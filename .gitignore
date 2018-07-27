@@ -276,6 +276,9 @@ __pycache__/
 logs
 npm-debug.log*
 
+# Build
+**/dist
+
 # Runtime data
 pids
 *.pid

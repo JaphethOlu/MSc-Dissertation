@@ -1,0 +1,23 @@
+{
+  "root": true,
+  "extends": [
+    "eslint:recommended"
+  ],
+  "parserOptions": {
+    "ecmaVersion": 6,
+    "sourceType": "scripts"
+  },
+  "env": {
+    "browser": true,
+    "node": true,
+    "mocha": true
+  },
+  "rules": {
+    "no-console": "warn",
+    "semi": "warn",
+    "quotes": ["error", "double"],
+    "curly": "error",
+    "no-const-assign": "error",
+    "no-mixed-spaces-and-tabs": "error"
+  }
+}
