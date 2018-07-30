@@ -8,7 +8,7 @@ module.exports = {
     output: {
         path: path.join(__dirname, "wwwroot", "dist"),
         filename: "./js/bundle.min.js",
-        publicPath: dist
+        publicPath: "/dist/"
     },
     entry: [ 
         "./ClientApp/src/index.js",
