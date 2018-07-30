@@ -32,6 +32,7 @@ namespace Master
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseWebpackDevMiddleware();
             }
             else{
                 app.UseExceptionHandler("Home/Error");

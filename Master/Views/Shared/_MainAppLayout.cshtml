@@ -9,12 +9,24 @@
             <link rel="stylesheet" href="~/dist/css/styles.css" asp-append-version="true" />
         </environment>
 
+        <environment names="Staging,Production">
+            <link rel="stylesheet" href="~/dist/css/styles.min.css" asp-append-version="true" />
+        </environment>
+
     </head>
 
     <body>
         @RenderBody()
         <div id="app-container"></div>
-        <script src="~/dist/js/bundle.js" asp-append-version="true"></script>
+
+        <environment names="Development">
+            <script src="~/dist/js/bundle.js" asp-append-version="true"></script>
+        </environment>
+        
+        <environment names="Staging,Production">
+            <script src="~/dist/js/bundle.min.js" asp-append-version="true"></script>
+        </environment>
+
         @RenderSection("mainapp", required: false)
     </body>
 </html>
