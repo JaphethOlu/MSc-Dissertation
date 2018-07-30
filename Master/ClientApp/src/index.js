@@ -1,4 +1,5 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import HotApp from "./App";
 
-ReactDOM.render(<h1>Hello From ReactDOM</h1>, document.getElementById('app-container'));
+ReactDOM.render(<HotApp />, document.getElementById('app-container'));

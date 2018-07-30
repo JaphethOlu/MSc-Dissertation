@@ -1,13 +1,12 @@
-const webpack = require("webpack");
 const path = require("path");
+const webpack = require("webpack");
 const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const OptimizeCssAssetsPlugin = require("optimize-css-assets-webpack-plugin");
-const dist = "./wwwroot/dist";
 
 module.exports = {
     output: {
-        path: path.resolve(__dirname, dist),
+        path: path.join(__dirname, "wwwroot", "dist"),
         filename: "./js/bundle.min.js",
         publicPath: dist
     },
