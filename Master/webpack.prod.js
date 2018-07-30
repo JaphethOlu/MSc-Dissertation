@@ -1,8 +1,13 @@
 const path = require("path");
 const webpack = require("webpack");
 const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
+const CleanWebpackPlugin = require("clean-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const OptimizeCssAssetsPlugin = require("optimize-css-assets-webpack-plugin");
+
+let pathsToClean = [
+    "./wwwroot/dist"
+]
 
 module.exports = {
     output: {
@@ -15,6 +20,7 @@ module.exports = {
         "./ClientApp/src/styles/styles.scss"
     ],
     plugins: [
+        new CleanWebpackPlugin(pathsToClean),
         new MiniCssExtractPlugin({
             filename: "./css/styles.min.css",
         })        

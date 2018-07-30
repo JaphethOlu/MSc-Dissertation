@@ -42,6 +42,7 @@
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-react": "^6.24.1",
     "chalk": "^2.4.1",
+    "clean-webpack-plugin": "^0.1.19",
     "css-loader": "^1.0.0",
     "eslint": "^5.2.0",
     "eslint-watch": "^4.0.2",
