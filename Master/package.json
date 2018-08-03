@@ -10,6 +10,7 @@
     "dist:build": "webpack --config ./webpack.prod.js",
     "lint:react": "eslint ./src/index.js",
     "lint:sass": "sass-lint -c .sass-lint.yml ./src/styles/**/*.scss -v -q",
+    "test:db": "node ./DevScripts/DatabaseScripts/__tests__/MasterDatabaseTest.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -47,6 +48,8 @@
     "eslint": "^5.2.0",
     "eslint-watch": "^4.0.2",
     "mini-css-extract-plugin": "^0.4.1",
+    "mocha": "^5.2.0",
+    "mysql": "^2.16.0",
     "node-sass": "^4.9.2",
     "nodemon": "^1.18.3",
     "optimize-css-assets-webpack-plugin": "^5.0.0",

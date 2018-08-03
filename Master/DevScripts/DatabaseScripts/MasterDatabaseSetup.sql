@@ -1,32 +1,27 @@
 DROP DATABASE IF EXISTS Dissertation;
-GO
 
 CREATE DATABASE Dissertation;
-GO
 
 USE Dissertation;
-GO
 
 CREATE TABLE Users (
     EmailAddress VARCHAR(50) NOT NULL UNIQUE,
     Password VARCHAR(150) NOT NULL,
-    UserRole VARCHAR(50) NOT NULL,
-    CONSTRAINT PK_Users PRIMARY KEY (EmailAddress),
-    CONSTRAINT User_Role_Validation CHECK(UserRole IN ('contractor', 'recruiter', 'director'))
+    UserRole ENUM('contractor', 'recruiter', 'director') NOT NULL,
+    CONSTRAINT PK_User PRIMARY KEY (EmailAddress)
 );
 
 CREATE TABLE Organisations (
     OrganisationID INT NOT NULL,
     OrganisationName VARCHAR(75) NOT NULL,
-    OrganisationType VARCHAR(10) NOT NULL,
+    OrganisationType ENUM ('employer', 'agency') NOT NULL ,
     PersonalStatement VARCHAR(1500),
     Location VARCHAR(30) NOT NULL,
-    NumberOfAvailableAdverts TINYINT DEFAULT(5),
+    NumberOfAvailableAdverts TINYINT DEFAULT 5,
     Director VARCHAR(50) NOT NULL,
     CONSTRAINT U_Organisation UNIQUE (OrganisationID, OrganisationName, Director),
     CONSTRAINT PK_Organisation PRIMARY KEY (OrganisationID),
     CONSTRAINT FK_Organisation_Director FOREIGN KEY (Director) REFERENCES Users(EmailAddress),
-    CONSTRAINT Organisation_Type_Validation CHECK (OrganisationType IN ('employer', 'agency')),
     CONSTRAINT Organisation_Adverts CHECK (NumberOfAvailableAdverts >= 5)
 );
 
@@ -43,7 +38,7 @@ CREATE TABLE Recruiters (
 CREATE TABLE Contracts (
     ContractID INT NOT NULL UNIQUE,
     Position VARCHAR(30),
-    DateCreated DATE DEFAULT GETDATE(),
+    DateCreated DATE,
     OrganisationID INT NOT NULL,
     Location VARCHAR(30),
     Description VARCHAR(2000),
@@ -70,10 +65,10 @@ CREATE TABLE Contractors (
 CREATE TABLE Work_Experience (
     EmailAddress VARCHAR(50) NOT NULL,
     EmployerName VARCHAR(100) NOT NULL,
-    Role VARCHAR(35) NOT NULL,
+    JobRole VARCHAR(35) NOT NULL,
     StartDate DATE NOT NULL,
     EndDate DATE,
-    Present BIT,
+    Present TINYINT(1),
     AchievementsAndResponsibilities VARCHAR(3000),
     CONSTRAINT FK_Work_Experience FOREIGN KEY (EmailAddress) REFERENCES Contractors(EmailAddress)
 );
@@ -81,27 +76,24 @@ CREATE TABLE Work_Experience (
 CREATE TABLE Education (
     InstitionName VARCHAR(75) NOT NULL,
     DegreeName VARCHAR(100) NOT NULL,
-    DegreeLevel VARCHAR(20) NOT NULL,
-    WithHons BIT,
+    DegreeLevel ENUM ('secondary', 'associate', 'bachelor',
+					  'pgcert', 'pgdip', 'master', 'doctorate') NOT NULL,
+    WithHons TINYINT(1),
     StartDate DATE NOT NULL,
-    EndDate DATE NOT NULL,
-    CONSTRAINT DEGREE_CLASS CHECK (DegreeLevel IN ('secondary', 'associate', 'bachelor', 
-                                                    'pgcert', 'pgdip', 'master', 'doctorate'))
+    EndDate DATE NOT NULL
 );
-GO
 
 CREATE TABLE Saved_Contract (
     ContractID INT NOT NULL UNIQUE,
-    DateSaved DATE DEFAULT GETDATE(),
+    DateSaved DATE,
     CONSTRAINT FK_Saved_Contract FOREIGN KEY(ContractID) REFERENCES Contracts(ContractID)
 );
 
 CREATE TABLE Applied_Contract (
     ContractID INT NOT NULL UNIQUE,
-    DateApplied DATE DEFAULT GETDATE(),
+    DateApplied DATE,
     CONSTRAINT FK_Applied_Contract FOREIGN KEY(ContractID) REFERENCES Contracts(ContractID)
 );
-GO
 
 CREATE TABLE Languages (
     Language VARCHAR(30) UNIQUE,
@@ -115,6 +107,5 @@ CREATE TABLE Skills (
 
 CREATE TABLE Industries (
     Industry VARCHAR(50) UNIQUE,
-    CONSTRAINT PK_Industrie PRIMARY KEY (Industry)
+    CONSTRAINT PK_Industry PRIMARY KEY (Industry)
 );
-GO
