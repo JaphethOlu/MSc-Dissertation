@@ -10,20 +10,20 @@
     "dist:build": "webpack --config ./webpack.prod.js",
     "lint:react": "eslint ./src/index.js",
     "lint:sass": "sass-lint -c .sass-lint.yml ./src/styles/**/*.scss -v -q",
-    "test:db": "node ./DevScripts/DatabaseScripts/__tests__/MasterDatabaseTest.js",
+    "populate:db": "node ./DevScripts/DatabaseScripts/__tests__/MasterDatabaseTest.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/MrDecipher/react-starter-pack.git"
+    "url": "git+https://github.com/MrDecipher/MSc-Dissertation.git"
   },
   "keywords": [],
   "author": "Japheth Ishola",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/MrDecipher/react-starter-pack/issues"
+    "url": "https://github.com/MrDecipher/MSc-Dissertation/issues"
   },
-  "homepage": "https://github.com/MrDecipher/react-starter-pack#readme",
+  "homepage": "https://github.com/MrDecipher/MSc-Dissertation#readme",
   "dependencies": {
     "history": "^4.7.2",
     "react": "^16.4.1",
@@ -48,7 +48,6 @@
     "eslint": "^5.2.0",
     "eslint-watch": "^4.0.2",
     "mini-css-extract-plugin": "^0.4.1",
-    "mocha": "^5.2.0",
     "mysql": "^2.16.0",
     "node-sass": "^4.9.2",
     "nodemon": "^1.18.3",

@@ -21,8 +21,5 @@ connection.connect(err => {
     }
 });
 
-
-
-
 //MySQL Port on my PC is 3306
 //connection.close();
