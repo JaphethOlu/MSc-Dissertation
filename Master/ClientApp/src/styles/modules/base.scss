@@ -1,4 +1,6 @@
-body
+html
 {
-  background-color: $main;
+  @include fluid-typo($min-width, $max-width, $font-size-min, $font-size-max);
+  box-sizing: border-box;
+  width: 100vw;
 }
