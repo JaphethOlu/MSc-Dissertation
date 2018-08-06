@@ -7,14 +7,14 @@ USE Dissertation;
 CREATE TABLE Users (
     EmailAddress VARCHAR(50) NOT NULL UNIQUE,
     Password VARCHAR(150) NOT NULL,
-    UserRole ENUM('contractor', 'recruiter', 'director') NOT NULL,
+    UserRole ENUM('Contractor', 'Recruiter', 'Director') NOT NULL,
     CONSTRAINT PK_User PRIMARY KEY (EmailAddress)
 );
 
 CREATE TABLE Organisations (
     OrganisationID INT NOT NULL,
     OrganisationName VARCHAR(75) NOT NULL,
-    OrganisationType ENUM ('employer', 'agency') NOT NULL ,
+    OrganisationType ENUM ('Employer', 'Agency') NOT NULL ,
     PersonalStatement VARCHAR(1500),
     Location VARCHAR(30) NOT NULL,
     NumberOfAvailableAdverts TINYINT DEFAULT 5,
@@ -76,8 +76,8 @@ CREATE TABLE Work_Experience (
 CREATE TABLE Education (
     InstitionName VARCHAR(75) NOT NULL,
     DegreeName VARCHAR(100) NOT NULL,
-    DegreeLevel ENUM ('secondary', 'associate', 'bachelor',
-					  'pgcert', 'pgdip', 'master', 'doctorate') NOT NULL,
+    DegreeLevel ENUM ('Secondary', 'Associate', 'Bachelor',
+					  'PGCert', 'PGDip', 'Master', 'Doctorate') NOT NULL,
     WithHons TINYINT(1),
     StartDate DATE NOT NULL,
     EndDate DATE NOT NULL
