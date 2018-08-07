@@ -69,7 +69,7 @@ CREATE TABLE Work_Experience (
     StartDate DATE NOT NULL,
     EndDate DATE,
     Present TINYINT(1),
-    AchievementsAndResponsibilities VARCHAR(3000),
+    AchievementsAndResponsibilities VARCHAR(3000), -- //TODO: Convert to JSON
     CONSTRAINT FK_Work_Experience FOREIGN KEY (EmailAddress) REFERENCES Contractors(EmailAddress)
 );
 
