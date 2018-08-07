@@ -6,9 +6,9 @@ const warning = chalk.yellow;
 const failure = chalk.bold.red;
 
 const connection = mysql.createConnection({
-    host        : "localhoset",
-    user        : "disso",
-    password    : "M4st3rDiss0"
+    host        : "localhost",
+    user        : "root",
+    password    : "M4st3rD1ss0"
 });
 
 connection.connect(err => {
