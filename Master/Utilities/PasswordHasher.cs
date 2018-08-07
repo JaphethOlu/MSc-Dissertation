@@ -8,7 +8,7 @@ namespace Master.Utilities
         const int SaltSize = 16;
         const int HashSize = 20;
         const int HashIterations = 10000;
-        readonly byte[] Salt;
+        readonly byte[] Salt = new byte[SaltSize];
         readonly byte[] Hash;
 
         public PasswordHasher(string password)
