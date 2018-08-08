@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27703.2042
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Master", "Master\Master.csproj", "{5B8A3A70-D1F2-4502-A2FE-B9E68710D92B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Master", "Master\Master.csproj", "{5B8A3A70-D1F2-4502-A2FE-B9E68710D92B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Master.Tests", "Master.Tests\Master.Tests.csproj", "{24BF6D05-22E9-42EE-BCC1-F95E1EA02D95}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{5B8A3A70-D1F2-4502-A2FE-B9E68710D92B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5B8A3A70-D1F2-4502-A2FE-B9E68710D92B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5B8A3A70-D1F2-4502-A2FE-B9E68710D92B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{24BF6D05-22E9-42EE-BCC1-F95E1EA02D95}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{24BF6D05-22E9-42EE-BCC1-F95E1EA02D95}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{24BF6D05-22E9-42EE-BCC1-F95E1EA02D95}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{24BF6D05-22E9-42EE-BCC1-F95E1EA02D95}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
