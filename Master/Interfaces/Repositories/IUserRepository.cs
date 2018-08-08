@@ -1,5 +1,5 @@
 using System;
-using Master.Model;
+using Master.Models;
 
 namespace Master.Interfaces.Repositories
 {

@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Master.Model
+namespace Master.Models
 {
     public partial class Industry
     {

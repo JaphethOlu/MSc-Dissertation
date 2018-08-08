@@ -2,9 +2,9 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Master.Model;
+using Master.Models;
 
-namespace Master
+namespace Master.Contexts
 {
     public partial class DissertationContext : DbContext
     {

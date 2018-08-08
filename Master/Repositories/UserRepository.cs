@@ -1,5 +1,6 @@
 using System;
-using Master.Model;
+using Master.Models;
+using Master.Contexts;
 using Master.Interfaces.Repositories;
 
 namespace Master.Repositories

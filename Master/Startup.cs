@@ -15,6 +15,8 @@ using Microsoft.Extensions.Options;
 using Microsoft.EntityFrameworkCore;
 using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 
+// =========================== Inner Project Dependencies ===========================
+using Master.Contexts;
 using Master.Repositories;
 using Master.Interfaces.Repositories;
 

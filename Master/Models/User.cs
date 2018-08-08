@@ -1,13 +1,13 @@
 using System;
 
-namespace Master.Model
+namespace Master.Models
 {
     public class User
     {
         private string _EmailAddress;
         private string _Password;
         private Role _UserRole;
-        
+
         public User(string emailAddress, string password, Role userRole)
         {
             _EmailAddress = emailAddress;

@@ -1,6 +1,6 @@
 using System;
 
-namespace Master.Model
+namespace Master.Models
 {
     public enum Role : byte
     {
