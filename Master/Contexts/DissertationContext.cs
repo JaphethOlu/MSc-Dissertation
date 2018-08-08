@@ -25,7 +25,7 @@ namespace Master.Contexts
         public virtual DbSet<Organisation> Organisations { get; set; }
         public virtual DbSet<Recruiter> Recruiters { get; set; }
         public virtual DbSet<Skill> Skills { get; set; }
-        public virtual DbSet<UserAccount> Users { get; set; }
+        public virtual DbSet<UserAccount> UserAccounts { get; set; }
 
         // Unable to generate entity type for table 'applied_contract'. Please see the warning messages.
         // Unable to generate entity type for table 'education'. Please see the warning messages.
@@ -47,7 +47,7 @@ namespace Master.Contexts
             {
                 entity.HasKey(e => e.EmailAddress);
 
-                entity.ToTable("contractors");
+                entity.ToTable("contractor");
 
                 entity.Property(e => e.EmailAddress).HasColumnType("varchar(50)");
 
@@ -72,7 +72,7 @@ namespace Master.Contexts
             {
                 entity.HasKey(e => e.ContractId);
 
-                entity.ToTable("contracts");
+                entity.ToTable("contract");
 
                 entity.HasIndex(e => e.ContractId)
                     .HasName("ContractID")
@@ -140,7 +140,7 @@ namespace Master.Contexts
             {
                 entity.HasKey(e => e.OrganisationId);
 
-                entity.ToTable("organisations");
+                entity.ToTable("organisation");
 
                 entity.HasIndex(e => e.Director)
                     .HasName("FK_Organisation_Director");
@@ -182,7 +182,7 @@ namespace Master.Contexts
             {
                 entity.HasKey(e => e.EmailAddress);
 
-                entity.ToTable("recruiters");
+                entity.ToTable("recruiter");
 
                 entity.HasIndex(e => e.EmailAddress)
                     .HasName("EmailAddress")
@@ -235,7 +235,7 @@ namespace Master.Contexts
             {
                 entity.HasKey(e => e.EmailAddress);
 
-                entity.ToTable("users");
+                entity.ToTable("useraccount");
 
                 entity.HasIndex(e => e.EmailAddress)
                     .HasName("EmailAddress")
