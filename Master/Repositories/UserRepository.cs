@@ -14,9 +14,9 @@ namespace Master.Repositories
             DbContext = dbContext;
         }
 
-        public void SaveUser(User newUser)
+        public void SaveUser(UserAccount newUserAccount)
         {
-            DbContext.Users.Add(newUser);
+            DbContext.Users.Add(newUserAccount);
             DbContext.SaveChanges();
         }
     }

@@ -10,7 +10,7 @@ namespace Master.Models
         public string LastName { get; set; }
         public int OrganisationId { get; set; }
 
-        public User EmailAddressNavigation { get; set; }
+        public UserAccount EmailAddressNavigation { get; set; }
         public Organisation Organisation { get; set; }
     }
 }

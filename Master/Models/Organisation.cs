@@ -18,7 +18,7 @@ namespace Master.Models
         public sbyte? NumberOfAvailableAdverts { get; set; }
         public string Director { get; set; }
 
-        public User DirectorNavigation { get; set; }
+        public UserAccount DirectorNavigation { get; set; }
         public ICollection<Contract> Contracts { get; set; }
         public ICollection<Recruiter> Recruiters { get; set; }
     }

@@ -2,13 +2,13 @@ using System;
 
 namespace Master.Models
 {
-    public class User
+    public class UserAccount
     {
         private string _EmailAddress;
         private string _Password;
         private Role _UserRole;
 
-        public User(string emailAddress, string password, Role userRole)
+        public UserAccount(string emailAddress, string password, Role userRole)
         {
             _EmailAddress = emailAddress;
             _Password = password;

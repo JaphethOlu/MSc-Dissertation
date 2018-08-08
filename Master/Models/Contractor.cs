@@ -12,6 +12,6 @@ namespace Master.Models
         public string PersonalStatement { get; set; }
         public string Location { get; set; }
 
-        public User EmailAddressNavigation { get; set; }
+        public UserAccount EmailAddressNavigation { get; set; }
     }
 }

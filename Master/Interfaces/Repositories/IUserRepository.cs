@@ -6,6 +6,6 @@ namespace Master.Interfaces.Repositories
     public interface IUserRepository
     {
         // TODO: Presave Action Password Encryption
-        void SaveUser(User newUser);
+        void SaveUser(UserAccount newUser);
     }
 }

@@ -4,14 +4,14 @@ CREATE DATABASE Dissertation;
 
 USE Dissertation;
 
-CREATE TABLE Users (
+CREATE TABLE UserAccount (
     EmailAddress VARCHAR(50) NOT NULL UNIQUE,
     Password VARCHAR(150) NOT NULL,
     UserRole ENUM('Contractor', 'Recruiter', 'Director') NOT NULL,
     CONSTRAINT PK_User PRIMARY KEY (EmailAddress)
 );
 
-CREATE TABLE Organisations (
+CREATE TABLE Organisation (
     OrganisationID INT NOT NULL,
     OrganisationName VARCHAR(75) NOT NULL,
     OrganisationType ENUM ('Employer', 'Agency') NOT NULL ,
@@ -21,21 +21,21 @@ CREATE TABLE Organisations (
     Director VARCHAR(50) NOT NULL,
     CONSTRAINT U_Organisation UNIQUE (OrganisationID, OrganisationName, Director),
     CONSTRAINT PK_Organisation PRIMARY KEY (OrganisationID),
-    CONSTRAINT FK_Organisation_Director FOREIGN KEY (Director) REFERENCES Users(EmailAddress),
+    CONSTRAINT FK_Organisation_Director FOREIGN KEY (Director) REFERENCES UserAccount(EmailAddress),
     CONSTRAINT Organisation_Adverts CHECK (NumberOfAvailableAdverts >= 5)
 );
 
-CREATE TABLE Recruiters (
+CREATE TABLE Recruiter (
     EmailAddress VARCHAR(50) NOT NULL UNIQUE,
     FirstName VARCHAR(30) NOT NULL,
     LastName VARCHAR(30) NOT NULL,
     OrganisationID INT NOT NULL,
     CONSTRAINT PK_Recruiter PRIMARY KEY (EmailAddress),
-    CONSTRAINT FK_Recruiter_EmailAddress FOREIGN KEY (EmailAddress) REFERENCES Users(EmailAddress),
-    CONSTRAINT FK_Recruiter_Organisation FOREIGN KEY (OrganisationID) REFERENCES Organisations(OrganisationID)
+    CONSTRAINT FK_Recruiter_EmailAddress FOREIGN KEY (EmailAddress) REFERENCES UserAccount(EmailAddress),
+    CONSTRAINT FK_Recruiter_Organisation FOREIGN KEY (OrganisationID) REFERENCES Organisation(OrganisationID)
 );
 
-CREATE TABLE Contracts (
+CREATE TABLE Contract (
     ContractID INT NOT NULL UNIQUE,
     Position VARCHAR(30),
     DateCreated DATE,
@@ -46,12 +46,12 @@ CREATE TABLE Contracts (
     StartDate DATE,
     EndDate DATE,
     CONSTRAINT PK_Contract PRIMARY KEY (ContractID),
-    CONSTRAINT FK_Contract_Organisation FOREIGN KEY (OrganisationID) REFERENCES Organisations(OrganisationID),
+    CONSTRAINT FK_Contract_Organisation FOREIGN KEY (OrganisationID) REFERENCES Organisation(OrganisationID),
     CONSTRAINT Min_Contract_Duration CHECK(Duration > 0),
 	CONSTRAINT Max_Contract_Duration CHECK(Duration <= 24)
 );
 
-CREATE TABLE Contractors (
+CREATE TABLE Contractor (
     EmailAddress VARCHAR(50) NOT NULL,
     FirstName VARCHAR(30),
     LastName VARCHAR(30),
@@ -59,7 +59,7 @@ CREATE TABLE Contractors (
     PersonalStatement VARCHAR(800),
     Location VARCHAR(30),
     CONSTRAINT PK_Contractor_EmailAddress PRIMARY KEY (EmailAddress),
-    CONSTRAINT FK_Contractor_EmailAddress FOREIGN KEY (EmailAddress) REFERENCES Users(EmailAddress)
+    CONSTRAINT FK_Contractor_EmailAddress FOREIGN KEY (EmailAddress) REFERENCES UserAccount(EmailAddress)
 );
 
 CREATE TABLE Work_Experience (
@@ -70,7 +70,7 @@ CREATE TABLE Work_Experience (
     EndDate DATE,
     Present TINYINT(1),
     AchievementsAndResponsibilities VARCHAR(3000), -- //TODO: Convert to JSON
-    CONSTRAINT FK_Work_Experience FOREIGN KEY (EmailAddress) REFERENCES Contractors(EmailAddress)
+    CONSTRAINT FK_Work_Experience FOREIGN KEY (EmailAddress) REFERENCES Contractor(EmailAddress)
 );
 
 CREATE TABLE Education (
@@ -86,13 +86,13 @@ CREATE TABLE Education (
 CREATE TABLE Saved_Contract (
     ContractID INT NOT NULL UNIQUE,
     DateSaved DATE,
-    CONSTRAINT FK_Saved_Contract FOREIGN KEY(ContractID) REFERENCES Contracts(ContractID)
+    CONSTRAINT FK_Saved_Contract FOREIGN KEY(ContractID) REFERENCES Contract(ContractID)
 );
 
 CREATE TABLE Applied_Contract (
     ContractID INT NOT NULL UNIQUE,
     DateApplied DATE,
-    CONSTRAINT FK_Applied_Contract FOREIGN KEY(ContractID) REFERENCES Contracts(ContractID)
+    CONSTRAINT FK_Applied_Contract FOREIGN KEY(ContractID) REFERENCES Contract(ContractID)
 );
 
 CREATE TABLE Languages (

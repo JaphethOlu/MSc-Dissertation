@@ -25,7 +25,7 @@ namespace Master.Contexts
         public virtual DbSet<Organisation> Organisations { get; set; }
         public virtual DbSet<Recruiter> Recruiters { get; set; }
         public virtual DbSet<Skill> Skills { get; set; }
-        public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<UserAccount> Users { get; set; }
 
         // Unable to generate entity type for table 'applied_contract'. Please see the warning messages.
         // Unable to generate entity type for table 'education'. Please see the warning messages.
@@ -36,7 +36,8 @@ namespace Master.Contexts
         {
             if (!optionsBuilder.IsConfigured)
             {
-				Console.WriteLine("Configure the Database");
+				// Console.WriteLine("Configure the Database");
+                optionsBuilder.UseMySql("Server=localhost;Database=dissertation;User=root;Password=M4st3rD1ss0;");
 			}
         }
 
@@ -230,7 +231,7 @@ namespace Master.Contexts
                 entity.Property(e => e._Skill).HasColumnType("varchar(50)");
             });
 
-            modelBuilder.Entity<User>(entity =>
+            modelBuilder.Entity<UserAccount>(entity =>
             {
                 entity.HasKey(e => e.EmailAddress);
 
