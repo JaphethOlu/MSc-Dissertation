@@ -1,6 +1,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Master.Model;
 
 namespace Master
@@ -35,7 +36,7 @@ namespace Master
         {
             if (!optionsBuilder.IsConfigured)
             {
-                Console.WriteLine("Configure the Database");
+				Console.WriteLine("Configure the Database");
 			}
         }
 
@@ -244,7 +245,12 @@ namespace Master
                 entity.Property(e => e.Password)
                     .IsRequired()
                     .HasColumnType("varchar(150)");
-            });
+
+				var UserRoleConverter = new EnumToStringConverter<Role>();
+                entity.Property(e => e.UserRole)
+					.IsRequired()
+                    .HasConversion(UserRoleConverter);
+			});
         }
     }
 }

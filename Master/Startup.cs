@@ -15,6 +15,9 @@ using Microsoft.Extensions.Options;
 using Microsoft.EntityFrameworkCore;
 using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 
+using Master.Repositories;
+using Master.Interfaces.Repositories;
+
 namespace Master
 {
     public class Startup
@@ -41,6 +44,10 @@ namespace Master
 
             services.AddMvc()
                     .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
+            // ========================================= Repositories Start ================================================
+            services.AddScoped<IUserRepository, UserRepository>();
+            // ========================================== Repositories End ================================================
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

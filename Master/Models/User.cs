@@ -6,13 +6,13 @@ namespace Master.Model
     {
         private string _EmailAddress;
         private string _Password;
-        private UserRole _Role;
-
-        public User(string emailAddress, string password, UserRole role)
+        private Role _UserRole;
+        
+        public User(string emailAddress, string password, Role userRole)
         {
             _EmailAddress = emailAddress;
             _Password = password;
-            _Role = role;
+            _UserRole = userRole;
         }
 
         public string EmailAddress
@@ -31,12 +31,17 @@ namespace Master.Model
 			}
 		}
 
-        public UserRole Role
+        public Role UserRole
         {
             get
             {
-                return _Role;
+                return _UserRole;
             }
+
+			set
+			{
+				_UserRole = value;
+			}
         }
     }
 }
