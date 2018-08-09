@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Master.Models
 {
-    public class Contractor
+    public class ContractorProfile
     {
         public string EmailAddress { get; set; }
         public string FirstName { get; set; }
@@ -12,6 +12,6 @@ namespace Master.Models
         public string PersonalStatement { get; set; }
         public string Location { get; set; }
 
-        public UserAccount EmailAddressNavigation { get; set; }
+        public ContractorAccount EmailAddressNavigation { get; set; }
     }
 }

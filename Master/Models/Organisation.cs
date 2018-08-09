@@ -8,7 +8,7 @@ namespace Master.Models
         public Organisation()
         {
             Contracts = new HashSet<Contract>();
-            Recruiters = new HashSet<Recruiter>();
+            Recruiters = new HashSet<RecruiterAccount>();
         }
 
         public int OrganisationId { get; set; }
@@ -18,8 +18,8 @@ namespace Master.Models
         public sbyte? NumberOfAvailableAdverts { get; set; }
         public string Director { get; set; }
 
-        public UserAccount DirectorNavigation { get; set; }
+        public RecruiterAccount DirectorNavigation { get; set; }
         public ICollection<Contract> Contracts { get; set; }
-        public ICollection<Recruiter> Recruiters { get; set; }
+        public ICollection<RecruiterAccount> Recruiters { get; set; }
     }
 }

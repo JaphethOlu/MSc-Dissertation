@@ -4,11 +4,20 @@ CREATE DATABASE Dissertation;
 
 USE Dissertation;
 
-CREATE TABLE UserAccount (
+CREATE TABLE Contractor_Account (
     EmailAddress VARCHAR(50) NOT NULL UNIQUE,
     Password VARCHAR(150) NOT NULL,
-    UserRole ENUM('Contractor', 'Recruiter', 'Director') NOT NULL,
-    CONSTRAINT PK_User PRIMARY KEY (EmailAddress)
+    FirstName VARCHAR(30) NOT NULL,
+    LastName VARCHAR(30) NOT NULL,
+    CONSTRAINT PK_ContractorAccount PRIMARY KEY (EmailAddress)
+);
+
+CREATE TABLE Recruiter_Account (
+    EmailAddress VARCHAR(50) NOT NULL UNIQUE,
+    FirstName VARCHAR(30) NOT NULL,
+    LastName VARCHAR(30) NOT NULL,
+    OrganisationID INT NOT NULL,
+    CONSTRAINT PK_Recruiter PRIMARY KEY (EmailAddress)
 );
 
 CREATE TABLE Organisation (
@@ -21,19 +30,11 @@ CREATE TABLE Organisation (
     Director VARCHAR(50) NOT NULL,
     CONSTRAINT U_Organisation UNIQUE (OrganisationID, OrganisationName, Director),
     CONSTRAINT PK_Organisation PRIMARY KEY (OrganisationID),
-    CONSTRAINT FK_Organisation_Director FOREIGN KEY (Director) REFERENCES UserAccount(EmailAddress),
+    CONSTRAINT FK_Organisation_Director FOREIGN KEY (Director) REFERENCES Recruiter_Account(EmailAddress),
     CONSTRAINT Organisation_Adverts CHECK (NumberOfAvailableAdverts >= 5)
 );
 
-CREATE TABLE Recruiter (
-    EmailAddress VARCHAR(50) NOT NULL UNIQUE,
-    FirstName VARCHAR(30) NOT NULL,
-    LastName VARCHAR(30) NOT NULL,
-    OrganisationID INT NOT NULL,
-    CONSTRAINT PK_Recruiter PRIMARY KEY (EmailAddress),
-    CONSTRAINT FK_Recruiter_EmailAddress FOREIGN KEY (EmailAddress) REFERENCES UserAccount(EmailAddress),
-    CONSTRAINT FK_Recruiter_Organisation FOREIGN KEY (OrganisationID) REFERENCES Organisation(OrganisationID)
-);
+ALTER TABLE recruiter_account ADD CONSTRAINT FK_Recruiter_Organisation FOREIGN KEY (OrganisationID) REFERENCES Organisation(OrganisationID);
 
 CREATE TABLE Contract (
     ContractID INT NOT NULL UNIQUE,
@@ -51,18 +52,18 @@ CREATE TABLE Contract (
 	CONSTRAINT Max_Contract_Duration CHECK(Duration <= 24)
 );
 
-CREATE TABLE Contractor (
+CREATE TABLE Contractor_Profile (
     EmailAddress VARCHAR(50) NOT NULL,
     FirstName VARCHAR(30),
-    LastName VARCHAR(30),
+    LastName VARCHAR(30) NOT NULL,
     Headline VARCHAR(120),
     PersonalStatement VARCHAR(800),
     Location VARCHAR(30),
     CONSTRAINT PK_Contractor_EmailAddress PRIMARY KEY (EmailAddress),
-    CONSTRAINT FK_Contractor_EmailAddress FOREIGN KEY (EmailAddress) REFERENCES UserAccount(EmailAddress)
+    CONSTRAINT FK_Contractor_EmailAddress FOREIGN KEY (EmailAddress) REFERENCES Contractor_Account(EmailAddress)
 );
 
-CREATE TABLE Work_Experience (
+CREATE TABLE Contractor_Work_Experience (
     EmailAddress VARCHAR(50) NOT NULL,
     EmployerName VARCHAR(100) NOT NULL,
     JobRole VARCHAR(35) NOT NULL,
@@ -70,7 +71,7 @@ CREATE TABLE Work_Experience (
     EndDate DATE,
     Present TINYINT(1),
     AchievementsAndResponsibilities VARCHAR(3000), -- //TODO: Convert to JSON
-    CONSTRAINT FK_Work_Experience FOREIGN KEY (EmailAddress) REFERENCES Contractor(EmailAddress)
+    CONSTRAINT FK_Work_Experience FOREIGN KEY (EmailAddress) REFERENCES Contractor_Profile(EmailAddress)
 );
 
 CREATE TABLE Education (

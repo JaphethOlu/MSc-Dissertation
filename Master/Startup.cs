@@ -48,7 +48,7 @@ namespace Master
                     .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             // ========================================= Repositories Start ================================================
-            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IContractorAccountRepository, ContractorAccountRepository>();
             // ========================================== Repositories End ================================================
         }
 
