@@ -15,9 +15,13 @@ using Microsoft.Extensions.Options;
 using Microsoft.EntityFrameworkCore;
 using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 
-// =========================== Inner Project Dependencies ===========================
+// =========== Inner Project Dependencies =============
+using Master.Models;
+using Master.Services;
 using Master.Contexts;
 using Master.Repositories;
+using Master.Interfaces.Models;
+using Master.Interfaces.Services;
 using Master.Interfaces.Repositories;
 
 namespace Master
@@ -47,9 +51,14 @@ namespace Master
             services.AddMvc()
                     .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
-            // ========================================= Repositories Start ================================================
+            // ======================= Repositories Start ==========================
             services.AddScoped<IContractorAccountRepository, ContractorAccountRepository>();
-            // ========================================== Repositories End ================================================
+
+            // ========================== Models Start =============================
+			services.AddTransient<IContractorAccount, ContractorAccount>();
+
+            // ========================= Services Start ============================
+            services.AddTransient<IPasswordHasher, PasswordHasher>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

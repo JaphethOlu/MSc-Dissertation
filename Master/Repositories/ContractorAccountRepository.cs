@@ -1,4 +1,6 @@
 using System;
+using Microsoft.EntityFrameworkCore;
+
 using Master.Models;
 using Master.Contexts;
 using Master.Interfaces.Repositories;
@@ -16,7 +18,6 @@ namespace Master.Repositories
 
         public void SaveContractorAccount(ContractorAccount newContractorAccount)
         {
-			//DbContext.Users.Add(newContractorAccount);
 			DbContext.ContractorAccounts.Add(newContractorAccount);
             DbContext.SaveChanges();
         }
@@ -32,6 +33,23 @@ namespace Master.Repositories
             ContractorAccount userToDelete = FindContractorAccount(emailAddress);
             DbContext.ContractorAccounts.Remove(userToDelete);
             DbContext.SaveChanges();
+        }
+
+        public bool CheckIfAccountExist(string emailAddress)
+        {
+            if(FindContractorAccount(emailAddress) != null)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public void MarkAsModified(ContractorAccount contractorAccount)
+        {
+            DbContext.Entry(contractorAccount).State = EntityState.Modified;
         }
     }
 }

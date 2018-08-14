@@ -1,12 +1,13 @@
 using System;
 using Xunit;
+
 using Master;
 using Master.Models;
 using Master.Contexts;
 using Master.Repositories;
 using Master.Interfaces.Repositories;
 
-namespace Tests
+namespace Tests.Repositories
 {
     public class ContractorAccountRepositoryTests
     {
@@ -20,7 +21,7 @@ namespace Tests
             ContractorAccountRepository = new ContractorAccountRepository(dissertationContext);
             NewContractorAccount = new ContractorAccount(ExampleEmailAddress, "IAmAContractor", "John", "Doe");
         }
-
+        
         [Fact]
         public void TestDeleteContractor()
         {

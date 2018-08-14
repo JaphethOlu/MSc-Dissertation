@@ -49,11 +49,11 @@ namespace Master.Contexts
                 entity.HasKey(ca => ca.EmailAddress);
 
                 entity.ToTable("contractor_account");
-
+                
                 entity.HasIndex(ca => ca.EmailAddress)
                     .HasName("EmailAddress")
                     .IsUnique();
-
+                
                 entity.Property(ca => ca.EmailAddress)
                     .IsRequired()
                     .HasColumnType("varchar(50)");

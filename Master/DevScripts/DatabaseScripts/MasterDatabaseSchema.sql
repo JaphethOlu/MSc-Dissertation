@@ -110,3 +110,6 @@ CREATE TABLE Industries (
     Industry VARCHAR(50) UNIQUE,
     CONSTRAINT PK_Industry PRIMARY KEY (Industry)
 );
+
+INSERT INTO contractor_account(EmailAddress, Password, FirstName, LastName)
+VALUES ("bourneCoder@example.com", "ThisIsATestAccount", "Jason", "Bourne");
