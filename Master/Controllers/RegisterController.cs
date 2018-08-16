@@ -21,14 +21,14 @@ using Master.Interfaces.Repositories;
 namespace Master.Controllers
 {
     [Route("api/[controller]")]
-    public class ContractorAccountController : Controller
+    public class RegisterController : Controller
     {
 		private readonly DissertationContext dbContext;
         private IContractorAccountRepository contractorAccountRepository;
         private IPasswordHasher passwordHasher;
         private IContractorAccount contractor;
 
-		public ContractorAccountController(IContractorAccountRepository contractorAccountRepository,
+		public RegisterController(IContractorAccountRepository contractorAccountRepository,
                                            IContractorAccount contractor)
 		{
 			dbContext = new DissertationContext();
@@ -36,11 +36,11 @@ namespace Master.Controllers
             this.contractor = contractor;
 		}
 		
-        [HttpPost("register")]
+        [HttpPost("contractor")]
         [ProducesResponseType(201)]
         [ProducesResponseType(400)]
         [ProducesResponseType(403)]
-        public HttpResponseMessage CreateContractorAccount([FromForm] ContractorAccount contractor,
+        public HttpResponseMessage RegisterContractor([FromForm] ContractorAccount contractor,
                                         [FromServices] IPasswordHasher passwordHasher)
 		{
             if(ModelState.IsValid)

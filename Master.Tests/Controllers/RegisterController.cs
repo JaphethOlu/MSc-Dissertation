@@ -19,9 +19,9 @@ using Master.Interfaces.Repositories;
 namespace Tests.Controllers
 {
     [TestFixture]
-    public class ContractorControllerTests
+    public class RegisterTests
     {
-        ContractorAccountController controller;
+        RegisterController controller;
         ContractorAccountRepository contractorAccountRepository;
         ContractorAccount contractorAccount = new ContractorAccount();
         PasswordHasher passwordHasher;
@@ -29,9 +29,9 @@ namespace Tests.Controllers
         ContractorAccount falseEmailContractor;
         ContractorAccount existingContractor;
 
-        public ContractorControllerTests()
+        public RegisterTests()
         {
-            controller = new ContractorAccountController(contractorAccountRepository, contractorAccount);
+            controller = new RegisterController(contractorAccountRepository, contractorAccount);
         }
 
         [OneTimeSetUp]
@@ -73,7 +73,7 @@ namespace Tests.Controllers
         [Test]
         public void TrueContractorAccount()
         {
-            var actualResult = controller.CreateContractorAccount(trueContractor, passwordHasher);
+            var actualResult = controller.RegisterContractor(trueContractor, passwordHasher);
 
             var expectedResult = new HttpResponseMessage(HttpStatusCode.Created);
 
@@ -83,7 +83,7 @@ namespace Tests.Controllers
         [Test]
         public void FalseEmailContractorAccount()
         {
-            var actualResult = controller.CreateContractorAccount(falseEmailContractor, passwordHasher);
+            var actualResult = controller.RegisterContractor(falseEmailContractor, passwordHasher);
 
             var expectedResult = new HttpResponseMessage(HttpStatusCode.Forbidden);
 
@@ -93,7 +93,7 @@ namespace Tests.Controllers
         [Test]
         public void ExisitingContractorAccount()
         {
-            var actualResult = controller.CreateContractorAccount(existingContractor, passwordHasher);
+            var actualResult = controller.RegisterContractor(existingContractor, passwordHasher);
 
             var expectedResult = new HttpResponseMessage(HttpStatusCode.Forbidden);
             
