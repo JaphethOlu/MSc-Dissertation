@@ -49,11 +49,12 @@ namespace Master.Controllers
 
             if(ModelState.IsValid)
             {
+
                 bool AccountExist = contractorAccountRepository.CheckIfAccountExist(contractor.EmailAddress);
 
-                if(AccountExist == true)
+                if(AccountExist == true || (IsValidEmail(contractor.EmailAddress) == false))
                 {
-                    string errorMessage = "This email address is already in use";
+                    string errorMessage = "This email address is already in use or invalid";
                     response = BadRequest(new { error = errorMessage});
                 }
                 else
@@ -79,6 +80,18 @@ namespace Master.Controllers
                 return new BadRequestObjectResult(ModelState);
             }
 		}
+
+        private bool IsValidEmail(string email)
+        {
+            try {
+                var addr = new System.Net.Mail.MailAddress(email);
+                return true; //addr.Address == email;
+            }
+            catch 
+            {
+                return false;
+            }
+        }
 
         private string BuildUserIdentity(IAccount userAccount)
         {
