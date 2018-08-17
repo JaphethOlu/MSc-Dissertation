@@ -5,7 +5,7 @@ using Master.Interfaces.Services;
 
 namespace Master.Services
 {
-    public class PasswordHasher : IPasswordHasher
+    public class PasswordManager : IPasswordManager
     {
         const int SaltSize = 16;
         const int HashSize = 20;
@@ -13,7 +13,7 @@ namespace Master.Services
         private byte[] Salt = new byte[SaltSize];
         private byte[] Hash;
 
-        public PasswordHasher()
+        public PasswordManager()
         {
             // Generate a new salt
             new RNGCryptoServiceProvider().GetBytes(Salt);            
@@ -36,6 +36,26 @@ namespace Master.Services
             string HashedPasswordString = Convert.ToBase64String(PasswordBytes);
 
             return HashedPasswordString;
+        }
+
+        public bool VerifyPassword(string truePassword, string providedPassword)
+        {
+            // Convert password to bytes
+            byte[] hashBytes = Convert.FromBase64String(truePassword);
+
+            // Take the salt out
+            byte[] salt = new byte[16];
+            Array.Copy(hashBytes, 20, salt, 0, SaltSize);
+
+            // Hash the user inputted password
+            var hashProvidedPassword = new Rfc2898DeriveBytes(providedPassword, salt, HashIterations);
+
+            byte[] hash = hashProvidedPassword.GetBytes(20);
+
+            for(int i = 0; i < HashSize; i++)
+                if(hashBytes[i] != hash[i])
+                    return false;
+            return true;
         }
     }
 }
