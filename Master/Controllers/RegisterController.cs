@@ -64,11 +64,11 @@ namespace Master.Controllers
 
                     contractor.Password = encryptedPassword;
 
-                    contractorAccountRepository.SaveContractorAccount(contractor);
-
                     contractorAccountRepository.MarkAsModified(contractor);
 
                     string userToken = BuildUserIdentity(contractor);
+
+                    contractorAccountRepository.SaveContractorAccount(contractor);
 
                     response = Ok(new { token = userToken });
                 }

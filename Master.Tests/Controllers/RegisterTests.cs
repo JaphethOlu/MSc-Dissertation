@@ -1,8 +1,6 @@
 using System;
 using NUnit;
 using NUnit.Framework;
-using System.Net;
-using System.Net.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
@@ -15,6 +13,7 @@ using Master.Controllers;
 using Master.Repositories;
 using Master.Interfaces.Models;
 using Master.Interfaces.Repositories;
+using Microsoft.Extensions.Configuration;
 
 namespace Tests.Controllers
 {
@@ -25,13 +24,16 @@ namespace Tests.Controllers
         ContractorAccountRepository contractorAccountRepository;
         ContractorAccount contractorAccount = new ContractorAccount();
         PasswordHasher passwordHasher;
+        TokenGenerator tokenGenerator;
         ContractorAccount trueContractor;
         ContractorAccount falseEmailContractor;
-        ContractorAccount existingContractor;
+        ContractorAccount existingContractor;        
 
         public RegisterTests()
         {
-            controller = new RegisterController(contractorAccountRepository, contractorAccount);
+            var config = new ConfigurationBuilder().AddJsonFile("appsettings.Development.json").Build();
+            tokenGenerator = new TokenGenerator(config);
+            controller = new RegisterController(contractorAccountRepository, contractorAccount, tokenGenerator);
         }
 
         [OneTimeSetUp]
@@ -73,31 +75,35 @@ namespace Tests.Controllers
         [Test]
         public void TrueContractorAccount()
         {
-            var actualResult = controller.RegisterContractor(trueContractor, passwordHasher);
+            IActionResult actualResult = controller.RegisterContractor(trueContractor, passwordHasher);
+            var resultContent = actualResult as OkObjectResult;
 
-            var expectedResult = new HttpResponseMessage(HttpStatusCode.Created);
-
-            Assert.AreEqual(expectedResult.StatusCode, actualResult.StatusCode);
+            Assert.IsNotNull(resultContent);
+            Assert.IsInstanceOf(typeof(OkObjectResult), actualResult);
+            Assert.AreEqual(200, resultContent.StatusCode);
         }
+        
         
         [Test]
         public void FalseEmailContractorAccount()
         {
-            var actualResult = controller.RegisterContractor(falseEmailContractor, passwordHasher);
+            IActionResult actualResult = controller.RegisterContractor(falseEmailContractor, passwordHasher);
+            var resultContent = actualResult as BadRequestObjectResult;
 
-            var expectedResult = new HttpResponseMessage(HttpStatusCode.Forbidden);
-
-            Assert.AreEqual(expectedResult.StatusCode, actualResult.StatusCode);
+            Assert.IsNotNull(resultContent);
+            Assert.AreEqual(400, resultContent.StatusCode);
+            Assert.IsInstanceOf(typeof(BadRequestObjectResult), actualResult);
         }
         
         [Test]
         public void ExisitingContractorAccount()
         {
-            var actualResult = controller.RegisterContractor(existingContractor, passwordHasher);
+            IActionResult actualResult = controller.RegisterContractor(existingContractor, passwordHasher);
+            var resultContent = actualResult as BadRequestObjectResult;
 
-            var expectedResult = new HttpResponseMessage(HttpStatusCode.Forbidden);
-            
-            Assert.AreEqual(expectedResult.StatusCode, actualResult.StatusCode);
+            Assert.IsNotNull(resultContent);
+            Assert.AreEqual(400, resultContent.StatusCode);
+            Assert.IsInstanceOf(typeof(BadRequestObjectResult), actualResult);
         }
     }
 }
