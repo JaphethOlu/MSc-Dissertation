@@ -2,13 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Web.Http;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 
 using Master.Models;
 using Master.Services;
@@ -26,59 +25,88 @@ namespace Master.Controllers
 		private readonly DissertationContext dbContext;
         private IContractorAccountRepository contractorAccountRepository;
         private IPasswordHasher passwordHasher;
-        private IContractorAccount contractor;
+        private ITokenGenerator tokenGenerator;
+        private IAccount contractor;
 
 		public RegisterController(IContractorAccountRepository contractorAccountRepository,
-                                           IContractorAccount contractor)
+                                  IAccount contractor,
+                                  ITokenGenerator tokenGenerator)
 		{
 			dbContext = new DissertationContext();
             this.contractorAccountRepository = new ContractorAccountRepository(dbContext);
             this.contractor = contractor;
+            this.tokenGenerator = tokenGenerator;
 		}
 		
+        [AllowAnonymous]
         [HttpPost("contractor")]
         [ProducesResponseType(201)]
         [ProducesResponseType(400)]
-        [ProducesResponseType(403)]
-        public HttpResponseMessage RegisterContractor([FromForm] ContractorAccount contractor,
+        public IActionResult RegisterContractor([FromForm] ContractorAccount contractor,
                                         [FromServices] IPasswordHasher passwordHasher)
 		{
+            IActionResult response;
+
             if(ModelState.IsValid)
             {
                 bool AccountExist = contractorAccountRepository.CheckIfAccountExist(contractor.EmailAddress);
-                
-                if(AccountExist)
+
+                if(AccountExist == true)
                 {
-                    return new HttpResponseMessage(HttpStatusCode.Forbidden);
+                    string errorMessage = "This email address is already in use";
+                    response = BadRequest(new { error = errorMessage});
                 }
-                
-                ContractorAccount newContractorAccount;
-
-                passwordHasher = new PasswordHasher();
-
-                string encryptedPassword = passwordHasher.GeneratePassword(contractor.Password);
-
-                newContractorAccount = new ContractorAccount
+                else
                 {
-                    EmailAddress = contractor.EmailAddress,
-                    Password = encryptedPassword,
-                    FirstName = contractor.FirstName,
-                    LastName = contractor.LastName
-                };
+                    passwordHasher = new PasswordHasher();
 
-                contractorAccountRepository.SaveContractorAccount(newContractorAccount);
+                    string encryptedPassword = passwordHasher.GeneratePassword(contractor.Password);
 
-                contractorAccountRepository.MarkAsModified(newContractorAccount);
+                    contractor.Password = encryptedPassword;
 
-                HttpResponseMessage accountCreatedResponse = new HttpResponseMessage(HttpStatusCode.Created);
+                    contractorAccountRepository.SaveContractorAccount(contractor);
 
-                return accountCreatedResponse;
+                    contractorAccountRepository.MarkAsModified(contractor);
+
+                    string userToken = BuildUserIdentity(contractor);
+
+                    response = Ok(new { token = userToken });
+                }
+                return response;
             }
             else
             {
-                HttpResponseMessage invalidModelResponse = new HttpResponseMessage(HttpStatusCode.BadRequest);
-                return invalidModelResponse;
+                return new BadRequestObjectResult(ModelState);
             }
-		}		
+		}
+
+        private string BuildUserIdentity(IAccount userAccount)
+        {
+            string authenticationToken = null;
+
+            if(userAccount.GetType() == typeof(ContractorAccount))
+            {
+                Contractor contractor = new Contractor
+                {
+                    EmailAddress = userAccount.EmailAddress,
+                    FirstName = userAccount.FirstName,
+                    LastName = userAccount.LastName
+                };
+                authenticationToken = tokenGenerator.GenerateToken(contractor);
+            }
+            else
+            {
+                /*
+                Recruiter recruiter = new Recruiter
+                {
+                    EmailAddress = userAccount.EmailAddress,
+                    FirstName = userAccount.FirstName,
+                    LastName = userAccount.LastName
+                };
+                */
+                throw new NotImplementedException();
+            }
+            return authenticationToken;
+        }
     }
 }

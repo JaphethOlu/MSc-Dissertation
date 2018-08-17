@@ -1,8 +1,10 @@
 using System;
 
+using Master.Interfaces.Models;
+
 namespace Master.Models
 {
-    public class RecruiterAccount
+    public class RecruiterAccount : IAccount
     {
         public string EmailAddress { get; set; }
         public string Password { get; set; }

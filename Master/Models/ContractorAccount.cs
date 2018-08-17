@@ -5,7 +5,7 @@ using Master.Interfaces.Models;
 
 namespace Master.Models
 {
-    public class ContractorAccount : IContractorAccount
+    public class ContractorAccount : IAccount
     {
         [Required]
 		[EmailAddress]

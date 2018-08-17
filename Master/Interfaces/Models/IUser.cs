@@ -2,11 +2,11 @@ using System;
 
 namespace Master.Interfaces.Models
 {
-    public interface IContractorAccount
+    public interface IUser
     {
         string EmailAddress { get; set; }
-        string Password { get; set; }
         string FirstName { get; set; }
         string LastName { get; set; }
+        string Role { get; }
     }
 }
