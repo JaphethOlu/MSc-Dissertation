@@ -4,10 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 
 using Master.Models;
 using Master.Services;
@@ -24,13 +21,12 @@ namespace Master.Controllers
     {
 		private readonly DissertationContext dbContext;
         private IContractorAccountRepository contractorAccountRepository;
-        private IPasswordHasher passwordHasher;
+        private IPasswordManager passwordManager;
         private ITokenGenerator tokenGenerator;
         private IAccount contractor;
 
 		public RegisterController(IContractorAccountRepository contractorAccountRepository,
-                                  IAccount contractor,
-                                  ITokenGenerator tokenGenerator)
+                                  IAccount contractor, ITokenGenerator tokenGenerator)
 		{
 			dbContext = new DissertationContext();
             this.contractorAccountRepository = new ContractorAccountRepository(dbContext);
@@ -43,7 +39,8 @@ namespace Master.Controllers
         [ProducesResponseType(201)]
         [ProducesResponseType(400)]
         public IActionResult RegisterContractor([FromForm] ContractorAccount contractor,
-                                        [FromServices] IPasswordHasher passwordHasher)
+                                        [FromServices] IPasswordManager passwordManager,
+                                        [FromServices] IEmailValidator emailValidator)
 		{
             IActionResult response;
 
@@ -52,16 +49,20 @@ namespace Master.Controllers
 
                 bool AccountExist = contractorAccountRepository.CheckIfAccountExist(contractor.EmailAddress);
 
-                if(AccountExist == true || (IsValidEmail(contractor.EmailAddress) == false))
+                emailValidator = new EmailValidator(contractor.EmailAddress);
+
+                bool isEmailValid = emailValidator.IsValidEmail();
+
+                if(AccountExist == true || (isEmailValid == false))
                 {
                     string errorMessage = "This email address is already in use or invalid";
                     response = BadRequest(new { error = errorMessage});
                 }
                 else
                 {
-                    passwordHasher = new PasswordHasher();
+                    passwordManager = new PasswordManager();
 
-                    string encryptedPassword = passwordHasher.GeneratePassword(contractor.Password);
+                    string encryptedPassword = passwordManager.GeneratePassword(contractor.Password);
 
                     contractor.Password = encryptedPassword;
 
@@ -70,6 +71,8 @@ namespace Master.Controllers
                     string userToken = BuildUserIdentity(contractor);
 
                     contractorAccountRepository.SaveContractorAccount(contractor);
+
+					//TODO: Create contractor profile
 
                     response = Ok(new { token = userToken });
                 }
@@ -80,18 +83,6 @@ namespace Master.Controllers
                 return new BadRequestObjectResult(ModelState);
             }
 		}
-
-        private bool IsValidEmail(string email)
-        {
-            try {
-                var addr = new System.Net.Mail.MailAddress(email);
-                return true; //addr.Address == email;
-            }
-            catch 
-            {
-                return false;
-            }
-        }
 
         private string BuildUserIdentity(IAccount userAccount)
         {

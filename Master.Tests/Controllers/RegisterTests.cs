@@ -24,6 +24,8 @@ namespace Tests.Controllers
         ContractorAccountRepository contractorAccountRepository;
         ContractorAccount contractorAccount = new ContractorAccount();
         PasswordManager passwordManager;
+
+        EmailValidator emailValidator;
         TokenGenerator tokenGenerator;
         ContractorAccount trueContractor;
         ContractorAccount falseEmailContractor;
@@ -75,7 +77,7 @@ namespace Tests.Controllers
         [Test]
         public void TrueContractorAccount()
         {
-            IActionResult actualResult = controller.RegisterContractor(trueContractor, passwordManager);
+            IActionResult actualResult = controller.RegisterContractor(trueContractor, passwordManager, emailValidator);
             var resultContent = actualResult as OkObjectResult;
 
             Assert.IsNotNull(resultContent);
@@ -87,7 +89,7 @@ namespace Tests.Controllers
         [Test]
         public void FalseEmailContractorAccount()
         {
-            IActionResult actualResult = controller.RegisterContractor(falseEmailContractor, passwordManager);
+            IActionResult actualResult = controller.RegisterContractor(falseEmailContractor, passwordManager, emailValidator);
             var resultContent = actualResult as BadRequestObjectResult;
 
             Assert.IsNotNull(resultContent);
@@ -98,7 +100,7 @@ namespace Tests.Controllers
         [Test]
         public void ExisitingContractorAccount()
         {
-            IActionResult actualResult = controller.RegisterContractor(existingContractor, passwordManager);
+            IActionResult actualResult = controller.RegisterContractor(existingContractor, passwordManager, emailValidator);
             var resultContent = actualResult as BadRequestObjectResult;
 
             Assert.IsNotNull(resultContent);
