@@ -5,7 +5,7 @@ const CleanWebpackPlugin = require("clean-webpack-plugin");
 
 let pathsToClean = [
     "./wwwroot/build"
-]
+];
 
 module.exports = {
     output: {
