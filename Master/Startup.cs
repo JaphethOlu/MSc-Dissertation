@@ -80,9 +80,9 @@ namespace Master
 
             // ========================= Services Start ============================
             services.AddTransient<IPasswordManager, PasswordManager>();
+            services.AddTransient<IEmailValidator, EmailValidator>();
             services.AddTransient<ITokenGenerator, TokenGenerator>();
             services.AddTransient<ILogin, Login>();
-            services.AddTransient<IEmailValidator, EmailValidator>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

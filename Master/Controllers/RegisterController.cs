@@ -49,9 +49,9 @@ namespace Master.Controllers
 
                 bool AccountExist = contractorAccountRepository.CheckIfAccountExist(contractor.EmailAddress);
 
-                emailValidator = new EmailValidator(contractor.EmailAddress);
+                emailValidator = new EmailValidator();
 
-                bool isEmailValid = emailValidator.IsValidEmail();
+                bool isEmailValid = emailValidator.IsValidEmail(contractor.EmailAddress);
 
                 if(AccountExist == true || (isEmailValid == false))
                 {

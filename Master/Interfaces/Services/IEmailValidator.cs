@@ -4,6 +4,6 @@ namespace Master.Interfaces.Services
 {
     public interface IEmailValidator
     {
-        bool IsValidEmail();
+        bool IsValidEmail(string email);
     }
 }

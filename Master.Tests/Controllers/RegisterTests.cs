@@ -60,7 +60,7 @@ namespace Tests.Controllers
             existingContractor = new ContractorAccount
             {
                 EmailAddress = "bourneCoder@example.com",
-                Password = "IAmAContractor",
+                Password = "ThisIsATestContractor",
                 FirstName = "Jason",
                 LastName = "Bourne"
             };

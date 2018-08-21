@@ -6,18 +6,15 @@ namespace Master.Services
 {
     public class EmailValidator : IEmailValidator
     {
-        
-        private string Email;
-
-        public EmailValidator(string email)
+        public EmailValidator()
         {
-            Email = email;
+
         }
 
-        public bool IsValidEmail()
+        public bool IsValidEmail(string email)
         {
             try {
-                var addr = new System.Net.Mail.MailAddress(Email);
+                var addr = new System.Net.Mail.MailAddress(email);
                 return true; //addr.Address == email;
             }
             catch 
