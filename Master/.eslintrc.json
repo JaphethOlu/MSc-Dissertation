@@ -1,12 +1,15 @@
 {
   "root": true,
   "extends": [
-    "eslint:recommended"
+    "eslint:recommended",
+    "plugin:react/recommended"
   ],
   "parserOptions": {
-    "ecmaVersion": 6,
-    "sourceType": "scripts"
+    "ecmaVersion": 6
   },
+  "plugins": [
+    "react"
+  ],
   "env": {
     "browser": true,
     "node": true,
