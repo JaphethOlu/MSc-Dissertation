@@ -16,7 +16,8 @@ module.exports = {
     mode: "development",
     entry: {
         app: "./ClientApp/src/index.js",
-        styles: "./ClientApp/src/styles/styles.scss"
+        styles: "./ClientApp/src/styles/styles.scss",
+        hotReload: "webpack-hot-middleware/client?reload=true"
     },
     plugins: [
         new CleanWebpackPlugin(pathsToClean),

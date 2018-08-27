@@ -4,3 +4,10 @@ html
   box-sizing: border-box;
   width: 100vw;
 }
+
+html,
+head,
+body
+{
+  font-family: $font-fam-main;
+}

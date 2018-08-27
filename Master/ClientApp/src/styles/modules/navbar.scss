@@ -1,0 +1,112 @@
+div.nav-bar {
+    margin: 0;
+    width: 100%;
+    height: 2.5rem;
+
+    position: fixed;
+
+    background-color: $main-color;
+
+    .job-search-bar {
+        margin: auto;
+        padding: 0;
+        padding-top: 14px;
+        max-width: 40%;
+        min-width: 15%;
+
+        input {
+            padding-left: 1rem;
+            width: 70%;
+            height: 1.2rem;
+
+            font-family: $font-fam-main;
+            font-size: 0.65rem;
+            font-weight: 600;
+
+            border: transparent;
+            border-top-left-radius: 0.4rem;
+            border-bottom-left-radius: 0.4rem;
+        }
+
+        .con-search-btn {
+            height: 1.27rem;
+            padding-left: 0.7rem;
+            padding-right: 0.7rem;
+
+            border: transparent;
+            border-color: $main-color;
+            border-left-style: solid;
+            border-left-width: 0.1rem;
+            border-top-right-radius: 0.4rem;
+            border-bottom-right-radius: 0.4rem;
+
+            font-family: $font-fam-main;
+            font-size: 0.6rem;
+            font-weight: 600;
+
+            color: $main-color;
+            background-color: $complement-color;
+        }
+
+    }
+
+}
+
+div.nav-bar > section.unauth-user {
+    width: 32%;
+    float: right;
+
+    position: relative;
+    top: -0.95rem;
+
+    h1 {
+        width: 40%;
+        margin: 0;
+        padding-left: 0.2rem;
+        padding-right: 0.2rem;
+
+        font-size: 0.7rem;
+        color: $complement-color;
+    }
+
+    section.con-auth {
+        width: 41%;
+
+        position: relative;
+        float: right;
+        top: -0.98rem;
+        left: -1rem;
+
+        button {
+            margin-left: 0.4rem;
+            margin-right: 0.4rem;
+
+            border-style: solid;
+            border-radius: 0.2rem;
+
+            font-family: $font-fam-main;
+            font-size: 0.8rem;
+            font-weight: 400;
+
+            display: inline;
+        }
+
+        button.con-login-btn {
+            border-color: $complement-color;
+
+            background-color: $main-color;
+
+            color: $complement-color
+        }
+
+        button.con-signup-btn {
+            border-color: $complement-color;
+
+            background-color: $complement-color;
+
+            color: $main-color
+        }
+
+    }
+
+}

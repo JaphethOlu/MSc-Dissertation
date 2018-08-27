@@ -1,6 +1,19 @@
+// Font Import
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:400,600');
 
 // Screen widths
 $min_width: 320px;
 $max_width: 2048px;
 $font-size-min: 14px;
 $font-size-max: 26px;
+
+// Font families
+$font-fam-main: "Open Sans", Ariel, sans-serif;
+$font-fam-sub: Helvetica, Calibri, Verdana;
+
+// Colours
+$main-color: #B629F2;
+$complement-color: #FFFFFF;
+$success-color: #3ADC3A;
+$money-color: #40D140;
+$warning-color:  #EE9800;
