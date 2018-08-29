@@ -11,6 +11,7 @@
     "lint:react": "eslint ./src/index.js",
     "lint:sass": "sass-lint -c .sass-lint.yml ./src/styles/**/*.scss -v -q",
     "populate:db": "node ./DevScripts/DatabaseScripts/__tests__/MasterDatabaseTest.js",
+    "test:ui": "jest \"./ClientApp/src/MainApp\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -31,6 +32,7 @@
     "react-redux": "^5.0.7",
     "react-router": "^4.3.1",
     "react-router-dom": "^4.3.1",
+    "reactjs-popup": "^1.2.0",
     "redux": "^4.0.0",
     "superagent": "^3.8.3"
   },
@@ -45,12 +47,14 @@
     "babel-preset-env": "^1.7.0",
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-react": "^6.24.1",
+    "chai": "^4.1.2",
     "chalk": "^2.4.1",
     "clean-webpack-plugin": "^0.1.19",
     "css-loader": "^1.0.0",
     "eslint": "^5.4.0",
     "eslint-plugin-react": "^7.11.1",
     "eslint-watch": "^4.0.2",
+    "jest": "^23.5.0",
     "mini-css-extract-plugin": "^0.4.2",
     "mysql": "^2.16.0",
     "node-sass": "^4.9.3",

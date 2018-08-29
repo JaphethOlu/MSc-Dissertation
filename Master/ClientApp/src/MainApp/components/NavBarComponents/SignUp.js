@@ -4,13 +4,15 @@ class SignUp extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            EmailAddress: "",
-            Password: "",
-            FirstName: "",
-            LastName: ""
+            email: "",
+            password: "",
+            name: {
+                first: "",
+                last: "",
+            }
         };
 
-        this.handleEmailAddress = this.handleEmailAddress.bind(this);
+        this.handleEmail = this.handleEmail.bind(this);
         this.handlePassword = this.handlePassword.bind(this);
         this.handleFirstName = this.handleFirstName.bind(this);
         this.handleLastName = this.handleLastName.bind(this);
@@ -18,20 +20,20 @@ class SignUp extends React.Component {
         
     }
 
-    handleEmailAddress(event) {
-        this.setState({ EmailAddress: event.target.value });
+    handleEmail(event) {
+        this.setState({ email: event.target.value });
     }
 
     handlePassword(event) {
-        this.setState({ Password: event.target.value });
+        this.setState({ password: event.target.value });
     }
 
     handleFirstName(event) {
-        this.setState({ FirstName: event.target.value });
+        this.setState({ name: { first: event.target.value }});
     }
 
     handleLastName(event) {
-        this.setState({ LastName: event.target.value });
+        this.setState({ name: { last: event.target.value }});
     }
 
     handleSubmit(event) {
@@ -43,27 +45,27 @@ class SignUp extends React.Component {
         return(
             <form onSubmit={ this.handleSubmit }>
                 <label>
-                    EmailAddress:
+                    Email Address:
                     <input type="text" placeholder="Email Address" 
-                           value={ this.state.EmailAddress } onChange={ this.handleEmailAddress } />
+                           value={ this.state.email } onChange={ this.handleEmail } />
                 </label>
 
                 <label>
                     Password:
                     <input type="password" placeholder="password" 
-                           value={ this.state.Password } onChange={ this.handlePassword } />
+                           value={ this.state.password } onChange={ this.handlePassword } />
                 </label>
 
                 <label>
                     First Name:
                     <input type="text" placeholder="First Name" 
-                           value={ this.state.FirstName } onChange={ this.handleFirstName } />
+                           value={ this.state.name.first } onChange={ this.handleFirstName } />
                 </label>
 
                 <label>
                     Last Name:
                     <input type="text" placeholder="Last Name" 
-                           value={ this.state.LastName } onChange={ this.handleLastName } />
+                           value={ this.state.name.last } onChange={ this.handleLastName } />
                 </label>
 
                 <button>Sign Up</button>
