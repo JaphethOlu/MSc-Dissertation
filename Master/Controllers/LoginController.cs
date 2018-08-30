@@ -58,7 +58,16 @@ namespace Master.Controllers
                     if(Autheticate(login, contractor, passwordManager) == true)
                     {
                         string userToken = BuildUserIdentity(contractor);
-                        response = Accepted(new { token = userToken });
+                        
+                        var jsonResponse = new {
+                            user = new {
+                                account = login.EmailAddress,
+                                token = userToken,
+                                role = "contractor"
+                            }
+                        };
+                        
+                        response = Accepted(jsonResponse);
                     }
                     else
                     {

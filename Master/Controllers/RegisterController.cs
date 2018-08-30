@@ -73,8 +73,15 @@ namespace Master.Controllers
                     contractorAccountRepository.SaveContractorAccount(contractor);
 
 					//TODO: Create contractor profile
+                    var jsonResponse = new {
+                            user = new {
+                                account = contractor.EmailAddress,
+                                token = userToken,
+                                role = "contractor"
+                            }
+                        };
 
-                    response = Ok(new { token = userToken });
+                    response = Ok(jsonResponse);
                 }
                 return response;
             }
