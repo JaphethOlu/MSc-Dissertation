@@ -1,6 +1,6 @@
 import { contractorActionTypes } from "../actionTypes";
 
-let user = JSON.parse(localStorage.getItem("user"));
+let user = localStorage.getItem("user");
 const initialState = user ? { user, authenticated: true } : {};
 
 export function authentication (state = initialState, action) {
