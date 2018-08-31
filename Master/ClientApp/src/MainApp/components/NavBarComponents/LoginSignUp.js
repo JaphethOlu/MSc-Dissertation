@@ -1,19 +1,19 @@
 import React from "react";
 import Popup from "reactjs-popup";
 
-import { Login } from "./Login";
-import SignUp from "./SignUp";
+import { LoginComponent } from "./LoginComponent";
+import SignUpComponent from "./SignUpComponent";
 
 function LoginSignUp() {
     return(
         <section className="con-auth">
 
             <Popup trigger={ <button className="con-login-btn">Login</button> }>
-                <Login />
+                <LoginComponent />
             </Popup>
 
             <Popup trigger={ <button className="con-signup-btn">Sign Up</button> }>
-                <SignUp />
+                <SignUpComponent />
             </Popup>
 
         </section>

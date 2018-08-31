@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { contractorActionsTypes } from "../../actionTypes";
 import { contractorActions } from "../../actions/contractorActions";
 
-class Login extends React.Component {
+class LoginComponent extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -67,6 +67,6 @@ const mapDispatchToProps = dispatch => {
     }
 };
 
-const connectedLogin = connect(mapDispatchToProps)(Login);
+const connectedLogin = connect(mapDispatchToProps)(LoginComponent);
 
-export { connectedLogin as Login };
+export { connectedLogin as LoginComponent };
