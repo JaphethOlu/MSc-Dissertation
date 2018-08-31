@@ -3,8 +3,7 @@ import sinon from "sinon";
 import thunk from "redux-thunk";
 import configureMockStore from "redux-mock-store";
 
-import { alertActionTypes } from "../../actionTypes";
-import { contractorActionTypes } from "../../actionTypes/contractorActionTypes";
+import { alertActionTypes, contractorActionTypes } from "../../actionTypes";
 import { contractorActions } from "../contractorActions";
 import { authenticationService } from "../../services";
 
@@ -56,6 +55,7 @@ describe("Contractor Actions", () => {
                         expect(actions).to.have.lengthOf(2);
                         expect(actions[1]).to.have.property("type");
                         expect(actions[1]).to.have.property("user");
+                        expect(actions).to.deep.equal(expectedActions);
                         done();
                     });
 
@@ -64,7 +64,8 @@ describe("Contractor Actions", () => {
     test("Return right action for unauthenicated contractor", done => {
         let expectedActions = [
             { type: contractorActionTypes.LOGIN_REQUEST },
-            { type: contractorActionTypes.LOGIN_ERROR, error: "Invalid login credentials" }
+            { type: contractorActionTypes.LOGIN_ERROR, error: "Invalid login credentials" },
+            { type: alertActionTypes.ERROR, message: "Invalid login credentials" }
         ];
 
         let fake = sinon.fake.resolves(sinonUnauthenticatedReturn);
@@ -78,6 +79,8 @@ describe("Contractor Actions", () => {
                         expect(actions[1]).to.have.property("type").to.equal(expectedActions[1].type);
                         expect(actions[1]).to.have.property("error").to.equal(expectedActions[1].error);
                         expect(actions[2]).to.have.property("type").to.equal(alertActionTypes.ERROR);
+                        expect(actions[2]).to.have.property("message").to.equal(expectedActions[2].message)
+                        expect(actions).to.deep.equal(expectedActions);
                         done();
                     });
 

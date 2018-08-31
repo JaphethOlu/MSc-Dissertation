@@ -1,24 +1,24 @@
-import { contractorConstants } from "../constants/contractorConstants";
+import { contractorActionTypes } from "../actionTypes";
 
 let user = JSON.parse(localStorage.getItem("user"));
 const initialState = user ? { user, authenticated: true } : {};
 
-export function authenticationReducer (state = initialState, action) {
+export function authentication (state = initialState, action) {
     switch (action.type) {
-        case contractorConstants.LOGIN_REQUEST:
-        case contractorConstants.SIGNUP_REQUEST:
-        case contractorConstants.LOGOUT:
+        case contractorActionTypes.LOGIN_REQUEST:
+        case contractorActionTypes.SIGNUP_REQUEST:
+        case contractorActionTypes.LOGOUT:
             return {};
         
-        case contractorConstants.LOGIN_SUCCESS:
-        case contractorConstants.SIGNUP_SUCCESS:
+        case contractorActionTypes.LOGIN_SUCCESS:
+        case contractorActionTypes.SIGNUP_SUCCESS:
             return {
                 user: action.user,
                 authenticated: true
             };
         
-        case contractorConstants.LOGIN_ERROR:
-        case contractorConstants.SIGNUP_ERROR:
+        case contractorActionTypes.LOGIN_ERROR:
+        case contractorActionTypes.SIGNUP_ERROR:
             return {
                 error: action.error
             };
