@@ -1,0 +1,75 @@
+/*
+const expect = require("chai").expect;
+
+import { authenticationService } from "../authenticationService";
+
+describe("Services: UI HTTP Authentication Services", () => {
+
+    const trueContractor = {
+        email: "bourneCoder@example.com",
+        password: "ThisIsATestContractor"
+    };
+
+    const falseContractor = {
+        email: "bourneCoder@example.com",
+        password: "ThisIsAtestContractor"
+    };
+
+    const invalidContractor = {
+        email: "sdlnkag",
+        password: "DSFgdtrseawaefrt"
+    };
+
+    const successResponseObject = {
+        status: 202,
+        headers: {
+            "content-type": "application/json"
+        },
+        body: { 
+            status: "Accepted",
+            "token": "randomtokenstring"
+        }
+    };
+
+    const failResponseObject = {
+        statusCode: 401,
+        body: {
+            "status": "Unauthorized"
+        }
+    };
+
+    test("Should authenticate true contractor", done => {
+        authenticationService.login(trueContractor.email, trueContractor.password)
+            .then((res) => {
+                expect(res).to.not.equal(null);
+                expect(res.body).to.not.equal(undefined);
+                expect(res).to.be.a("object");
+                expect(res.status).to.equal(successResponseObject.status);
+                expect(res.body).to.have.property("user");
+                done();
+            });
+    });
+    
+    test("Should not authenticate false contractor", done => {
+        authenticationService.login(falseContractor.email, falseContractor.password)
+            .then((res) => {
+                expect(res).to.not.equal(null);
+                expect(res.status).to.equal(401);
+                expect(res.body).to.equal(undefined);
+                done();
+            });
+    });
+
+    test("Should not authenticate invalid contractor", done => {
+        authenticationService.login(invalidContractor.email, invalidContractor.password)
+            .then((res) => {
+                expect(res).to.not.equal(null);
+                expect(res.status).to.equal(401);
+                expect(res.body).to.equal(undefined);
+                done();
+            });
+
+    });
+    
+});
+*/

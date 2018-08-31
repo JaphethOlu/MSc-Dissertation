@@ -4,6 +4,7 @@ import request from "superagent";
 
 export const authenticationService = {
     login,
+    logout,
     signup
 };
 
@@ -13,10 +14,11 @@ function login(email, password) {
                   .send({ EmailAddress: email })
                   .send({ Password: password })
                   .then((res) => {
+                      storeResponse(res);
                       return res;
                   })
                   .catch((err) => {
-                      return err;
+                      console.log(err);
                   });
 };
 
@@ -28,9 +30,20 @@ function signup(email, password, name) {
                   .send({ FirstName: name.first })
                   .send({ LastName: name.last })
                   .then((res) => {
+                      storeResponse(res);
                       return res;
                   })
                   .catch((err) => {
                       return err;
                   });
-}
+};
+
+function logout() {
+    localStorage.removeItem("user");
+};
+
+function storeResponse(response) {
+    if(response.status === 202 || response.status === 200) {
+        localStorage.setItem("user", response.body.user);
+    }
+};
