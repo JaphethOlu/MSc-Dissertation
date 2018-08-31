@@ -112,4 +112,4 @@ CREATE TABLE Industries (
 );
 
 INSERT INTO contractor_account(EmailAddress, Password, FirstName, LastName)
-VALUES ("bourneCoder@example.com", "bkvTo+Ym6YJK9dpgbk7YPkMD2rKoy7tTdknhlRd3ZYNCKt4k", "Jason", "Bourne");
+VALUES ("bourneCoder@example.com", "9mvkY64Ct1ALAO3iJpB869Mo9MARJ0TftBbS7MmTctG9Vqqz", "Jason", "Bourne");

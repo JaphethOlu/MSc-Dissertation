@@ -43,7 +43,7 @@ namespace Tests.Controllers
             trueContractorLogin = new Login
             {
                 EmailAddress = "bourneCoder@example.com",
-                Password = "ThisIsATestContractor",
+                Password = "TestPassword",
             };
             
             falseContractorLogin = new Login

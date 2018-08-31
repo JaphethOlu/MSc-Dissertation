@@ -1,4 +1,8 @@
 import React from "react";
+import { connect } from "react-redux";
+
+import { contractorActionsTypes } from "../../actionTypes";
+import { contractorActions } from "../../actions/contractorActions";
 
 class Login extends React.Component {
     constructor(props) {
@@ -11,7 +15,7 @@ class Login extends React.Component {
         this.handleEmail = this.handleEmail.bind(this);
         this.handlePassword = this.handlePassword.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-        
+
     }
 
     handleEmail(event) {
@@ -23,8 +27,13 @@ class Login extends React.Component {
     }
 
     handleSubmit(event) {
-        alert("Login action should occur here");
         event.preventDefault();
+
+        const { email, password } = this.state;
+        const { dispatch } = this.props;
+        if(email && password) {
+            dispatch(contractorActions.login(email, password));
+        }
     }
 
     render() {
@@ -32,13 +41,13 @@ class Login extends React.Component {
             <form onSubmit={ this.handleSubmit }>
                 <label>
                     Email Address:
-                    <input type="text" placeholder="Email Address" 
+                    <input type="text" placeholder="Email Address"
                            value={ this.state.email } onChange={ this.handleEmail } />
                 </label>
 
                 <label>
                     Password:
-                    <input type="password" placeholder="password" 
+                    <input type="password" placeholder="password"
                            value={ this.state.password } onChange={ this.handlePassword } />
                 </label>
 
@@ -50,4 +59,14 @@ class Login extends React.Component {
 
 };
 
-export default Login;
+const mapDispatchToProps = dispatch => {
+    return {
+        handleSubmit: () => dispatch({
+            type: contractorActionsTypes.LOGIN_REQUEST
+        })
+    }
+};
+
+const connectedLogin = connect(mapDispatchToProps)(Login);
+
+export { connectedLogin as Login };

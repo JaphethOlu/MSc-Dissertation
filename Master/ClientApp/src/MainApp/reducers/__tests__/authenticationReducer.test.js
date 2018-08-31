@@ -12,7 +12,6 @@ describe("authentication reducer", () => {
 
     let errorString = "Invalid login credentials";
 
-
     test("should return initial state", () => {
         let expectedState = {};
 

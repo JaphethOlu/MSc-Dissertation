@@ -48,7 +48,7 @@ describe("Contractor Actions", () => {
 
         sinon.replace(authenticationService, "login", fake);
 
-        return store.dispatch(contractorActions.login("bourneCoder@example.com", "ThisIsATestContractor"))
+        return store.dispatch(contractorActions.login("bourneCoder@example.com", "TestPassword"))
                     .then(() => {
                         let actions = store.getActions();
                         expect(actions[1].user).to.equal(expectedActions[1].user);

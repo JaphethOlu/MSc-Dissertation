@@ -7,7 +7,7 @@ describe("Services: UI HTTP Authentication Services", () => {
 
     const trueContractor = {
         email: "bourneCoder@example.com",
-        password: "ThisIsATestContractor"
+        password: "TestPassword"
     };
 
     const falseContractor = {

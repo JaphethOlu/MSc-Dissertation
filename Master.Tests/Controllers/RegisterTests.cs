@@ -24,7 +24,6 @@ namespace Tests.Controllers
         ContractorAccountRepository contractorAccountRepository;
         ContractorAccount contractorAccount = new ContractorAccount();
         PasswordManager passwordManager;
-
         EmailValidator emailValidator;
         TokenGenerator tokenGenerator;
         ContractorAccount trueContractor;
@@ -60,7 +59,7 @@ namespace Tests.Controllers
             existingContractor = new ContractorAccount
             {
                 EmailAddress = "bourneCoder@example.com",
-                Password = "ThisIsATestContractor",
+                Password = "TestPassword",
                 FirstName = "Jason",
                 LastName = "Bourne"
             };

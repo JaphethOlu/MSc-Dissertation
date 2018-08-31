@@ -1,7 +1,7 @@
 import React from "react";
 import Popup from "reactjs-popup";
 
-import Login from "./Login";
+import { Login } from "./Login";
 import SignUp from "./SignUp";
 
 function LoginSignUp() {
