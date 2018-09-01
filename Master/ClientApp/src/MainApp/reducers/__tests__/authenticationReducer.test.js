@@ -1,5 +1,5 @@
 import { authentication } from "../authenticationReducer";
-import { contractorActionTypes, alertActionTypes } from "../../actionTypes";
+import { contractorActionTypes } from "../../actionTypes";
 import { expect } from "chai";
 
 describe("authentication reducer", () => {
@@ -35,4 +35,5 @@ describe("authentication reducer", () => {
         let action = { type: contractorActionTypes.LOGIN_ERROR, error: errorString };
         expect(authentication([], action)).to.deep.equal(expectedState);
     });
+    
 });
