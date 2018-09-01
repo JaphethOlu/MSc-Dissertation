@@ -16,9 +16,9 @@ namespace Master.Repositories
             DbContext = dbContext;
         }
 
-        public void SaveContractorAccount(ContractorAccount newContractorAccount)
+        public void SaveNewContractorAccount(ContractorAccount contractorAccount)
         {
-			DbContext.ContractorAccounts.Add(newContractorAccount);
+			DbContext.ContractorAccounts.Add(contractorAccount);
             DbContext.SaveChanges();
         }
 

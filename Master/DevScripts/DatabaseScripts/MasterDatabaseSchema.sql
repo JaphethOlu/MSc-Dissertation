@@ -111,8 +111,8 @@ CREATE TABLE Industries (
     CONSTRAINT PK_Industry PRIMARY KEY (Industry)
 );
 
-INSERT INTO contractor_account(EmailAddress, Password, FirstName, LastName)
+INSERT INTO contractor_account(EmailAddress, Password, FirstName, LastName) 
 VALUES ("bourneCoder@example.com", "9mvkY64Ct1ALAO3iJpB869Mo9MARJ0TftBbS7MmTctG9Vqqz", "Jason", "Bourne");
 
-INSERT INTO Contractor_Profile(EmailAddress, FirstName, LastName)
-VALUES ("bourneCoder@example.com", "Jason", "Bourne");
+# INSERT INTO Contractor_Profile(EmailAddress, FirstName, LastName)
+#VALUES ("bourneCoder@example.com", "Jason", "Bourne");

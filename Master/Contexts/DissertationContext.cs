@@ -220,10 +220,10 @@ namespace Master.Contexts
                 entity.Property(cp => cp.PersonalStatement)
                     .HasColumnType("varchar(800)");
 
-                entity.HasOne(d => d.EmailAddressNavigation)
+                entity.HasOne(cp => cp.EmailAddressForeignKey)
                     .WithOne()
                     .HasForeignKey<ContractorProfile>(d => d.EmailAddress)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("FK_Contractor_EmailAddress");
             });
 
