@@ -54,13 +54,13 @@ CREATE TABLE Contract (
 
 CREATE TABLE Contractor_Profile (
     EmailAddress VARCHAR(50) NOT NULL,
-    FirstName VARCHAR(30),
+    FirstName VARCHAR(30) NOT NULL,
     LastName VARCHAR(30) NOT NULL,
     Headline VARCHAR(120),
     PersonalStatement VARCHAR(800),
     Location VARCHAR(30),
     CONSTRAINT PK_Contractor_EmailAddress PRIMARY KEY (EmailAddress),
-    CONSTRAINT FK_Contractor_EmailAddress FOREIGN KEY (EmailAddress) REFERENCES Contractor_Account(EmailAddress)
+    CONSTRAINT FK_Contractor_EmailAddress FOREIGN KEY (EmailAddress) REFERENCES Contractor_Account(EmailAddress) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 CREATE TABLE Contractor_Work_Experience (
@@ -71,7 +71,7 @@ CREATE TABLE Contractor_Work_Experience (
     EndDate DATE,
     Present TINYINT(1),
     AchievementsAndResponsibilities VARCHAR(3000), -- //TODO: Convert to JSON
-    CONSTRAINT FK_Work_Experience FOREIGN KEY (EmailAddress) REFERENCES Contractor_Profile(EmailAddress)
+    CONSTRAINT FK_Work_Experience FOREIGN KEY (EmailAddress) REFERENCES Contractor_Profile(EmailAddress) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 CREATE TABLE Education (
@@ -113,3 +113,6 @@ CREATE TABLE Industries (
 
 INSERT INTO contractor_account(EmailAddress, Password, FirstName, LastName)
 VALUES ("bourneCoder@example.com", "9mvkY64Ct1ALAO3iJpB869Mo9MARJ0TftBbS7MmTctG9Vqqz", "Jason", "Bourne");
+
+INSERT INTO Contractor_Profile(EmailAddress, FirstName, LastName)
+VALUES ("bourneCoder@example.com", "Jason", "Bourne");
