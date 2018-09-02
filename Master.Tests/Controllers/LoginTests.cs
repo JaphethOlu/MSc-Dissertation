@@ -20,33 +20,33 @@ namespace Tests.Controllers
     [TestFixture]
     public class LoginTests
     {
-        LoginController controller;
-        ContractorAccountRepository contractorAccountRepository;
-        EmailValidator emailValidator;
-        TokenGenerator tokenGenerator;
-        ContractorAccount account;
-        Login login;
-        Login trueContractorLogin;
-        Login falseContractorLogin;
+        LoginController Controller;
+        ContractorAccountRepository ContractorAccountRepository;
+        EmailValidator EmailValidator;
+        TokenGenerator TokenGenerator;
+        ContractorAccount Account;
+        Login Login;
+        Login TrueContractorLogin;
+        Login FalseContractorLogin;
 
 
         public LoginTests()
         {
             var config = new ConfigurationBuilder().AddJsonFile("appsettings.Development.json").Build();
-            tokenGenerator = new TokenGenerator(config);
-            controller = new LoginController(contractorAccountRepository, account, login, tokenGenerator);
+            TokenGenerator = new TokenGenerator(config);
+            Controller = new LoginController(ContractorAccountRepository, Account, Login, TokenGenerator);
         }
 
         [OneTimeSetUp]
         public void LoginTestsSetup()
         {
-            trueContractorLogin = new Login
+            TrueContractorLogin = new Login
             {
                 EmailAddress = "bourneCoder@example.com",
                 Password = "TestPassword",
             };
             
-            falseContractorLogin = new Login
+            FalseContractorLogin = new Login
             {
                 EmailAddress = "bourneCoder@example.com",
                 Password = "ThisIsAtestContractor",
@@ -56,7 +56,7 @@ namespace Tests.Controllers
         [Test]
         public void TestTrueAuthContractor()
         {
-            IActionResult actualResult = controller.LoginContractor(trueContractorLogin, emailValidator);
+            IActionResult actualResult = Controller.LoginContractor(TrueContractorLogin, EmailValidator);
             var resultContent = actualResult as AcceptedResult;
             Assert.NotNull(actualResult);
             Assert.IsInstanceOf(typeof(AcceptedResult), actualResult);
@@ -65,7 +65,7 @@ namespace Tests.Controllers
 
         public void TestFalseAuthContractor()
         {
-            IActionResult actualResult = controller.LoginContractor(falseContractorLogin, emailValidator);
+            IActionResult actualResult = Controller.LoginContractor(FalseContractorLogin, EmailValidator);
             var resultContent = actualResult as UnauthorizedResult;
             Assert.NotNull(actualResult);
             Assert.IsInstanceOf(typeof(UnauthorizedResult), actualResult);

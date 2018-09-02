@@ -20,27 +20,28 @@ namespace Tests.Controllers
     [TestFixture]
     public class RegisterTests
     {
-        RegisterController controller;
-        ContractorAccountRepository contractorAccountRepository;
-        ContractorAccount contractorAccount = new ContractorAccount();
-        PasswordManager passwordManager;
-        EmailValidator emailValidator;
-        TokenGenerator tokenGenerator;
-        ContractorAccount trueContractor;
-        ContractorAccount falseEmailContractor;
-        ContractorAccount existingContractor;        
+        RegisterController Controller;
+        ContractorAccountRepository ContractorAccountRepository;
+        IContractorProfileRepository ContractorProfileRepository;
+        ContractorAccount ContractorAccount = new ContractorAccount();
+        PasswordManager PasswordManager;
+        EmailValidator EmailValidator;
+        TokenGenerator TokenGenerator;
+        ContractorAccount TrueContractor;
+        ContractorAccount FalseEmailContractor;
+        ContractorAccount ExistingContractor;        
 
         public RegisterTests()
         {
             var config = new ConfigurationBuilder().AddJsonFile("appsettings.Development.json").Build();
-            tokenGenerator = new TokenGenerator(config);
-            controller = new RegisterController(contractorAccountRepository, contractorAccount, tokenGenerator);
+            TokenGenerator = new TokenGenerator(config);
+            Controller = new RegisterController(ContractorAccountRepository, ContractorProfileRepository, ContractorAccount, TokenGenerator);
         }
 
         [OneTimeSetUp]
         public void SetupContractorAccounts()
         {
-            trueContractor = new ContractorAccount
+            TrueContractor = new ContractorAccount
             {
                 EmailAddress = "johndoe@example.com",
                 Password = "IAmAContractor",
@@ -48,7 +49,7 @@ namespace Tests.Controllers
                 LastName = "Bond"
             };
             
-            falseEmailContractor = new ContractorAccount
+            FalseEmailContractor = new ContractorAccount
             {
                 EmailAddress = "agsdzs",
                 Password = "IAmAContractor",
@@ -56,7 +57,7 @@ namespace Tests.Controllers
                 LastName = "Bourne"
             };
 
-            existingContractor = new ContractorAccount
+            ExistingContractor = new ContractorAccount
             {
                 EmailAddress = "bourneCoder@example.com",
                 Password = "TestPassword",
@@ -70,13 +71,13 @@ namespace Tests.Controllers
         {
             DissertationContext dbContext = new DissertationContext();
             ContractorAccountRepository repo = new ContractorAccountRepository(dbContext);
-            repo.DeleteContractorAccount(trueContractor.EmailAddress);
+            repo.DeleteContractorAccount(TrueContractor.EmailAddress);
         }
 
         [Test]
         public void TrueContractorAccount()
         {
-            IActionResult actualResult = controller.RegisterContractor(trueContractor, passwordManager, emailValidator);
+            IActionResult actualResult = Controller.RegisterContractor(TrueContractor, PasswordManager, EmailValidator);
             var resultContent = actualResult as OkObjectResult;
 
             Assert.IsNotNull(resultContent);
@@ -88,7 +89,7 @@ namespace Tests.Controllers
         [Test]
         public void FalseEmailContractorAccount()
         {
-            IActionResult actualResult = controller.RegisterContractor(falseEmailContractor, passwordManager, emailValidator);
+            IActionResult actualResult = Controller.RegisterContractor(FalseEmailContractor, PasswordManager, EmailValidator);
             var resultContent = actualResult as BadRequestObjectResult;
 
             Assert.IsNotNull(resultContent);
@@ -99,7 +100,7 @@ namespace Tests.Controllers
         [Test]
         public void ExisitingContractorAccount()
         {
-            IActionResult actualResult = controller.RegisterContractor(existingContractor, passwordManager, emailValidator);
+            IActionResult actualResult = Controller.RegisterContractor(ExistingContractor, PasswordManager, EmailValidator);
             var resultContent = actualResult as BadRequestObjectResult;
 
             Assert.IsNotNull(resultContent);
