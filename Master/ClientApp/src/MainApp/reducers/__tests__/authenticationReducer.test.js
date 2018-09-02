@@ -13,27 +13,27 @@ describe("authentication reducer", () => {
     let errorString = "Invalid login credentials";
 
     test("should return initial state", () => {
-        let expectedState = {};
+        let expectedState = { authenticating: false };
 
         expect(authentication(undefined, {})).to.deep.equal(expectedState);
     });
 
     test("should handle LOGIN_REQUEST", () => {
-        let expectedState = {};
-        let action = { type: contractorActionTypes.LOGIN_REQUEST };
+        let expectedState = { authenticating: true };
+        let action = { type: contractorActionTypes.LOGIN_REQUEST, authenticating: true };
         expect(authentication(undefined, action)).to.deep.equal(expectedState);
     });
 
     test("should handle LOGIN_SUCCESS", () => {
-        let expectedState = { user: user, authenticated: true };
-        let action = { type: contractorActionTypes.LOGIN_SUCCESS, user: user };
+        let expectedState = { authenticating: false, user: user, authenticated: true };
+        let action = { type: contractorActionTypes.LOGIN_SUCCESS, authenticating: false, user: user };
         expect(authentication([], action)).to.deep.equal(expectedState);
     });
 
     test("should handle LOGIN_ERROR", () => {
-        let expectedState = { error: errorString };
-        let action = { type: contractorActionTypes.LOGIN_ERROR, error: errorString };
+        let expectedState = { authenticating: false, error: errorString };
+        let action = { type: contractorActionTypes.LOGIN_ERROR, authenticating: false, error: errorString };
         expect(authentication([], action)).to.deep.equal(expectedState);
     });
-    
+
 });

@@ -3,7 +3,7 @@ import { alertActionTypes } from "../../actionTypes";
 import { expect } from "chai";
 
 describe("alert reducer", () => {
-    
+
     let successMessage = "Test action successful";
 
     let errorMessage = "Test error message";
