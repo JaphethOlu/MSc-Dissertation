@@ -8,11 +8,10 @@ export const authenticationService = {
     signup
 };
 
-function login(email, password) {
+function login(userCredentials) {
     return request.post("http://localhost:55903/api/login/contractor")
                   .type("form")
-                  .send({ EmailAddress: email })
-                  .send({ Password: password })
+                  .send(userCredentials)
                   .then((res) => {
                       storeResponse(res);
                       return res;
@@ -22,13 +21,10 @@ function login(email, password) {
                   });
 };
 
-function signup(email, password, name) {
+function signup(userCredentials) {
     return request.post("http://localhost55903/api/register/contractor")
                   .type("form")
-                  .send({ EmailAddress: email })
-                  .send({ Password: password })
-                  .send({ FirstName: name.first })
-                  .send({ LastName: name.last })
+                  .send(userCredentials)
                   .then((res) => {
                       storeResponse(res);
                       return res;

@@ -10,7 +10,8 @@ export const contractorActions = {
 function login(email, password) {
     return dispatch => {
         dispatch(request());
-        return authenticationService.login(email, password)
+        let credentials = { EmailAddress: email, Password: password };
+        return authenticationService.login(credentials)
                 .then((res) => {
                     if(res.status == 202) {
                         dispatch(success(res.body.user));
