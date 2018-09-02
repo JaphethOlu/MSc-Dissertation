@@ -40,8 +40,8 @@ describe("Contractor Actions", () => {
 
     test("It returns right action for authenticated true user", done => {
         let expectedActions = [
-            { type: contractorActionTypes.LOGIN_REQUEST },
-            { type: contractorActionTypes.LOGIN_SUCCESS, user: successUser }
+            { type: contractorActionTypes.LOGIN_REQUEST, authenticating: true },
+            { type: contractorActionTypes.LOGIN_SUCCESS, authenticating: false, user: successUser }
         ];
 
         let fake = sinon.fake.resolves(sinonAuthenticatedReturn);
@@ -63,8 +63,8 @@ describe("Contractor Actions", () => {
 
     test("Return right action for unauthenicated contractor", done => {
         let expectedActions = [
-            { type: contractorActionTypes.LOGIN_REQUEST },
-            { type: contractorActionTypes.LOGIN_ERROR, error: "Invalid login credentials" },
+            { type: contractorActionTypes.LOGIN_REQUEST, authenticating: true },
+            { type: contractorActionTypes.LOGIN_ERROR, authenticating: false, error: "Invalid login credentials" },
             { type: alertActionTypes.ERROR, message: "Invalid login credentials" }
         ];
 
@@ -79,7 +79,7 @@ describe("Contractor Actions", () => {
                         expect(actions[1]).to.have.property("type").to.equal(expectedActions[1].type);
                         expect(actions[1]).to.have.property("error").to.equal(expectedActions[1].error);
                         expect(actions[2]).to.have.property("type").to.equal(alertActionTypes.ERROR);
-                        expect(actions[2]).to.have.property("message").to.equal(expectedActions[2].message)
+                        expect(actions[2]).to.have.property("message").to.equal(expectedActions[2].message);
                         expect(actions).to.deep.equal(expectedActions);
                         done();
                     });

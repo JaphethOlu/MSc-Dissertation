@@ -25,15 +25,15 @@ function login(email, password) {
     };
 
     function request() {
-        return { type: contractorActionTypes.LOGIN_REQUEST };
+        return { type: contractorActionTypes.LOGIN_REQUEST, authenticating: true };
     }
 
     function success(user) {
-        return { type: contractorActionTypes.LOGIN_SUCCESS, user };
+        return { type: contractorActionTypes.LOGIN_SUCCESS, authenticating: false, user };
     }
 
     function failure(error) {
-        return { type: contractorActionTypes.LOGIN_ERROR, error };
+        return { type: contractorActionTypes.LOGIN_ERROR, authenticating: false, error };
     }
 };
 
