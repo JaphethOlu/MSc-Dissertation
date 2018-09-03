@@ -2,11 +2,12 @@ import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
-import { contractorActionsTypes } from "../../actionTypes";
+//import { contractorActionsTypes } from "../../actionTypes";
 import { contractorActions } from "../../actions/contractorActions";
 
 class LoginPopOut extends React.Component {
     constructor(props) {
+
         super(props);
         this.state = {
             email: "",
@@ -18,7 +19,7 @@ class LoginPopOut extends React.Component {
         this.handleSubmit = this.handleSubmit.bind(this);
 
     }
-
+    
     handleEmail(event) {
         this.setState({ email: event.target.value });
     }
@@ -29,7 +30,6 @@ class LoginPopOut extends React.Component {
 
     handleSubmit(event) {
         event.preventDefault();
-
         const { email, password } = this.state;
         const { dispatch } = this.props;
         if(email && password) {
@@ -38,19 +38,24 @@ class LoginPopOut extends React.Component {
     }
 
     render() {
+
+        const { authenticating } = this.props;
+
+        const { email, password } = this.state;
+
         return(
             <form onSubmit={ this.handleSubmit }>
             
                 <label>
                     Email Address:
                     <input type="text" placeholder="Email Address"
-                           value={ this.state.email } onChange={ this.handleEmail } />
+                           value={ email } onChange={ this.handleEmail } />
                 </label>
 
                 <label>
                     Password:
                     <input type="password" placeholder="password"
-                           value={ this.state.password } onChange={ this.handlePassword } />
+                           value={ password } onChange={ this.handlePassword } />
                 </label>
 
                 <button>Login</button>
@@ -61,18 +66,31 @@ class LoginPopOut extends React.Component {
 
 };
 
+const mapStateToProps = state => {
+    const { authenticating } = state.authentication;
+    return {
+        authenticating
+    };
+};
+
+/*
 const mapDispatchToProps = dispatch => {
     return {
         handleSubmit: () => dispatch({
             type: contractorActionsTypes.LOGIN_REQUEST
         })
-    }
+    };
 };
+*/
 
 LoginPopOut.propTypes = {
-    dispatch: PropTypes.func.isRequired
+    authenticating: PropTypes.bool,
+    dispatch: PropTypes.func
 };
 
-const connectedLogin = connect(mapDispatchToProps)(LoginPopOut);
+const connectedLogin = connect(
+    mapStateToProps/*,
+    mapDispatchToProps*/
+)(LoginPopOut);
 
 export { connectedLogin as LoginPopOut };

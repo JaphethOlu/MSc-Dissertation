@@ -1,7 +1,7 @@
 import { contractorActionTypes } from "../actionTypes";
 
 let user = localStorage.getItem("user");
-const initialState = user ? { user, authenticated: true } : { authenticating: false };
+const initialState = user ? { user, authenticating: false, authenticated: true } : { authenticating: false };
 
 export function authentication (state = initialState, action) {
     switch (action.type) {
