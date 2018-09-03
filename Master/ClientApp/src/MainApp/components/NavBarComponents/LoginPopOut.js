@@ -1,10 +1,11 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
 import { contractorActionsTypes } from "../../actionTypes";
 import { contractorActions } from "../../actions/contractorActions";
 
-class LoginComponent extends React.Component {
+class LoginPopOut extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -67,6 +68,10 @@ const mapDispatchToProps = dispatch => {
     }
 };
 
-const connectedLogin = connect(mapDispatchToProps)(LoginComponent);
+LoginPopOut.propTypes = {
+    dispatch: PropTypes.func.isRequired
+};
 
-export { connectedLogin as LoginComponent };
+const connectedLogin = connect(mapDispatchToProps)(LoginPopOut);
+
+export { connectedLogin as LoginPopOut };
