@@ -22,7 +22,7 @@ function login(userCredentials) {
 };
 
 function signup(accountDetails) {
-    return request.post("http://localhost55903/api/register/contractor")
+    return request.post("http://localhost:55903/api/register/contractor")
                   .type("form")
                   .send(accountDetails)
                   .then((res) => {

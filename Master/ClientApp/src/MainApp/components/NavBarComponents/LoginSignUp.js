@@ -2,7 +2,7 @@ import React from "react";
 import Popup from "reactjs-popup";
 
 import { LoginPopOut } from "./LoginPopOut";
-import SignUpPopOut from "./SignUpPopOut";
+import { SignUpPopOut } from "./SignUpPopOut";
 
 function LoginSignUp() {
     return(

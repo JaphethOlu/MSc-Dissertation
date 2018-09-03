@@ -2,7 +2,6 @@ import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
-//import { contractorActionsTypes } from "../../actionTypes";
 import { contractorActions } from "../../actions/contractorActions";
 
 class LoginPopOut extends React.Component {
@@ -39,8 +38,7 @@ class LoginPopOut extends React.Component {
 
     render() {
 
-        const { authenticating } = this.props;
-
+        //const { authenticating } = this.props;
         const { email, password } = this.state;
 
         return(
@@ -73,24 +71,11 @@ const mapStateToProps = state => {
     };
 };
 
-/*
-const mapDispatchToProps = dispatch => {
-    return {
-        handleSubmit: () => dispatch({
-            type: contractorActionsTypes.LOGIN_REQUEST
-        })
-    };
-};
-*/
-
 LoginPopOut.propTypes = {
     authenticating: PropTypes.bool,
     dispatch: PropTypes.func
 };
 
-const connectedLogin = connect(
-    mapStateToProps/*,
-    mapDispatchToProps*/
-)(LoginPopOut);
+const connectedLogin = connect(mapStateToProps)(LoginPopOut);
 
 export { connectedLogin as LoginPopOut };

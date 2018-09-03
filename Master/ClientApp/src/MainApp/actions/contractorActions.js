@@ -1,4 +1,4 @@
-import { contractorActionTypes} from "../actionTypes"
+import { contractorActionTypes} from "../actionTypes";
 import { authenticationService } from "../services";
 import { alertActions } from "./alertActions";
 
@@ -39,15 +39,15 @@ function login(email, password) {
     }
 };
 
-function signup(email, password, name) {
+function signup(email, password, firstName, lastName) {
     return dispatch => {
         dispatch(request());
 
         let account = { 
             EmailAddress: email,
             Password: password,
-            FirstName: name.first,
-            LastName: name.last
+            FirstName: firstName,
+            LastName: lastName
         };
 
         return authenticationService.signup(account)

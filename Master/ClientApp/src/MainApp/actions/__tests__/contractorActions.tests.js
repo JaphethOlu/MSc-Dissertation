@@ -112,7 +112,7 @@ describe("Contractor Actions", () => {
 
         sinon.replace(authenticationService, "signup", fake);
 
-        return store.dispatch(contractorActions.signup("bourneCoderexample.com", "TestPassword", signUpUser))
+        return store.dispatch(contractorActions.signup("bourneCoderexample.com", "TestPassword", signUpUser.first, signUpUser.last))
                     .then(() => {
                         let actions = store.getActions();
                         expect(actions).to.have.lengthOf(2);
@@ -135,7 +135,7 @@ describe("Contractor Actions", () => {
 
         sinon.replace(authenticationService, "signup", fake);
 
-        return store.dispatch(contractorActions.signup("bourneCoderexample.com", "TestPassword", signUpUser))
+        return store.dispatch(contractorActions.signup("bourneCoderexample.com", "TestPassword", signUpUser.first, signUpUser.last))
                     .then(() => {
                         let actions = store.getActions();
                         expect(actions).to.have.lengthOf(3);
