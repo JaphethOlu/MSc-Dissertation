@@ -54,6 +54,7 @@ namespace Master.Controllers
             {
                 if(isEmailValid == true)
                 {
+                    //TODO: Special case when account not found. Error here
                     ContractorAccount contractor = ContractorAccountRepository.FindContractorAccount(login.EmailAddress);
                     if(Autheticate(login, contractor, PasswordManager) == true)
                     {
