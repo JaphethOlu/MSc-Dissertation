@@ -4,8 +4,8 @@ import request from "superagent";
 
 export const authenticationService = {
     login,
-    logout,
-    signup
+    signup,
+    logout   
 };
 
 function login(userCredentials) {
@@ -21,16 +21,16 @@ function login(userCredentials) {
                   });
 };
 
-function signup(userCredentials) {
+function signup(accountDetails) {
     return request.post("http://localhost55903/api/register/contractor")
                   .type("form")
-                  .send(userCredentials)
+                  .send(accountDetails)
                   .then((res) => {
                       storeResponse(res);
                       return res;
                   })
                   .catch((err) => {
-                      return err;
+                      console.log(err);
                   });
 };
 

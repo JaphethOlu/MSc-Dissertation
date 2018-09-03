@@ -40,6 +40,7 @@ class LoginPopOut extends React.Component {
     render() {
         return(
             <form onSubmit={ this.handleSubmit }>
+            
                 <label>
                     Email Address:
                     <input type="text" placeholder="Email Address"
