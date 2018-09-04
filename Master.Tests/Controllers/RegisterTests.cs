@@ -23,9 +23,6 @@ namespace Tests.Controllers
         RegisterController Controller;
         ContractorAccountRepository ContractorAccountRepository;
         IContractorProfileRepository ContractorProfileRepository;
-        ContractorAccount ContractorAccount = new ContractorAccount();
-        PasswordManager PasswordManager;
-        EmailValidator EmailValidator;
         TokenGenerator TokenGenerator;
         ContractorAccount TrueContractor;
         ContractorAccount FalseEmailContractor;
@@ -35,7 +32,7 @@ namespace Tests.Controllers
         {
             var config = new ConfigurationBuilder().AddJsonFile("appsettings.Development.json").Build();
             TokenGenerator = new TokenGenerator(config);
-            Controller = new RegisterController(ContractorAccountRepository, ContractorProfileRepository, ContractorAccount, TokenGenerator);
+            Controller = new RegisterController(ContractorAccountRepository, ContractorProfileRepository, TokenGenerator);
         }
 
         [OneTimeSetUp]
@@ -77,7 +74,7 @@ namespace Tests.Controllers
         [Test]
         public void TrueContractorAccount()
         {
-            IActionResult actualResult = Controller.RegisterContractor(TrueContractor, PasswordManager, EmailValidator);
+            IActionResult actualResult = Controller.RegisterContractor(TrueContractor);
             var resultContent = actualResult as OkObjectResult;
 
             Assert.IsNotNull(resultContent);
@@ -89,7 +86,7 @@ namespace Tests.Controllers
         [Test]
         public void FalseEmailContractorAccount()
         {
-            IActionResult actualResult = Controller.RegisterContractor(FalseEmailContractor, PasswordManager, EmailValidator);
+            IActionResult actualResult = Controller.RegisterContractor(FalseEmailContractor);
             var resultContent = actualResult as BadRequestObjectResult;
 
             Assert.IsNotNull(resultContent);
@@ -100,7 +97,7 @@ namespace Tests.Controllers
         [Test]
         public void ExisitingContractorAccount()
         {
-            IActionResult actualResult = Controller.RegisterContractor(ExistingContractor, PasswordManager, EmailValidator);
+            IActionResult actualResult = Controller.RegisterContractor(ExistingContractor);
             var resultContent = actualResult as BadRequestObjectResult;
 
             Assert.IsNotNull(resultContent);

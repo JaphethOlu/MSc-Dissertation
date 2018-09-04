@@ -22,18 +22,15 @@ namespace Master.Controllers
 		private readonly DissertationContext DbContext;
         private IContractorAccountRepository ContractorAccountRepository;
         private IContractorProfileRepository ContractorProfileRepository;
-        private IPasswordManager PasswordManager;
         private ITokenGenerator TokenGenerator;
-        private IAccount Contractor;
 
 		public RegisterController(IContractorAccountRepository ContractorAccountRepository,
 								  IContractorProfileRepository ContractorProfileRepository,
-                                  IAccount Contractor, ITokenGenerator TokenGenerator)
+                                  ITokenGenerator TokenGenerator)
 		{
 			DbContext = new DissertationContext();
             this.ContractorAccountRepository = new ContractorAccountRepository(DbContext);
 			this.ContractorProfileRepository = new ContractorProfileRepository(DbContext);
-            this.Contractor = Contractor;
             this.TokenGenerator = TokenGenerator;
 		}
 		
@@ -41,9 +38,7 @@ namespace Master.Controllers
         [HttpPost("contractor")]
         [ProducesResponseType(201)]
         [ProducesResponseType(400)]
-        public IActionResult RegisterContractor([FromForm] ContractorAccount contractor,
-                                        [FromServices] IPasswordManager passwordManager,
-                                        [FromServices] IEmailValidator emailValidator)
+        public IActionResult RegisterContractor([FromForm] ContractorAccount contractor)
 		{
             IActionResult response;
 
@@ -52,9 +47,9 @@ namespace Master.Controllers
 
                 bool AccountExist = ContractorAccountRepository.CheckIfAccountExist(contractor.EmailAddress);
 
-                emailValidator = new EmailValidator();
+                EmailValidator EmailValidator = new EmailValidator();
 
-                bool isEmailValid = emailValidator.IsValidEmail(contractor.EmailAddress);
+                bool isEmailValid = EmailValidator.IsValidEmail(contractor.EmailAddress);
 
                 if(AccountExist == true || (isEmailValid == false))
                 {
@@ -63,9 +58,9 @@ namespace Master.Controllers
                 }
                 else
                 {
-                    passwordManager = new PasswordManager();
+                    PasswordManager PasswordManager = new PasswordManager();
 
-                    string encryptedPassword = passwordManager.GeneratePassword(contractor.Password);
+                    string encryptedPassword = PasswordManager.GeneratePassword(contractor.Password);
 
                     contractor.Password = encryptedPassword;
 

@@ -22,10 +22,7 @@ namespace Tests.Controllers
     {
         LoginController Controller;
         ContractorAccountRepository ContractorAccountRepository;
-        EmailValidator EmailValidator;
         TokenGenerator TokenGenerator;
-        ContractorAccount Account;
-        Login Login;
         Login TrueContractor;
         Login FalseContractor;
         Login InvalidEmailContractor;
