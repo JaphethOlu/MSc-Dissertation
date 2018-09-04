@@ -17,12 +17,13 @@ function login(email, password) {
                     if(res.status == 202) {
                         dispatch(success(res.body.user));
                     } else {
-                        throw "Invalid login credentials";
+                        throw new Error;
                     }
                 })
-                .catch((error) => {
-                    dispatch(failure(error));
-                    dispatch(alertActions.error(error));
+                .catch((e) => {
+                    let info = "Invalid login credentials";
+                    dispatch(failure(info));
+                    dispatch(alertActions.error(info));
                 });
     };
 
@@ -58,9 +59,10 @@ function signup(email, password, firstName, lastName) {
                         throw "There was a problem creating your account";
                     }
                 })
-                .catch((error) => {
-                    dispatch(failure(error));
-                    dispatch(alertActions.error(error));
+                .catch((e) => {
+                    let info = "Invalid login credentials";
+                    dispatch(failure(info));
+                    dispatch(alertActions.error(info));
                 });
     };
 
