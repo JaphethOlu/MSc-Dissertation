@@ -57,11 +57,11 @@ function signup(email, password, firstName, lastName) {
                     if(res.status == 200) {
                         dispatch(success(res.body.user));
                     } else {
-                        throw "There was a problem creating your account";
+                        throw new Error();
                     }
                 })
                 .catch((e) => {
-                    let info = "Invalid login credentials";
+                    let info = "There was a problem creating your account";
                     dispatch(failure(info));
                     dispatch(alertActions.error(info));
                 });
