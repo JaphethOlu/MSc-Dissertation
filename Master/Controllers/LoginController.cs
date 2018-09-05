@@ -19,61 +19,52 @@ namespace Master.Controllers
 	[Route("api/[controller]")]
 	public class LoginController : Controller
 	{
-        private readonly DissertationContext dbContext;
-        private IContractorAccountRepository contractorAccountRepository;
-        private IPasswordManager passwordManager;
-        private ITokenGenerator tokenGenerator;
-        private IEmailValidator emailValidator;
-        private ILogin login;
-        private IAccount userAccount;
+        private readonly DissertationContext DbContext;
+        private IContractorAccountRepository ContractorAccountRepository;
+        private ITokenGenerator TokenGenerator;
 
-		public LoginController(IContractorAccountRepository contractorAccountRepository,
-                               IAccount userAccount, ILogin login, ITokenGenerator tokenGenerator)
+		public LoginController(IContractorAccountRepository ContractorAccountRepository,
+							   ITokenGenerator TokenGenerator)
 		{
-            dbContext = new DissertationContext();
-            this.contractorAccountRepository = new ContractorAccountRepository(dbContext);
-            this.userAccount = userAccount;
-            this.login = login;
-            this.tokenGenerator = tokenGenerator;
+            DbContext = new DissertationContext();
+            this.ContractorAccountRepository = new ContractorAccountRepository(DbContext);
+            this.TokenGenerator = TokenGenerator;
 		}
 
         [AllowAnonymous]
         [HttpPost("contractor")]
         [ProducesResponseType(202)]
         [ProducesResponseType(401)]
-        public IActionResult LoginContractor([FromForm] Login login,
-                                             [FromServices] IEmailValidator emailValidator)
+        public IActionResult LoginContractor([FromForm] Login login)
         {
             IActionResult response = Unauthorized();
 
-            emailValidator = new EmailValidator();
-
-            bool isEmailValid = emailValidator.IsValidEmail(login.EmailAddress);
-
             if(ModelState.IsValid)
             {
-                if(isEmailValid == true)
-                {
-                    ContractorAccount contractor = contractorAccountRepository.FindContractorAccount(login.EmailAddress);
-                    if(Autheticate(login, contractor, passwordManager) == true)
-                    {
-                        string userToken = BuildUserIdentity(contractor);
-                        
-                        var jsonResponse = new {
-                            user = new {
-                                account = login.EmailAddress,
-                                token = userToken,
-                                role = "contractor"
-                            }
-                        };
-                        
-                        response = Accepted(jsonResponse);
-                    }
-                    else
-                    {
-                        response = Unauthorized();
-                    }
-                }
+				IAccount contractor = CredentialsChecker(login.EmailAddress);
+				if (contractor != null)
+				{
+					if (Autheticate(login, contractor) == true)
+					{
+						string userToken = BuildUserIdentity(contractor);
+
+						var jsonResponse = new
+						{
+							user = new
+							{
+								account = login.EmailAddress,
+								token = userToken,
+								role = "contractor"
+							}
+						};
+
+						response = Accepted(jsonResponse);
+					}
+					else
+					{
+						response = Unauthorized();
+					}
+				}
                 else
                 {
                     response = Unauthorized();
@@ -86,12 +77,12 @@ namespace Master.Controllers
             }
         }
 
-        private bool Autheticate(ILogin login, IAccount userAccount, [FromServices] IPasswordManager passwordManager)
+        private bool Autheticate(ILogin login, IAccount userAccount)
         {
-            passwordManager = new PasswordManager();
+            PasswordManager PasswordManager = new PasswordManager();
             if(typeof(ContractorAccount) == userAccount.GetType())
             {
-                return passwordManager.VerifyPassword(userAccount.Password, login.Password);
+                return PasswordManager.VerifyPassword(userAccount.Password, login.Password);
             }
             else
             {
@@ -100,6 +91,22 @@ namespace Master.Controllers
             }
             
         }
+
+		private IAccount CredentialsChecker(string emailAddress)
+		{
+			ContractorAccount contractor;
+			EmailValidator EmailValidator = new EmailValidator();
+			if(EmailValidator.IsValidEmail(emailAddress) == true)
+			{
+				contractor = ContractorAccountRepository.FindContractorAccount(emailAddress);
+				return contractor;
+			}
+			else
+			{
+				contractor = null;
+				return contractor;
+			}
+		}
 
         private string BuildUserIdentity(IAccount userAccount)
         {
@@ -113,7 +120,7 @@ namespace Master.Controllers
                     FirstName = userAccount.FirstName,
                     LastName = userAccount.LastName
                 };
-                authenticationToken = tokenGenerator.GenerateToken(contractor);
+                authenticationToken = TokenGenerator.GenerateToken(contractor);
             }
             else
             {

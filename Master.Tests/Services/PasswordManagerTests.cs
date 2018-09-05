@@ -11,32 +11,32 @@ namespace Master.Tests.Services
     [TestFixture]
     public class PasswordManagerTests
     {
-        PasswordManager passwordManager;
+        PasswordManager PasswordManager;
 
-        string truePassword = "ChocolateMilk";
+        string TruePassword = "ChocolateMilk";
 
-        string falsePassword = "StrawberryMilk";
+        string FalsePassword = "StrawberryMilk";
 
         [SetUp]
         public void CreatePasswordManager()
         {
-            passwordManager = new PasswordManager();
+            PasswordManager = new PasswordManager();
         }
 
         [Test]
         public void TestTruePassword()
         {
-            string trueHashPassword = passwordManager.GeneratePassword(truePassword);
+            string trueHashPassword = PasswordManager.GeneratePassword(TruePassword);
 
-            Assert.True(passwordManager.VerifyPassword(trueHashPassword, truePassword));
+            Assert.True(PasswordManager.VerifyPassword(trueHashPassword, TruePassword));
         }
 
         [Test]
         public void TestFalsePassword()
         {
-            string trueHashPassword = passwordManager.GeneratePassword(truePassword);
+            string trueHashPassword = PasswordManager.GeneratePassword(TruePassword);
 
-            Assert.False(passwordManager.VerifyPassword(trueHashPassword, falsePassword));
+            Assert.False(PasswordManager.VerifyPassword(trueHashPassword, FalsePassword));
         }
     }
 }

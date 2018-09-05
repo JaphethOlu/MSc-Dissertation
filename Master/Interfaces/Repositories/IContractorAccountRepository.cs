@@ -7,7 +7,7 @@ namespace Master.Interfaces.Repositories
 {
     public interface IContractorAccountRepository
     {
-        void SaveContractorAccount(ContractorAccount newContractorAccount);
+        void SaveNewContractorAccount(ContractorAccount newContractorAccount);
         ContractorAccount FindContractorAccount(string emailAddress);
         void DeleteContractorAccount(string emailAddress);
         bool CheckIfAccountExist(string emailAddress);

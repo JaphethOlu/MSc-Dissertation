@@ -77,7 +77,7 @@ div.nav-bar > section.unauth-user {
         top: -0.98rem;
         left: -1rem;
 
-        button {
+        .login-popup-btn, .signup-popup-btn {
             margin-left: 0.4rem;
             margin-right: 0.4rem;
 
@@ -91,7 +91,7 @@ div.nav-bar > section.unauth-user {
             display: inline;
         }
 
-        button.con-login-btn {
+        .login-popup-btn {
             border-color: $complement-color;
 
             background-color: $main-color;
@@ -99,12 +99,12 @@ div.nav-bar > section.unauth-user {
             color: $complement-color
         }
 
-        button.con-signup-btn {
+        .signup-popup-btn {
             border-color: $complement-color;
 
             background-color: $complement-color;
 
-            color: $main-color
+            color: $main-color;
         }
 
     }

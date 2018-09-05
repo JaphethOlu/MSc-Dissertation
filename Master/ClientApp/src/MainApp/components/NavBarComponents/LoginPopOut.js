@@ -1,11 +1,12 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
-import { contractorActionsTypes } from "../../actionTypes";
 import { contractorActions } from "../../actions/contractorActions";
 
-class LoginComponent extends React.Component {
+class LoginPopOut extends React.Component {
     constructor(props) {
+
         super(props);
         this.state = {
             email: "",
@@ -28,7 +29,6 @@ class LoginComponent extends React.Component {
 
     handleSubmit(event) {
         event.preventDefault();
-
         const { email, password } = this.state;
         const { dispatch } = this.props;
         if(email && password) {
@@ -37,21 +37,28 @@ class LoginComponent extends React.Component {
     }
 
     render() {
+
+        //const { authenticating } = this.props;
+        const { email, password } = this.state;
+
         return(
-            <form onSubmit={ this.handleSubmit }>
+            <form className="auth-form" onSubmit={ this.handleSubmit }>
+
                 <label>
-                    Email Address:
-                    <input type="text" placeholder="Email Address"
-                           value={ this.state.email } onChange={ this.handleEmail } />
+                    <h3> E-mail: </h3>
+                    <input type="text" placeholder="example@email.com"
+                           value={ email } onChange={ this.handleEmail } />
                 </label>
 
                 <label>
-                    Password:
+                    <h3> Password: </h3>
                     <input type="password" placeholder="password"
-                           value={ this.state.password } onChange={ this.handlePassword } />
+                           value={ password } onChange={ this.handlePassword } />
                 </label>
 
-                <button>Login</button>
+                <button className="auth-form-submit-btn">Login</button>
+
+                <div className="auth-form-alt"> <h2> Forgot Password? </h2>¯_(ツ)_/¯</div>
 
             </form>
         );
@@ -59,14 +66,18 @@ class LoginComponent extends React.Component {
 
 };
 
-const mapDispatchToProps = dispatch => {
+const mapStateToProps = state => {
+    const { authenticating } = state.authentication;
     return {
-        handleSubmit: () => dispatch({
-            type: contractorActionsTypes.LOGIN_REQUEST
-        })
-    }
+        authenticating
+    };
 };
 
-const connectedLogin = connect(mapDispatchToProps)(LoginComponent);
+LoginPopOut.propTypes = {
+    authenticating: PropTypes.bool,
+    dispatch: PropTypes.func
+};
 
-export { connectedLogin as LoginComponent };
+const connectedLogin = connect(mapStateToProps)(LoginPopOut);
+
+export { connectedLogin as LoginPopOut };

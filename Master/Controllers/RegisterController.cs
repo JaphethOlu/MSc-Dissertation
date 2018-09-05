@@ -19,39 +19,37 @@ namespace Master.Controllers
     [Route("api/[controller]")]
     public class RegisterController : Controller
     {
-		private readonly DissertationContext dbContext;
-        private IContractorAccountRepository contractorAccountRepository;
-        private IPasswordManager passwordManager;
-        private ITokenGenerator tokenGenerator;
-        private IAccount contractor;
+		private readonly DissertationContext DbContext;
+        private IContractorAccountRepository ContractorAccountRepository;
+        private IContractorProfileRepository ContractorProfileRepository;
+        private ITokenGenerator TokenGenerator;
 
-		public RegisterController(IContractorAccountRepository contractorAccountRepository,
-                                  IAccount contractor, ITokenGenerator tokenGenerator)
+		public RegisterController(IContractorAccountRepository ContractorAccountRepository,
+								  IContractorProfileRepository ContractorProfileRepository,
+                                  ITokenGenerator TokenGenerator)
 		{
-			dbContext = new DissertationContext();
-            this.contractorAccountRepository = new ContractorAccountRepository(dbContext);
-            this.contractor = contractor;
-            this.tokenGenerator = tokenGenerator;
+			DbContext = new DissertationContext();
+            this.ContractorAccountRepository = new ContractorAccountRepository(DbContext);
+			this.ContractorProfileRepository = new ContractorProfileRepository(DbContext);
+            this.TokenGenerator = TokenGenerator;
 		}
 		
         [AllowAnonymous]
         [HttpPost("contractor")]
         [ProducesResponseType(201)]
         [ProducesResponseType(400)]
-        public IActionResult RegisterContractor([FromForm] ContractorAccount contractor,
-                                        [FromServices] IPasswordManager passwordManager,
-                                        [FromServices] IEmailValidator emailValidator)
+        public IActionResult RegisterContractor([FromForm] ContractorAccount contractor)
 		{
             IActionResult response;
 
             if(ModelState.IsValid)
             {
 
-                bool AccountExist = contractorAccountRepository.CheckIfAccountExist(contractor.EmailAddress);
+                bool AccountExist = ContractorAccountRepository.CheckIfAccountExist(contractor.EmailAddress);
 
-                emailValidator = new EmailValidator();
+                EmailValidator EmailValidator = new EmailValidator();
 
-                bool isEmailValid = emailValidator.IsValidEmail(contractor.EmailAddress);
+                bool isEmailValid = EmailValidator.IsValidEmail(contractor.EmailAddress);
 
                 if(AccountExist == true || (isEmailValid == false))
                 {
@@ -60,19 +58,20 @@ namespace Master.Controllers
                 }
                 else
                 {
-                    passwordManager = new PasswordManager();
+                    PasswordManager PasswordManager = new PasswordManager();
 
-                    string encryptedPassword = passwordManager.GeneratePassword(contractor.Password);
+                    string encryptedPassword = PasswordManager.GeneratePassword(contractor.Password);
 
                     contractor.Password = encryptedPassword;
 
-                    contractorAccountRepository.MarkAsModified(contractor);
+                    ContractorAccountRepository.MarkAsModified(contractor);
 
                     string userToken = BuildUserIdentity(contractor);
 
-                    contractorAccountRepository.SaveContractorAccount(contractor);
+                    ContractorAccountRepository.SaveNewContractorAccount(contractor);
 
-					//TODO: Create contractor profile
+					CreateContractorProfile(contractor);
+
                     var jsonResponse = new {
                             user = new {
                                 account = contractor.EmailAddress,
@@ -103,7 +102,7 @@ namespace Master.Controllers
                     FirstName = userAccount.FirstName,
                     LastName = userAccount.LastName
                 };
-                authenticationToken = tokenGenerator.GenerateToken(contractor);
+                authenticationToken = TokenGenerator.GenerateToken(contractor);
             }
             else
             {
@@ -119,5 +118,17 @@ namespace Master.Controllers
             }
             return authenticationToken;
         }
+
+		private void CreateContractorProfile(ContractorAccount contractorAccount)
+		{
+			ContractorProfile ContractorProfile = new ContractorProfile
+			{
+				EmailAddress = contractorAccount.EmailAddress,
+				FirstName = contractorAccount.FirstName,
+				LastName = contractorAccount.LastName
+			};
+
+			ContractorProfileRepository.SaveNewContractorProfile(ContractorProfile);
+		}
     }
 }

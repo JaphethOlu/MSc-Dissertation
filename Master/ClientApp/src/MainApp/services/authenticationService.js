@@ -4,15 +4,14 @@ import request from "superagent";
 
 export const authenticationService = {
     login,
-    logout,
-    signup
+    signup,
+    logout   
 };
 
-function login(email, password) {
+function login(userCredentials) {
     return request.post("http://localhost:55903/api/login/contractor")
                   .type("form")
-                  .send({ EmailAddress: email })
-                  .send({ Password: password })
+                  .send(userCredentials)
                   .then((res) => {
                       storeResponse(res);
                       return res;
@@ -22,19 +21,16 @@ function login(email, password) {
                   });
 };
 
-function signup(email, password, name) {
-    return request.post("http://localhost55903/api/register/contractor")
+function signup(accountDetails) {
+    return request.post("http://localhost:55903/api/register/contractor")
                   .type("form")
-                  .send({ EmailAddress: email })
-                  .send({ Password: password })
-                  .send({ FirstName: name.first })
-                  .send({ LastName: name.last })
+                  .send(accountDetails)
                   .then((res) => {
                       storeResponse(res);
                       return res;
                   })
                   .catch((err) => {
-                      return err;
+                      console.log(err);
                   });
 };
 

@@ -20,52 +20,83 @@ namespace Tests.Controllers
     [TestFixture]
     public class LoginTests
     {
-        LoginController controller;
-        ContractorAccountRepository contractorAccountRepository;
-        EmailValidator emailValidator;
-        TokenGenerator tokenGenerator;
-        ContractorAccount account;
-        Login login;
-        Login trueContractorLogin;
-        Login falseContractorLogin;
-
+        LoginController Controller;
+        ContractorAccountRepository ContractorAccountRepository;
+        TokenGenerator TokenGenerator;
+        Login TrueContractor;
+        Login FalseContractor;
+        Login InvalidEmailContractor;
+        Login NoAccountContractor;
 
         public LoginTests()
         {
             var config = new ConfigurationBuilder().AddJsonFile("appsettings.Development.json").Build();
-            tokenGenerator = new TokenGenerator(config);
-            controller = new LoginController(contractorAccountRepository, account, login, tokenGenerator);
+            TokenGenerator = new TokenGenerator(config);
+            Controller = new LoginController(ContractorAccountRepository, TokenGenerator);
         }
 
         [OneTimeSetUp]
         public void LoginTestsSetup()
         {
-            trueContractorLogin = new Login
+            TrueContractor = new Login
             {
                 EmailAddress = "bourneCoder@example.com",
                 Password = "TestPassword",
             };
             
-            falseContractorLogin = new Login
+            FalseContractor = new Login
             {
                 EmailAddress = "bourneCoder@example.com",
                 Password = "ThisIsAtestContractor",
+            };
+
+            InvalidEmailContractor = new Login
+            {
+                EmailAddress = "bourneCoder.example.com",
+                Password = "TestPassword"
+            };
+
+            NoAccountContractor = new Login
+            {
+                EmailAddress = "johnDoe@example.com",
+                Password = "TestPassword"
             };
         }
 
         [Test]
         public void TestTrueAuthContractor()
         {
-            IActionResult actualResult = controller.LoginContractor(trueContractorLogin, emailValidator);
+            IActionResult actualResult = Controller.LoginContractor(TrueContractor);//, EmailValidator);
             var resultContent = actualResult as AcceptedResult;
             Assert.NotNull(actualResult);
             Assert.IsInstanceOf(typeof(AcceptedResult), actualResult);
             Assert.AreEqual(202, resultContent.StatusCode);
         }
 
+        [Test]
         public void TestFalseAuthContractor()
         {
-            IActionResult actualResult = controller.LoginContractor(falseContractorLogin, emailValidator);
+            IActionResult actualResult = Controller.LoginContractor(FalseContractor);//, EmailValidator);
+            var resultContent = actualResult as UnauthorizedResult;
+            Assert.NotNull(actualResult);
+            Assert.IsInstanceOf(typeof(UnauthorizedResult), actualResult);
+            Assert.AreEqual(401, resultContent.StatusCode);
+        }
+
+        [Test]
+        public void TestInvalidEmailContractor()
+        {
+            IActionResult actualResult = Controller.LoginContractor(InvalidEmailContractor);//, EmailValidator);
+            var resultContent = actualResult as UnauthorizedResult;
+            Assert.NotNull(actualResult);
+            Assert.IsInstanceOf(typeof(UnauthorizedResult), actualResult);
+            Assert.AreEqual(401, resultContent.StatusCode);
+        }
+
+        [Test]
+        public void TestNoAccountContractorLogin()
+        {
+            IActionResult actualResult = Controller.LoginContractor(NoAccountContractor);//, EmailValidator);
             var resultContent = actualResult as UnauthorizedResult;
             Assert.NotNull(actualResult);
             Assert.IsInstanceOf(typeof(UnauthorizedResult), actualResult);
