@@ -5,9 +5,8 @@ form.auth-form {
 
     label {
         width: 100%;
-        position: relative;
     }
-    
+
     label > h3 {
         padding-top: 0.5em;
 
@@ -19,7 +18,7 @@ form.auth-form {
 
     label > input {
         margin: 0.5em auto 1em auto;
-        padding-left: 1.2em;
+        padding-left: 1.5em;
         width: 85%;
 
         box-sizing: border-box;
@@ -38,11 +37,11 @@ form.auth-form {
 
 form.auth-form > button.auth-form-submit-btn {
     margin: auto;
-
-    padding: 0.5em 1.5em 0.5em 2em;
+    padding: 0.5em 1.5em 0.5em 1.5em;
 
     position: relative;
-    left: 5em;
+    display: block;
+    right: 1.8em;
 
     font-size: 0.7em;
 
@@ -56,10 +55,12 @@ form.auth-form > button.auth-form-submit-btn {
 
 form.auth-form > div.auth-form-alt {
     margin: auto;
-    padding: 2em 0 1em 0;
+    padding: 2em 0 1em 1em;
     width: 100%;
 
     font-size: 0.7em;
+
+    opacity: 0.6;
 
     h2 {
         display: inline;

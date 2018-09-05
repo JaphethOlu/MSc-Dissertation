@@ -5,7 +5,7 @@ import { LoginPopOut } from "./LoginPopOut";
 import { SignUpPopOut } from "./SignUpPopOut";
 
 const PopOutBaseStyle = {
-    width: "23%",
+    width: "20%",
     height: "auto",
 
     borderRadius: "15px",
