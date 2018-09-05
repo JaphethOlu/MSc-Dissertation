@@ -18,7 +18,7 @@ class LoginPopOut extends React.Component {
         this.handleSubmit = this.handleSubmit.bind(this);
 
     }
-    
+
     handleEmail(event) {
         this.setState({ email: event.target.value });
     }
@@ -42,21 +42,23 @@ class LoginPopOut extends React.Component {
         const { email, password } = this.state;
 
         return(
-            <form onSubmit={ this.handleSubmit }>
-            
+            <form className="auth-form" onSubmit={ this.handleSubmit }>
+
                 <label>
-                    Email Address:
-                    <input type="text" placeholder="Email Address"
+                    <h3> E-mail: </h3>
+                    <input type="text" placeholder="example@email.com"
                            value={ email } onChange={ this.handleEmail } />
                 </label>
 
                 <label>
-                    Password:
+                    <h3> Password: </h3>
                     <input type="password" placeholder="password"
                            value={ password } onChange={ this.handlePassword } />
                 </label>
 
-                <button>Login</button>
+                <button className="auth-form-submit-btn">Login</button>
+
+                <div className="auth-form-alt"> <h2> Forgot Password? </h2>¯_(ツ)_/¯</div>
 
             </form>
         );

@@ -55,33 +55,35 @@ class SignUpPopOut extends React.Component {
         const { email, password, firstName, lastName } = this.state;
 
         return(
-            <form onSubmit={ this.handleSubmit }>
+            <form className="auth-form" onSubmit={ this.handleSubmit }>
 
                 <label>
-                    Email Address:
-                    <input type="text" placeholder="Email Address" 
+                    <h3> Email Address: </h3>
+                    <input type="text" placeholder="example@email.com" 
                            value={ email } onChange={ this.handleEmail } />
                 </label>
 
                 <label>
-                    Password:
+                    <h3> Password: </h3>
                     <input type="password" placeholder="password" 
                            value={ password } onChange={ this.handlePassword } />
                 </label>
 
                 <label>
-                    First Name:
+                    <h3> First Name: </h3>
                     <input type="text" placeholder="First Name" 
                            value={ firstName } onChange={ this.handleFirstName } />
                 </label>
 
                 <label>
-                    Last Name:
+                    <h3> Last Name: </h3>
                     <input type="text" placeholder="Last Name" 
                            value={ lastName } onChange={ this.handleLastName } />
                 </label>
 
-                <button>Sign Up</button>
+                <button className="auth-form-submit-btn">Sign Up</button>
+
+                <div className="auth-form-alt">༼ つ ◕_◕ ༽つ <h2> Already have an account </h2></div>
 
             </form>
         );

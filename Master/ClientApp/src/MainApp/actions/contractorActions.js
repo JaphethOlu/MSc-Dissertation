@@ -8,6 +8,7 @@ export const contractorActions = {
     logout
 };
 
+/* eslint-disable no-unused-vars */
 function login(email, password) {
     return dispatch => {
         dispatch(request());

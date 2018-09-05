@@ -1,0 +1,69 @@
+form.auth-form {
+    margin: auto;
+    width: 100%;
+    padding: 0.8rem 0.8rem 1rem 0.8rem;
+
+    label {
+        width: 100%;
+        position: relative;
+    }
+    
+    label > h3 {
+        padding-top: 0.5em;
+
+        font-size: 0.7rem;
+        font-weight: 600;
+
+        color: $main-color;
+    }
+
+    label > input {
+        margin: 0.5em auto 1em auto;
+        padding-left: 1.2em;
+        width: 85%;
+
+        box-sizing: border-box;
+
+        height: 1.8rem;
+
+        border-radius: 15px;
+        border-style: solid;
+        border-color: black;
+
+        font-size: 0.6em;
+
+        opacity: 0.8;
+    }
+}
+
+form.auth-form > button.auth-form-submit-btn {
+    margin: auto;
+
+    padding: 0.5em 1.5em 0.5em 2em;
+
+    position: relative;
+    left: 5em;
+
+    font-size: 0.7em;
+
+    border-style: solid;
+    border-radius: 5px;
+
+    border-color: $complement-color;
+    background-color: $main-color;
+    color: $complement-color;
+}
+
+form.auth-form > div.auth-form-alt {
+    margin: auto;
+    padding: 2em 0 1em 0;
+    width: 100%;
+
+    font-size: 0.7em;
+
+    h2 {
+        display: inline;
+
+        text-decoration: underline;
+    }
+}
