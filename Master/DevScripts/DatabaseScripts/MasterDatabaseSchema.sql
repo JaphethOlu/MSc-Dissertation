@@ -14,9 +14,10 @@ CREATE TABLE Contractor_Account (
 
 CREATE TABLE Recruiter_Account (
     EmailAddress VARCHAR(50) NOT NULL UNIQUE,
+    Password VARCHAR(150) NOT NULL,
     FirstName VARCHAR(30) NOT NULL,
     LastName VARCHAR(30) NOT NULL,
-    OrganisationID INT NOT NULL,
+    OrganisationID INT,
     CONSTRAINT PK_Recruiter PRIMARY KEY (EmailAddress)
 );
 
@@ -24,7 +25,9 @@ CREATE TABLE Organisation (
     OrganisationID INT NOT NULL,
     OrganisationName VARCHAR(75) NOT NULL,
     OrganisationType ENUM ('Employer', 'Agency') NOT NULL ,
-    PersonalStatement VARCHAR(1500),
+    OrganisationStatement VARCHAR(1500),
+    OrganisationProfilePictureLocation VARCHAR(250),
+    OrganisationProfileBannerLocation VARCHAR(250),
     Location VARCHAR(30) NOT NULL,
     NumberOfAvailableAdverts TINYINT DEFAULT 5,
     Director VARCHAR(50) NOT NULL,
@@ -58,30 +61,11 @@ CREATE TABLE Contractor_Profile (
     LastName VARCHAR(30) NOT NULL,
     Headline VARCHAR(120),
     PersonalStatement VARCHAR(800),
+    WorkExperience JSON, # -- Expected to be !> 10,000 characters
+    Education JSON, # -- Expected to be !> 5,000 characters
     Location VARCHAR(30),
     CONSTRAINT PK_Contractor_EmailAddress PRIMARY KEY (EmailAddress),
     CONSTRAINT FK_Contractor_EmailAddress FOREIGN KEY (EmailAddress) REFERENCES Contractor_Account(EmailAddress) ON UPDATE CASCADE ON DELETE CASCADE
-);
-
-CREATE TABLE Contractor_Work_Experience (
-    EmailAddress VARCHAR(50) NOT NULL,
-    EmployerName VARCHAR(100) NOT NULL,
-    JobRole VARCHAR(35) NOT NULL,
-    StartDate DATE NOT NULL,
-    EndDate DATE,
-    Present TINYINT(1),
-    AchievementsAndResponsibilities VARCHAR(3000), -- //TODO: Convert to JSON
-    CONSTRAINT FK_Work_Experience FOREIGN KEY (EmailAddress) REFERENCES Contractor_Profile(EmailAddress) ON UPDATE CASCADE ON DELETE CASCADE
-);
-
-CREATE TABLE Education (
-    InstitionName VARCHAR(75) NOT NULL,
-    DegreeName VARCHAR(100) NOT NULL,
-    DegreeLevel ENUM ('Secondary', 'Associate', 'Bachelor',
-					  'PGCert', 'PGDip', 'Master', 'Doctorate') NOT NULL,
-    WithHons TINYINT(1),
-    StartDate DATE NOT NULL,
-    EndDate DATE NOT NULL
 );
 
 CREATE TABLE Saved_Contract (
@@ -114,5 +98,30 @@ CREATE TABLE Industries (
 INSERT INTO contractor_account(EmailAddress, Password, FirstName, LastName) 
 VALUES ("bourneCoder@example.com", "9mvkY64Ct1ALAO3iJpB869Mo9MARJ0TftBbS7MmTctG9Vqqz", "Jason", "Bourne");
 
-# INSERT INTO Contractor_Profile(EmailAddress, FirstName, LastName)
-#VALUES ("bourneCoder@example.com", "Jason", "Bourne");
+#--INSERT INTO Contractor_Profile(EmailAddress, FirstName, LastName)
+#--VALUES ("bourneCoder@example.com", "Jason", "Bourne");
+
+/*
+=============== OLD MODELS ==============
+CREATE TABLE Contractor_Work_Experience (
+    EmailAddress VARCHAR(50) NOT NULL,
+    EmployerName VARCHAR(100) NOT NULL,
+    JobRole VARCHAR(35) NOT NULL,
+    StartDate DATE NOT NULL,
+    EndDate DATE,
+    Present TINYINT(1),
+    AchievementsAndResponsibilities VARCHAR(3000),
+    CONSTRAINT FK_Work_Experience FOREIGN KEY (EmailAddress) REFERENCES Contractor_Profile(EmailAddress) ON UPDATE CASCADE ON DELETE CASCADE
+);
+
+CREATE TABLE Education (
+    InstitionName VARCHAR(75) NOT NULL,
+    DegreeName VARCHAR(100) NOT NULL,
+    DegreeLevel ENUM ('Secondary', 'Associate', 'Bachelor',
+					  'PGCert', 'PGDip', 'Master', 'Doctorate') NOT NULL,
+    WithHons TINYINT(1),
+    StartDate DATE NOT NULL,
+    EndDate DATE NOT NULL
+);
+
+*/
