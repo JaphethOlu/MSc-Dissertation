@@ -54,6 +54,7 @@ div.nav-bar {
 
 div.nav-bar > section.unauth-user {
     width: 32%;
+    height: 2rem;
     float: right;
 
     position: relative;
@@ -64,13 +65,28 @@ div.nav-bar > section.unauth-user {
         margin: 0;
         padding-left: 0.2rem;
         padding-right: 0.2rem;
-
+        
         font-size: 0.7rem;
         color: $complement-color;
     }
 
+    section.con-auth::before {
+        content: "";
+        width: 2px;
+        height: 100%;
+
+        bottom: 10px;
+        left: -1.8em;
+        
+        border-radius: 5px;
+
+        background-color: white;
+        position: absolute;
+    }
+
     section.con-auth {
         width: 41%;
+        height: 100%;
 
         position: relative;
         float: right;
