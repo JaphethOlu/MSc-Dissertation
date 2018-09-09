@@ -22,7 +22,7 @@ CREATE TABLE Recruiter_Account (
 );
 
 CREATE TABLE Organisation (
-    OrganisationID INT NOT NULL,
+    OrganisationID INT NOT NULL AUTO_INCREMENT,
     OrganisationName VARCHAR(75) NOT NULL,
     OrganisationType ENUM ('Employer', 'Agency') NOT NULL ,
     OrganisationStatement VARCHAR(1500),
@@ -35,7 +35,7 @@ CREATE TABLE Organisation (
     CONSTRAINT PK_Organisation PRIMARY KEY (OrganisationID),
     CONSTRAINT FK_Organisation_Director FOREIGN KEY (Director) REFERENCES Recruiter_Account(EmailAddress),
     CONSTRAINT Organisation_Adverts CHECK (NumberOfAvailableAdverts >= 5)
-);
+)AUTO_INCREMENT = 101101;
 
 ALTER TABLE recruiter_account ADD CONSTRAINT FK_Recruiter_Organisation FOREIGN KEY (OrganisationID) REFERENCES Organisation(OrganisationID);
 
@@ -98,8 +98,10 @@ CREATE TABLE Industries (
 INSERT INTO contractor_account(EmailAddress, Password, FirstName, LastName) 
 VALUES ("bourneCoder@example.com", "9mvkY64Ct1ALAO3iJpB869Mo9MARJ0TftBbS7MmTctG9Vqqz", "Jason", "Bourne");
 
-#--INSERT INTO Contractor_Profile(EmailAddress, FirstName, LastName)
-#--VALUES ("bourneCoder@example.com", "Jason", "Bourne");
+/*
+INSERT INTO Contractor_Profile(EmailAddress, FirstName, LastName)
+VALUES ("bourneCoder@example.com", "Jason", "Bourne");
+*/
 
 /*
 =============== OLD MODELS ==============
