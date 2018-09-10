@@ -5,7 +5,7 @@ using Master.Interfaces.Models;
 
 namespace Master.Models
 {
-    public class RecruiterAccount : IAccount
+    public class DirectorAccount : IAccount
     {
         [Required]
         [EmailAddress]
@@ -22,26 +22,19 @@ namespace Master.Models
         [Required]
         [StringLength(30)]
         public string LastName { get; set; }
-        
 
-        [Required]
-        public int OrganisationId { get; set; }
-
-        public RecruiterAccount()
+        public DirectorAccount()
         {
 
         }
 
-        public RecruiterAccount(string emailAddress, string password,
-                                string firstName, string lastName, int orgId)
+        public DirectorAccount(string emailAddress, string password,
+                                string firstName, string lastName)
         {
             EmailAddress = emailAddress;
             Password = password;
             FirstName = firstName;
             LastName = lastName;
-            OrganisationId = orgId;
         }
-
-        public Organisation OrganisationForeignKey { get; set; }
     }
 }

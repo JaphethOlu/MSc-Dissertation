@@ -12,13 +12,12 @@ CREATE TABLE Contractor_Account (
     CONSTRAINT PK_ContractorAccount PRIMARY KEY (EmailAddress)
 );
 
-CREATE TABLE Recruiter_Account (
+CREATE TABLE Director_Account (
     EmailAddress VARCHAR(50) NOT NULL UNIQUE,
     Password VARCHAR(150) NOT NULL,
     FirstName VARCHAR(30) NOT NULL,
     LastName VARCHAR(30) NOT NULL,
-    OrganisationID INT,
-    CONSTRAINT PK_Recruiter PRIMARY KEY (EmailAddress)
+    CONSTRAINT PK_Director PRIMARY KEY (EmailAddress)
 );
 
 CREATE TABLE Organisation (
@@ -29,15 +28,23 @@ CREATE TABLE Organisation (
     OrganisationProfilePictureLocation VARCHAR(250),
     OrganisationProfileBannerLocation VARCHAR(250),
     Location VARCHAR(30) NOT NULL,
-    NumberOfAvailableAdverts TINYINT DEFAULT 5,
+    NumberOfAvailableAdverts SMALLINT UNSIGNED DEFAULT 5,
     Director VARCHAR(50) NOT NULL,
     CONSTRAINT U_Organisation UNIQUE (OrganisationID, OrganisationName, Director),
     CONSTRAINT PK_Organisation PRIMARY KEY (OrganisationID),
-    CONSTRAINT FK_Organisation_Director FOREIGN KEY (Director) REFERENCES Recruiter_Account(EmailAddress),
+    CONSTRAINT FK_Organisation_Director FOREIGN KEY (Director) REFERENCES Director_Account(EmailAddress),
     CONSTRAINT Organisation_Adverts CHECK (NumberOfAvailableAdverts >= 5)
 )AUTO_INCREMENT = 101101;
 
-ALTER TABLE recruiter_account ADD CONSTRAINT FK_Recruiter_Organisation FOREIGN KEY (OrganisationID) REFERENCES Organisation(OrganisationID);
+CREATE TABLE Recruiter_Account (
+    EmailAddress VARCHAR(50) NOT NULL UNIQUE,
+    Password VARCHAR(150) NOT NULL,
+    FirstName VARCHAR(30) NOT NULL,
+    LastName VARCHAR(30) NOT NULL,
+    OrganisationID INT,
+    CONSTRAINT PK_Recruiter PRIMARY KEY (EmailAddress),
+    CONSTRAINT FK_Recruiter_Organisation FOREIGN KEY (OrganisationID) REFERENCES Organisation(OrganisationID)
+);
 
 CREATE TABLE Contract (
     ContractID INT NOT NULL UNIQUE,
@@ -95,15 +102,19 @@ CREATE TABLE Industries (
     CONSTRAINT PK_Industry PRIMARY KEY (Industry)
 );
 
-INSERT INTO contractor_account(EmailAddress, Password, FirstName, LastName) 
+INSERT INTO Contractor_Account(EmailAddress, Password, FirstName, LastName) 
 VALUES ("bourneCoder@example.com", "9mvkY64Ct1ALAO3iJpB869Mo9MARJ0TftBbS7MmTctG9Vqqz", "Jason", "Bourne");
+
+INSERT INTO Director_Account(EmailAddress, Password, FirstName, LastName)
+VALUES ("johnsnow@email.com", "sfl7FadkEa8ifH34oerRwefeN3Haw", "John", "Snow");
+
+INSERT INTO Organisation(OrganisationName, OrganisationType, Location, Director)
+VALUES ("Donger's Inc", "Employer", "Manchester", "johnsnow@email.com");
 
 /*
 INSERT INTO Contractor_Profile(EmailAddress, FirstName, LastName)
 VALUES ("bourneCoder@example.com", "Jason", "Bourne");
-*/
 
-/*
 =============== OLD MODELS ==============
 CREATE TABLE Contractor_Work_Experience (
     EmailAddress VARCHAR(50) NOT NULL,
