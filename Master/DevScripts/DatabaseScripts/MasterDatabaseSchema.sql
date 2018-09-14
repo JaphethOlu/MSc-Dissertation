@@ -12,6 +12,19 @@ CREATE TABLE Contractor_Account (
     CONSTRAINT PK_ContractorAccount PRIMARY KEY (EmailAddress)
 );
 
+CREATE TABLE Contractor_Profile (
+    EmailAddress VARCHAR(50) NOT NULL,
+    FirstName VARCHAR(30) NOT NULL,
+    LastName VARCHAR(30) NOT NULL,
+    Headline VARCHAR(120),
+    PersonalStatement VARCHAR(800),
+    WorkExperience JSON, # -- Expected to be !> 10,000 characters
+    Education JSON, # -- Expected to be !> 5,000 characters
+    Location VARCHAR(30),
+    CONSTRAINT PK_Contractor_EmailAddress PRIMARY KEY (EmailAddress),
+    CONSTRAINT FK_Contractor_EmailAddress FOREIGN KEY (EmailAddress) REFERENCES Contractor_Account(EmailAddress) ON UPDATE CASCADE ON DELETE CASCADE
+);
+
 CREATE TABLE Director_Account (
     EmailAddress VARCHAR(50) NOT NULL UNIQUE,
     Password VARCHAR(150) NOT NULL,
@@ -34,7 +47,7 @@ CREATE TABLE Organisation (
     CONSTRAINT PK_Organisation PRIMARY KEY (OrganisationID),
     CONSTRAINT FK_Organisation_Director FOREIGN KEY (Director) REFERENCES Director_Account(EmailAddress),
     CONSTRAINT Organisation_Adverts CHECK (NumberOfAvailableAdverts >= 5)
-)AUTO_INCREMENT = 101101;
+)AUTO_INCREMENT = 101100;
 
 CREATE TABLE Recruiter_Account (
     EmailAddress VARCHAR(50) NOT NULL UNIQUE,
@@ -60,19 +73,6 @@ CREATE TABLE Contract (
     CONSTRAINT FK_Contract_Organisation FOREIGN KEY (OrganisationID) REFERENCES Organisation(OrganisationID),
     CONSTRAINT Min_Contract_Duration CHECK(Duration > 0),
 	CONSTRAINT Max_Contract_Duration CHECK(Duration <= 24)
-);
-
-CREATE TABLE Contractor_Profile (
-    EmailAddress VARCHAR(50) NOT NULL,
-    FirstName VARCHAR(30) NOT NULL,
-    LastName VARCHAR(30) NOT NULL,
-    Headline VARCHAR(120),
-    PersonalStatement VARCHAR(800),
-    WorkExperience JSON, # -- Expected to be !> 10,000 characters
-    Education JSON, # -- Expected to be !> 5,000 characters
-    Location VARCHAR(30),
-    CONSTRAINT PK_Contractor_EmailAddress PRIMARY KEY (EmailAddress),
-    CONSTRAINT FK_Contractor_EmailAddress FOREIGN KEY (EmailAddress) REFERENCES Contractor_Account(EmailAddress) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 CREATE TABLE Saved_Contract (
@@ -106,10 +106,13 @@ INSERT INTO Contractor_Account(EmailAddress, Password, FirstName, LastName)
 VALUES ("bourneCoder@example.com", "9mvkY64Ct1ALAO3iJpB869Mo9MARJ0TftBbS7MmTctG9Vqqz", "Jason", "Bourne");
 
 INSERT INTO Director_Account(EmailAddress, Password, FirstName, LastName)
-VALUES ("johnsnow@email.com", "sfl7FadkEa8ifH34oerRwefeN3Haw", "John", "Snow");
+VALUES ("johnsnow@example.com", "sfl7FadkEa8ifH34oerRwefeN3Haw", "John", "Snow");
+
+INSERT INTO Director_Account(EmailAddress, Password, FirstName, LastName)
+VALUES ("jamesbond@example.com", "kl56nbs8dgrnh7rt9er8s9ui3b2oi24b5y3i2obi", "James", "Bond");
 
 INSERT INTO Organisation(OrganisationName, OrganisationType, Location, Director)
-VALUES ("Donger's Inc", "Employer", "Manchester", "johnsnow@email.com");
+VALUES ("Donger's Inc", "Employer", "Manchester", "johnsnow@example.com");
 
 /*
 INSERT INTO Contractor_Profile(EmailAddress, FirstName, LastName)

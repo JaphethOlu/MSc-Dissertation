@@ -26,7 +26,6 @@ namespace Master.Models
         
         public string Location { get; set; }
 
-        [Required]
-        public ContractorAccount EmailAddressForeignKey { get; set; }
+        public ContractorAccount ProfileAccount { get; set; }
     }
 }

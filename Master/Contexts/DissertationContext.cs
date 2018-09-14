@@ -1,7 +1,6 @@
 using System;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+
 using Master.Models;
 
 namespace Master.Contexts
@@ -19,19 +18,17 @@ namespace Master.Contexts
         }
 
         public virtual DbSet<ContractorAccount> ContractorAccounts { get; set; }
-        public virtual DbSet<RecruiterAccount> RecruiterAccounts { get; set; }
+        public virtual DbSet<DirectorAccount> DirectorAccounts { get; set; }
         public virtual DbSet<Organisation> Organisations { get; set; }
+        public virtual DbSet<RecruiterAccount> RecruiterAccounts { get; set; }
         public virtual DbSet<Contract> Contracts { get; set; }
         public virtual DbSet<ContractorProfile> ContractorProfiles { get; set; }
         public virtual DbSet<Industry> Industries { get; set; }
         public virtual DbSet<Language> Languages { get; set; }
         public virtual DbSet<Skill> Skills { get; set; }
         
-
         // Unable to generate entity type for table 'applied_contract'. Please see the warning messages.
-        // Unable to generate entity type for table 'education'. Please see the warning messages.
         // Unable to generate entity type for table 'saved_contract'. Please see the warning messages.
-        // Unable to generate entity type for table 'work_experience'. Please see the warning messages.
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -46,111 +43,180 @@ namespace Master.Contexts
         {
             modelBuilder.Entity<ContractorAccount>(entity =>
             {
-                entity.HasKey(ca => ca.EmailAddress);
+                entity.HasKey(c => c.EmailAddress);
 
                 entity.ToTable("contractor_account");
                 
-                entity.HasIndex(ca => ca.EmailAddress)
+                entity.HasIndex(c => c.EmailAddress)
                     .HasName("EmailAddress")
                     .IsUnique();
                 
-                entity.Property(ca => ca.EmailAddress)
+                entity.Property(c => c.EmailAddress)
                     .IsRequired()
                     .HasColumnType("varchar(50)");
 
-                entity.Property(ca => ca.Password)
+                entity.Property(c => c.Password)
                     .IsRequired()
                     .HasColumnType("varchar(150)");
 
-                entity.Property(ca => ca.FirstName)
+                entity.Property(c => c.FirstName)
                     .IsRequired()
                     .HasColumnType("varchar(30)");
 
-                entity.Property(ca => ca.LastName)
+                entity.Property(c => c.LastName)
                     .IsRequired()
                     .HasColumnType("varchar(30)");
 			});
-            
-            modelBuilder.Entity<RecruiterAccount>(entity =>
+
+             modelBuilder.Entity<ContractorProfile>(entity =>
             {
-                entity.HasKey(ra => ra.EmailAddress);
+                entity.HasKey(p => p.EmailAddress);
 
-                entity.ToTable("recruiter_account");
+                entity.ToTable("contractor_profile");
 
-                entity.HasIndex(ra => ra.EmailAddress)
+                entity.Property(p => p.EmailAddress)
+                    .HasColumnType("varchar(50)");
+
+                entity.Property(p => p.FirstName)
+                    .IsRequired()
+                    .HasColumnType("varchar(30)");
+
+                entity.Property(p => p.LastName)
+                    .IsRequired()
+                    .HasColumnType("varchar(30)");
+
+                entity.Property(p => p.Headline)
+                    .HasColumnType("varchar(120)");
+
+                entity.Property(p => p.Location)
+                    .HasColumnType("varchar(30)");
+
+                entity.Property(p => p.PersonalStatement)
+                    .HasColumnType("varchar(800)");
+
+                entity.HasOne(p => p.ProfileAccount)
+                    .WithOne()
+                    .HasForeignKey<ContractorProfile>(p => p.EmailAddress)
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .HasConstraintName("FK_Contractor_EmailAddress");
+            });
+
+            modelBuilder.Entity<DirectorAccount>(entity => 
+            {
+                entity.HasKey(d => d.EmailAddress);
+
+                entity.ToTable("director_account");
+
+                entity.HasIndex(d => d.EmailAddress)
                     .HasName("EmailAddress")
                     .IsUnique();
 
-                entity.HasIndex(ra => ra.OrganisationId)
-                    .HasName("FK_Recruiter_Organisation");
-
-                entity.Property(ra => ra.EmailAddress)
-                    .IsRequired()
-                    .HasColumnType("varchar(50)");
-
-                entity.Property(ca => ca.Password)
+                entity.Property(d => d.Password)
                     .IsRequired()
                     .HasColumnType("varchar(150)");
 
-                entity.Property(ra => ra.FirstName)
+                entity.Property(d => d.FirstName)
                     .IsRequired()
-                    .HasColumnType("varchar(30)");
+                    .HasColumnType("varvhar(30)");
 
-                entity.Property(ra => ra.LastName)
+                entity.Property(d => d.LastName)
                     .IsRequired()
-                    .HasColumnType("varchar(30)");
-
-                entity.Property(ra => ra.OrganisationId)
-                    .HasColumnName("OrganisationID")
-                    .HasColumnType("int(11)");
-
-                entity.HasOne(d => d.Organisation)
-                    .WithMany(p => p.Recruiters)
-                    .HasForeignKey(d => d.OrganisationId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Recruiter_Organisation");
+                    .HasColumnType("varvhar(30)");
             });
+            
+            modelBuilder.HasSequence<int>("OrganisationID")
+                .StartsAt(101100)
+                .IncrementsBy(3);
 
             modelBuilder.Entity<Organisation>(entity =>
             {
-                entity.HasKey(e => e.OrganisationId);
+                entity.HasKey(o => o.OrganisationId);
 
                 entity.ToTable("organisation");
-
-                entity.HasIndex(e => e.Director)
-                    .HasName("FK_Organisation_Director");
-
-                entity.HasIndex(e => new { e.OrganisationId, e.OrganisationName, e.Director })
+                
+                entity.HasIndex(o => o.Director)
+                  .HasName("FK_Organisation_Director");
+                
+                entity.HasIndex(o => new { o.OrganisationId, o.OrganisationName, o.Director })
                     .HasName("U_Organisation")
                     .IsUnique();
 
-                entity.Property(e => e.OrganisationId)
+                entity.Property(o => o.OrganisationId)
                     .HasColumnName("OrganisationID")
-                    .HasColumnType("int(11)");
+                    .HasColumnType("int(11)")
+                    .HasDefaultValueSql("NEXT VALUE FOR OrganisationID");
 
-                entity.Property(e => e.Director)
-                    .IsRequired()
-                    .HasColumnType("varchar(50)");
-
-                entity.Property(e => e.Location)
-                    .IsRequired()
-                    .HasColumnType("varchar(30)");
-
-                entity.Property(e => e.NumberOfAvailableAdverts)
-                    .HasColumnType("tinyint(4)")
-                    .HasDefaultValueSql("'5'");
-
-                entity.Property(e => e.OrganisationName)
+                entity.Property(o => o.OrganisationName)
                     .IsRequired()
                     .HasColumnType("varchar(75)");
 
-                entity.Property(e => e.PersonalStatement).HasColumnType("varchar(1500)");
+                entity.Property(o => o.OrganisationType)
+                    .IsRequired()
+                    .HasConversion(
+                        t => t.ToString(),
+                        t => (OrganisationType)Enum.Parse(typeof(OrganisationType), t));
 
-                entity.HasOne(d => d.DirectorNavigation)
-                    .WithMany()
-                    .HasForeignKey(d => d.Director)
+                entity.Property(o => o.OrganisationStatement)
+                    .HasColumnType("varchar(1500)");
+                
+                entity.Property(o => o.Director)
+                    .IsRequired()
+                    .HasColumnType("varchar(50)");
+
+                entity.Property(o => o.Location)
+                    .IsRequired()
+                    .HasColumnType("varchar(30)");
+
+                entity.Property(o => o.NumberOfAvailableAdverts)
+                    .HasColumnType("smallint(6)")
+                    .HasDefaultValueSql("'5'");
+
+                entity.HasOne(o => o.DirectorAccount)
+                    .WithOne()
+                    .HasForeignKey<Organisation>(o => o.Director)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Organisation_Director");
+            });
+
+            modelBuilder.Entity<RecruiterAccount>(entity =>
+            {
+                entity.HasKey(r => r.EmailAddress);
+
+                entity.ToTable("recruiter_account");
+
+                entity.HasIndex(r => r.EmailAddress)
+                    .HasName("EmailAddress")
+                    .IsUnique();
+
+                entity.HasIndex(r => r.OrganisationId)
+                    .HasName("FK_Recruiter_Organisation");
+
+                entity.Property(r => r.EmailAddress)
+                    .IsRequired()
+                    .HasColumnType("varchar(50)");
+
+                entity.Property(r => r.Password)
+                    .IsRequired()
+                    .HasColumnType("varchar(150)");
+
+                entity.Property(r => r.FirstName)
+                    .IsRequired()
+                    .HasColumnType("varchar(30)");
+
+                entity.Property(r => r.LastName)
+                    .IsRequired()
+                    .HasColumnType("varchar(30)");
+
+                entity.Property(r => r.OrganisationId)
+                    .HasColumnName("OrganisationID")
+                    .HasColumnType("int(11)");
+                
+                entity.HasOne(r => r.OrganisationForeignKey)
+                    .WithMany(o => o.Recruiters)
+                    .HasForeignKey(r => r.OrganisationId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Recruiter_Organisation");
+                
             });
 
             modelBuilder.Entity<Contract>(entity =>
@@ -193,38 +259,6 @@ namespace Master.Contexts
                     .HasForeignKey(d => d.OrganisationId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Contract_Organisation");
-            });
-
-            modelBuilder.Entity<ContractorProfile>(entity =>
-            {
-                entity.HasKey(cp => cp.EmailAddress);
-
-                entity.ToTable("contractor_profile");
-
-                entity.Property(cp => cp.EmailAddress).HasColumnType("varchar(50)");
-
-                entity.Property(cp => cp.FirstName)
-                    .IsRequired()
-                    .HasColumnType("varchar(30)");
-
-                entity.Property(cp => cp.LastName)
-                    .IsRequired()
-                    .HasColumnType("varchar(30)");
-
-                entity.Property(cp => cp.Headline)
-                    .HasColumnType("varchar(120)");
-
-                entity.Property(cp => cp.Location)
-                    .HasColumnType("varchar(30)");
-
-                entity.Property(cp => cp.PersonalStatement)
-                    .HasColumnType("varchar(800)");
-
-                entity.HasOne(cp => cp.EmailAddressForeignKey)
-                    .WithOne()
-                    .HasForeignKey<ContractorProfile>(d => d.EmailAddress)
-                    .OnDelete(DeleteBehavior.Cascade)
-                    .HasConstraintName("FK_Contractor_EmailAddress");
             });
 
             modelBuilder.Entity<Industry>(entity =>

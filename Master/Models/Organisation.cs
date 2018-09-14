@@ -1,25 +1,55 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Master.Models
 {
     public partial class Organisation
     {
+        [Required]
+        [Range(101100, 2147483647)]
+        public int OrganisationId { get; set; }
+
+        [Required]
+        [StringLength(75)]
+        public string OrganisationName { get; set; }
+
+        [Required]
+        public OrganisationType OrganisationType { get; set; }
+
+        [StringLength(1500)]
+        public string OrganisationStatement { get; set; }
+
+        [Required]
+        [StringLength(30)]
+        public string Location { get; set; }
+
+        [Range(0, 65535)]
+        public ushort? NumberOfAvailableAdverts { get; set; }
+
+        [Required]
+        [EmailAddress]
+        public string Director { get; set; }
+
+        public DirectorAccount DirectorAccount { get; set; }
+        public ICollection<Contract> Contracts { get; set; }
+        public ICollection<RecruiterAccount> Recruiters { get; set; }
+        
         public Organisation()
         {
             Contracts = new HashSet<Contract>();
             Recruiters = new HashSet<RecruiterAccount>();
         }
 
-        public int OrganisationId { get; set; }
-        public string OrganisationName { get; set; }
-        public string PersonalStatement { get; set; }
-        public string Location { get; set; }
-        public sbyte? NumberOfAvailableAdverts { get; set; }
-        public string Director { get; set; }
+        public Organisation(string orgName, OrganisationType orgType, string location, string director)
+        {
+            OrganisationName = orgName;
+            OrganisationType = orgType;
+            Location = location;
+            Director = director;
 
-        public RecruiterAccount DirectorNavigation { get; set; }
-        public ICollection<Contract> Contracts { get; set; }
-        public ICollection<RecruiterAccount> Recruiters { get; set; }
+            Contracts = new HashSet<Contract>();
+            Recruiters = new HashSet<RecruiterAccount>();
+        }
     }
 }

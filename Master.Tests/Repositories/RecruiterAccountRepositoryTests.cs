@@ -15,8 +15,8 @@ namespace Tests.Repositories
         IRecruiterAccountRepository RecruiterAccountRepository;
         DissertationContext DissertationContext = new DissertationContext();
         RecruiterAccount NewRecruiterAccount;
-        string TestEmailAddress = "exampleRecruiter@email.com";
-        string FakeEmailAddress = "nonexistent@email.com";
+        string TestEmailAddress = "exampleRecruiter@example.com";
+        string FakeEmailAddress = "nonexistent@example.com";
         
         public RecruiterAccountRepositoryTests()
         {
@@ -26,7 +26,7 @@ namespace Tests.Repositories
                 Password = "IAmARecruiter",
                 FirstName = "John",
                 LastName = "Doe",
-                OrganisationId = 101101
+                OrganisationId = 101100
             };
         }
         
