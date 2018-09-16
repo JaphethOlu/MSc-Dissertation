@@ -26,7 +26,7 @@ namespace Master.Repositories
         public void DeleteOrganisation(string organisationName)
         {
             Organisation organisation = FindOrganisationByName(organisationName);
-            DbContext.Remove(organisation);
+            DbContext.Organisations.Remove(organisation);
             DbContext.SaveChanges();
         }
 
@@ -38,7 +38,8 @@ namespace Master.Repositories
 
         public Organisation FindOrganisationByName(string organisationName)
         {            
-            Organisation organisation = DbContext.Organisations.SingleOrDefault(o => o.OrganisationName.Contains(organisationName));
+            Organisation organisation = DbContext.Organisations
+                                                 .SingleOrDefault(o => o.OrganisationName.Contains(organisationName));
             return organisation;
         }
     }

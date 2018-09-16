@@ -25,6 +25,7 @@ namespace Master.Models
         
 
         [Required]
+        [Range(101100, 2147483647)]
         public int OrganisationId { get; set; }
 
         public RecruiterAccount()
@@ -42,6 +43,6 @@ namespace Master.Models
             OrganisationId = orgId;
         }
 
-        public Organisation OrganisationForeignKey { get; set; }
+        public Organisation Organisation { get; set; }
     }
 }

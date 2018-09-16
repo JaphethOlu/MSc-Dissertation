@@ -126,7 +126,7 @@ namespace Master.Contexts
             
             modelBuilder.HasSequence<int>("OrganisationID")
                 .StartsAt(101100)
-                .IncrementsBy(3);
+                .IncrementsBy(1);
 
             modelBuilder.Entity<Organisation>(entity =>
             {
@@ -211,7 +211,7 @@ namespace Master.Contexts
                     .HasColumnName("OrganisationID")
                     .HasColumnType("int(11)");
                 
-                entity.HasOne(r => r.OrganisationForeignKey)
+                entity.HasOne(r => r.Organisation)
                     .WithMany(o => o.Recruiters)
                     .HasForeignKey(r => r.OrganisationId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
@@ -219,44 +219,56 @@ namespace Master.Contexts
                 
             });
 
+            modelBuilder.HasSequence<int>("ContractID")
+                            .StartsAt(10000)
+                            .IncrementsBy(1);
+
             modelBuilder.Entity<Contract>(entity =>
             {
-                entity.HasKey(e => e.ContractId);
+                entity.HasKey(c => c.ContractId);
 
                 entity.ToTable("contract");
 
-                entity.HasIndex(e => e.ContractId)
+                entity.HasIndex(c => c.ContractId)
                     .HasName("ContractID")
                     .IsUnique();
 
-                entity.HasIndex(e => e.OrganisationId)
+                entity.HasIndex(c => c.OrganisationId)
                     .HasName("FK_Contract_Organisation");
 
-                entity.Property(e => e.ContractId)
+                entity.Property(c => c.ContractId)
                     .HasColumnName("ContractID")
                     .HasColumnType("int(11)");
 
-                entity.Property(e => e.DateCreated).HasColumnType("date");
+                entity.Property(c => c.DateCreated)
+                    .HasColumnType("datetime2")
+                    .HasDefaultValueSql("current_timestamp");
 
-                entity.Property(e => e.Description).HasColumnType("varchar(2000)");
+                entity.Property(c => c.Description)
+                    .HasColumnType("varchar(2000)");
 
-                entity.Property(e => e.Duration).HasColumnType("tinyint(4)");
+                entity.Property(c => c.Duration)
+                    .HasColumnType("tinyint(4)");
 
-                entity.Property(e => e.EndDate).HasColumnType("date");
+                entity.Property(c => c.EndDate)
+                    .HasColumnType("date");
 
-                entity.Property(e => e.Location).HasColumnType("varchar(30)");
+                entity.Property(c => c.Location)
+                    .HasColumnType("varchar(30)");
 
-                entity.Property(e => e.OrganisationId)
+                entity.Property(c => c.OrganisationId)
                     .HasColumnName("OrganisationID")
                     .HasColumnType("int(11)");
 
-                entity.Property(e => e.Position).HasColumnType("varchar(30)");
+                entity.Property(c => c.Position)
+                    .HasColumnType("varchar(75)");
 
-                entity.Property(e => e.StartDate).HasColumnType("date");
+                entity.Property(c => c.StartDate)
+                    .HasColumnType("date");
 
-                entity.HasOne(d => d.Organisation)
-                    .WithMany(p => p.Contracts)
-                    .HasForeignKey(d => d.OrganisationId)
+                entity.HasOne(c => c.Organisation)
+                    .WithMany(o => o.Contracts)
+                    .HasForeignKey(c => c.OrganisationId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Contract_Organisation");
             });

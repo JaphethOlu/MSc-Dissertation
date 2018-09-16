@@ -60,11 +60,11 @@ CREATE TABLE Recruiter_Account (
 );
 
 CREATE TABLE Contract (
-    ContractID INT NOT NULL UNIQUE,
-    Position VARCHAR(30),
-    DateCreated DATE,
+    ContractID INT NOT NULL AUTO_INCREMENT,
+    Position VARCHAR(75) NOT NULL,
+    DateCreated DATETIME DEFAULT CURRENT_TIMESTAMP,
     OrganisationID INT NOT NULL,
-    Location VARCHAR(30),
+    Location VARCHAR(30) NOT NULL,
     Description VARCHAR(2000),
     Duration TINYINT NOT NULL,
     StartDate DATE,
@@ -73,7 +73,7 @@ CREATE TABLE Contract (
     CONSTRAINT FK_Contract_Organisation FOREIGN KEY (OrganisationID) REFERENCES Organisation(OrganisationID),
     CONSTRAINT Min_Contract_Duration CHECK(Duration > 0),
 	CONSTRAINT Max_Contract_Duration CHECK(Duration <= 24)
-);
+)AUTO_INCREMENT = 10000;
 
 CREATE TABLE Saved_Contract (
     ContractID INT NOT NULL UNIQUE,
