@@ -10,6 +10,7 @@ using Master.Interfaces.Repositories;
 namespace Tests.Repositories
 {
     [TestFixture]
+    [Ignore("Tested to ensure functional database mapping")]
     public class ContractorAccountRepositoryTests
     {
         IContractorAccountRepository ContractorAccountRepository;

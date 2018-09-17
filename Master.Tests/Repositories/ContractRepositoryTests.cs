@@ -10,6 +10,7 @@ using Master.Interfaces.Repositories;
 namespace Tests.Repositories
 {
     [TestFixture]
+    [Ignore("Tested to ensure functional database mapping")]
     public class ContractRepositoryTests
     {
         DissertationContext DbContext = new DissertationContext();
@@ -35,7 +36,7 @@ namespace Tests.Repositories
                 MinimumSalary = 150
             };
         }
-        /*
+        
         [Test]
         public void TestDeleteContract()
         {
@@ -43,7 +44,7 @@ namespace Tests.Repositories
             Contract savedContract = ContractRepository.FindContractById(TestContractId);
             Assert.Null(savedContract);
         }
-        */
+        
         [Test]
         public void TestSaveContract()
         {
