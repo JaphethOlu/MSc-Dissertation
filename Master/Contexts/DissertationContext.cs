@@ -240,7 +240,11 @@ namespace Master.Contexts
                     .HasColumnName("ContractID")
                     .HasColumnType("int(11)");
 
-                entity.Property(c => c.DateCreated)
+                entity.Property(c => c.JobTitle)
+                    .IsRequired()
+                    .HasColumnType("varchar(75)");
+
+                entity.Property(c => c.DateAdded)
                     .HasColumnType("datetime2")
                     .HasDefaultValueSql("current_timestamp");
 
@@ -248,24 +252,27 @@ namespace Master.Contexts
                     .HasColumnType("varchar(2000)");
 
                 entity.Property(c => c.Duration)
+                    .IsRequired()
                     .HasColumnType("tinyint(4)");
 
-                entity.Property(c => c.EndDate)
-                    .HasColumnType("date");
+                entity.Property(c => c.MinimumSalary)
+                    .IsRequired()
+                    .HasColumnType("smallint(6)");
+
+                entity.Property(c => c.MaximumSalary)
+                    .IsRequired()
+                    .HasColumnType("smallint(6)");
 
                 entity.Property(c => c.Location)
                     .HasColumnType("varchar(30)");
 
+                entity.Property(c => c.ApplicationUrl)
+                    .HasColumnType("varchar(250)");
+
                 entity.Property(c => c.OrganisationId)
                     .HasColumnName("OrganisationID")
                     .HasColumnType("int(11)");
-
-                entity.Property(c => c.Position)
-                    .HasColumnType("varchar(75)");
-
-                entity.Property(c => c.StartDate)
-                    .HasColumnType("date");
-
+        
                 entity.HasOne(c => c.Organisation)
                     .WithMany(o => o.Contracts)
                     .HasForeignKey(c => c.OrganisationId)

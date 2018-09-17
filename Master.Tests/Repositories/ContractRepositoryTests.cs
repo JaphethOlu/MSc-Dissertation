@@ -15,7 +15,7 @@ namespace Tests.Repositories
         DissertationContext DbContext = new DissertationContext();
         ContractRepository ContractRepository;
         Contract TestContract = new Contract();
-        int TestContractId = 10001;
+        int TestContractId = 10000;
 
         public ContractRepositoryTests()
         {
@@ -27,10 +27,12 @@ namespace Tests.Repositories
         {
             TestContract = new Contract
             {
-                Position = "System Architect",
+                JobTitle = "System Architect",
                 OrganisationId = 101100,
                 Location = "NewCastle",
-                Duration = 6
+                Duration = 6,
+                MaximumSalary = 250,
+                MinimumSalary = 150
             };
         }
         /*
@@ -48,7 +50,7 @@ namespace Tests.Repositories
             ContractRepository.SaveNewContract(TestContract);
             Contract savedContract = ContractRepository.FindContractById(TestContractId);
             Assert.NotNull(savedContract);
-            Assert.NotNull(savedContract.DateCreated);
+            Assert.NotNull(savedContract.DateAdded);
         }
     }
 }

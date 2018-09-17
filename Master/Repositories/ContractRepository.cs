@@ -33,7 +33,7 @@ namespace Master.Repositories
         public List<Contract> FindContractsByPosition(string position)
         {
             List<Contract> contracts = DbContext.Contracts
-                                                .Where(c => c.Position.Contains(position))
+                                                .Where(c => c.JobTitle.Contains(position))
                                                 .ToList();
 
             return contracts;

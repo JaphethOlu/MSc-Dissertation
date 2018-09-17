@@ -12,10 +12,10 @@ namespace Master.Models
 
         [Required]
         [StringLength(75)]
-        public string Position { get; set; }
+        public string JobTitle { get; set; }
 
         [Required]
-        public DateTime? DateCreated { get; set; }
+        public DateTime? DateAdded { get; set; }
 
         [Required]
         [Range(101100, 2147483647)]
@@ -31,22 +31,23 @@ namespace Master.Models
         [Required]
         [Range(3, 24)]
         public sbyte Duration { get; set; }
-        public DateTime? StartDate { get; set; }
-        public DateTime? EndDate { get; set; }
+        
+        [Required]
+        [Range(30, 1000)]
+        public int MinimumSalary { get; set; }
+
+        [Required]
+        [Range(30, 1000)]
+        public int MaximumSalary { get; set; }
+
+        [Url]
+        public string ApplicationUrl { get; set; }
 
         public Organisation Organisation { get; set; }
 
         public Contract()
         {
 
-        }
-
-        public Contract(string position, int organisationId, string location, sbyte duration)
-        {
-            Position = position;
-            OrganisationId = organisationId;
-            Location = location;
-            Duration = duration;
         }
     }
 }
