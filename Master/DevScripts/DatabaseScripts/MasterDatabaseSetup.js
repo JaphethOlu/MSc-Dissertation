@@ -76,6 +76,7 @@ const CreateOrganisationTable = `CREATE TABLE Organisation (
     OrganisationProfileBannerLocation VARCHAR(250),
     Location VARCHAR(30) NOT NULL,
     NumberOfAvailableAdverts SMALLINT UNSIGNED DEFAULT 5,
+    NumberOfContracts SMALLINT UNSIGNED DEFAULT 0,
     Director VARCHAR(50) NOT NULL,
     CONSTRAINT U_Organisation UNIQUE (OrganisationID, OrganisationName, Director),
     CONSTRAINT PK_Organisation PRIMARY KEY (OrganisationID),
@@ -230,7 +231,11 @@ function createContracts() {
          ${mysql.escape(contract.description)}, ${mysql.escape(contract.duration)},
          ${mysql.escape(contract.minSal)}, ${mysql.escape(contract.maxSal)})`;
 
+        let updateNumberOfContractQuery =
+        `UPDATE organisation SET NumberOfContracts = NumberOfContracts + 1 WHERE OrganisationID = ${mysql.escape(contract.orgID)}`;
+
         executeQuery(saveContractQuery);
+        executeQuery(updateNumberOfContractQuery);
         NumberOfContractsCreated++;
     };
     endConnection();

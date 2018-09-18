@@ -42,6 +42,7 @@ CREATE TABLE Organisation (
     OrganisationProfileBannerLocation VARCHAR(250),
     Location VARCHAR(30) NOT NULL,
     NumberOfAvailableAdverts SMALLINT UNSIGNED DEFAULT 5,
+    NumberOfContracts SMALLINT UNSIGNED DEFAULT 0,
     Director VARCHAR(50) NOT NULL,
     CONSTRAINT U_Organisation UNIQUE (OrganisationID, OrganisationName, Director),
     CONSTRAINT PK_Organisation PRIMARY KEY (OrganisationID),
