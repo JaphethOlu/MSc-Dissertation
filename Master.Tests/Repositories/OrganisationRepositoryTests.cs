@@ -85,7 +85,7 @@ namespace Tests.Repositories
             Organisation organisation;
             organisation = Repository.FindOrganisationById(OrganisationId);
             ushort? previousNumberOfContracts = organisation.NumberOfContracts;
-            Repository.ReduceNumberOfContracts(OrganisationId);
+            Repository.DecreaseNumberOfContracts(OrganisationId);
             organisation = Repository.FindOrganisationById(OrganisationId);
             Assert.Less(organisation.NumberOfContracts, previousNumberOfContracts);
         }

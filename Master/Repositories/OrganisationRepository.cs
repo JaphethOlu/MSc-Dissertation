@@ -54,7 +54,7 @@ namespace Master.Repositories
             DbContext.SaveChanges();
         }
 
-        public void ReduceNumberOfContracts(int organisationId)
+        public void DecreaseNumberOfContracts(int organisationId)
         {
             Organisation organisation = FindOrganisationById(organisationId);
             if(organisation.NumberOfContracts > 0)

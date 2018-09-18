@@ -49,7 +49,7 @@ namespace Master.Repositories
             DbContext.SaveChanges();
 
             OrganisationRepository HelperRepository = new OrganisationRepository(DbContext);
-            HelperRepository.ReduceNumberOfContracts(contract.OrganisationId);
+            HelperRepository.DecreaseNumberOfContracts(contract.OrganisationId);
         }
     }
 }
