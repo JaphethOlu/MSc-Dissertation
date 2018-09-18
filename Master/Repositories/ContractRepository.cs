@@ -22,6 +22,9 @@ namespace Master.Repositories
         {
             DbContext.Contracts.Add(newContract);
             DbContext.SaveChanges();
+
+            OrganisationRepository HelperRepository = new OrganisationRepository(DbContext);
+            HelperRepository.IncreaseNumberOfContracts(newContract.OrganisationId);
         }
 
         public Contract FindContractById(int contractId)
@@ -44,6 +47,9 @@ namespace Master.Repositories
             Contract contract = FindContractById(contractId);
             DbContext.Contracts.Remove(contract);
             DbContext.SaveChanges();
+
+            OrganisationRepository HelperRepository = new OrganisationRepository(DbContext);
+            HelperRepository.ReduceNumberOfContracts(contract.OrganisationId);
         }
     }
 }

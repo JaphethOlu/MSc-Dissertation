@@ -54,6 +54,17 @@ namespace Master.Repositories
             DbContext.SaveChanges();
         }
 
+        public void ReduceNumberOfContracts(int organisationId)
+        {
+            Organisation organisation = FindOrganisationById(organisationId);
+            if(organisation.NumberOfContracts > 0)
+            {
+                organisation.NumberOfContracts -= 1;
+                DbContext.Organisations.Update(organisation);
+                DbContext.SaveChanges();
+            }
+        }
+
         public List<Organisation> GetMostContractsByAgency()
         {
             List<Organisation> topAgencies;

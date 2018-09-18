@@ -333,6 +333,8 @@ function endConnection() {
     connection.end(function(error) {
         if(error) { 
             console.log(error);
+        } else {
+            console.log(success("Operation Complete!!!"));
         }
     });
 };

@@ -15,7 +15,7 @@ namespace Tests.Repositories
         DissertationContext DbContext = new DissertationContext();
         ContractRepository Repository;
         Contract TestContract = new Contract();
-        int TestContractId = 10000;
+        int TestContractId = 10600;
 
         public ContractRepositoryTests()
         {
@@ -40,19 +40,45 @@ namespace Tests.Repositories
         [Ignore("Tested To Ensure DBConnection and functionality")]
         public void TestDeleteContract()
         {
+            OrganisationRepository HelperRepository = new OrganisationRepository(DbContext);
+
+            Organisation organisation = HelperRepository.FindOrganisationById(TestContract.OrganisationId);
+            ushort? previousNumberOfContracts = organisation.NumberOfContracts;
+
             Repository.DeleteContract(TestContractId);
             Contract savedContract = Repository.FindContractById(TestContractId);
-            Assert.Null(savedContract);
+
+            organisation = HelperRepository.FindOrganisationById(TestContract.OrganisationId);
+            ushort? currentNumberOfContracts = organisation.NumberOfContracts;
+            
+            Assert.Multiple(() => 
+            {
+                Assert.Null(savedContract);
+                Assert.Less(currentNumberOfContracts, previousNumberOfContracts);
+            });
         }
         
         [Test]
         [Ignore("Tested To Ensure DBConnection and functionality")]
         public void TestSaveContract()
         {
+            OrganisationRepository HelperRepository = new OrganisationRepository(DbContext);
+
+            Organisation organisation = HelperRepository.FindOrganisationById(TestContract.OrganisationId);
+            ushort? previousNumberOfContracts = organisation.NumberOfContracts;
+
             Repository.SaveNewContract(TestContract);
+
+            organisation = HelperRepository.FindOrganisationById(TestContract.OrganisationId);
+            ushort? currentNumberOfContracts = organisation.NumberOfContracts;
+
             Contract savedContract = Repository.FindContractById(TestContractId);
-            Assert.NotNull(savedContract);
-            Assert.NotNull(savedContract.DateAdded);
+
+            Assert.Multiple(() => {
+                Assert.NotNull(savedContract);
+                Assert.NotNull(savedContract.DateAdded);
+                Assert.Greater(currentNumberOfContracts, previousNumberOfContracts);
+            });
         }
     }
 }

@@ -78,6 +78,17 @@ namespace Tests.Repositories
             organisation = Repository.FindOrganisationById(OrganisationId);
             Assert.Greater(organisation.NumberOfContracts, previousNumberOfContracts);
         }
+        
+        [Test]
+        public void ReduceNumberOfContracts()
+        {
+            Organisation organisation;
+            organisation = Repository.FindOrganisationById(OrganisationId);
+            ushort? previousNumberOfContracts = organisation.NumberOfContracts;
+            Repository.ReduceNumberOfContracts(OrganisationId);
+            organisation = Repository.FindOrganisationById(OrganisationId);
+            Assert.Less(organisation.NumberOfContracts, previousNumberOfContracts);
+        }
 
         [Test]
         public void GetMostContractsByAgency()
