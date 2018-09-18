@@ -1,58 +1,72 @@
 [
     {
         "OrganisationName": "Macrosoft",
-        "OrganisationType": "Employer"
+        "OrganisationType": "Employer",
+        "Location": "Southampton"
     },
     {
         "OrganisationName": "Noodle",
-        "OrganisationType": "Employer"
+        "OrganisationType": "Employer",
+        "Location": "Birmingham"
     },
     {
         "OrganisationName": "Git Connect",
-        "OrganisationType": "Employer"
+        "OrganisationType": "Employer",
+        "Location": "London"
     },
     {
         "OrganisationName": "Zoober",
-        "OrganisationType": "Employer"
+        "OrganisationType": "Employer",
+        "Location": "Leeds"
     },
     {
         "OrganisationName": "Cola Coca",
-        "OrganisationType": "Employer"
+        "OrganisationType": "Employer",
+        "Location": "Portsmouth"
     },
     {
         "OrganisationName": "Waterbnb",
-        "OrganisationType": "Employer"
+        "OrganisationType": "Employer",
+        "Location": "Dublin"
     },
     {
         "OrganisationName": "Accounting Times",
-        "OrganisationType": "Employer"
+        "OrganisationType": "Employer",
+        "Location": "Milton Keyes"
     },
     {
         "OrganisationName": "Hiring Evolution",
-        "OrganisationType": "Agency"
+        "OrganisationType": "Agency",
+        "Location": "Kent"
     },
     {
         "OrganisationName": "Hailey Employment Services",
-        "OrganisationType": "Agency"
+        "OrganisationType": "Agency",
+        "Location": "Manchester"
     },
     {
         "OrganisationName": "Rays Recruitment PLC",
-        "OrganisationType": "Agency"
+        "OrganisationType": "Agency",
+        "Location": "Bristol"
     },
     {
         "OrganisationName": "You're Hired Services",
-        "OrganisationType": "Agency"
+        "OrganisationType": "Agency",
+        "Location": "Essex"
     },
     {
         "OrganisationName": "Talent Acquirer, Ltd",
-        "OrganisationType": "Agency"
+        "OrganisationType": "Agency",
+        "Location": "Surrey"
     },
     {
         "OrganisationName": "Staff Required Ltd",
-        "OrganisationType": "Agency"
+        "OrganisationType": "Agency",
+        "Location": "Southampton"
     },
     {
         "OrganisationName": "Skill Ladder",
-        "OrganisationType": "Agency"
+        "OrganisationType": "Agency",
+        "Location": "Kent"
     }
 ]
