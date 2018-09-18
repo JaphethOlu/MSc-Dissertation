@@ -10,10 +10,9 @@ using Master.Interfaces.Repositories;
 namespace Tests.Repositories
 {
     [TestFixture]
-    [Ignore("Tested to ensure functional database mapping")]
     public class DirectorAccountRepositoryTests
     {
-        IDirectorAccountRepository DirectorAccountRepository;
+        IDirectorAccountRepository Repository;
         DissertationContext DissertationContext = new DissertationContext();
         DirectorAccount NewDirectorAccount;
         string TestEmailAddress = "exampleDirector@email.com";
@@ -21,7 +20,7 @@ namespace Tests.Repositories
         
         public DirectorAccountRepositoryTests()
         {
-            DirectorAccountRepository = new DirectorAccountRepository(DissertationContext);
+            Repository = new DirectorAccountRepository(DissertationContext);
             NewDirectorAccount = new DirectorAccount{
                 EmailAddress = TestEmailAddress,
                 Password = "IAmADirector",
@@ -31,25 +30,27 @@ namespace Tests.Repositories
         }
         
         [Test]
+        [Ignore("Tested To Ensure DBConnection and functionality")]
         public void TestDeleteDirector()
         {
-            DirectorAccountRepository.DeleteDirectorAccount(TestEmailAddress);
-            Assert.Null(DirectorAccountRepository.FindDirectorAccount(TestEmailAddress));
+            Repository.DeleteDirectorAccount(TestEmailAddress);
+            Assert.Null(Repository.FindDirectorAccount(TestEmailAddress));
         }
 
         [Test]
         public void TestFindFakeDirectorAccounts()
         {
             DirectorAccount foundAccount;
-            foundAccount = DirectorAccountRepository.FindDirectorAccount(FakeEmailAddress);
+            foundAccount = Repository.FindDirectorAccount(FakeEmailAddress);
             Assert.Null(foundAccount);
         }
         
         [Test]
+        [Ignore("Tested To Ensure DBConnection and functionality")]
         public void TestSaveDirector()
         {
-            DirectorAccountRepository.SaveNewDirectorAccount(NewDirectorAccount);
-            DirectorAccount savedAccount = DirectorAccountRepository.FindDirectorAccount(TestEmailAddress);
+            Repository.SaveNewDirectorAccount(NewDirectorAccount);
+            DirectorAccount savedAccount = Repository.FindDirectorAccount(TestEmailAddress);
             Assert.NotNull(savedAccount);
         }
     }

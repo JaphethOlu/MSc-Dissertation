@@ -171,6 +171,10 @@ namespace Master.Contexts
                     .HasColumnType("smallint(6)")
                     .HasDefaultValueSql("'5'");
 
+                entity.Property(o => o.NumberOfContracts)
+                    .HasColumnType("smallint(6)")
+                    .HasDefaultValueSql("'0'");
+
                 entity.HasOne(o => o.DirectorAccount)
                     .WithOne()
                     .HasForeignKey<Organisation>(o => o.Director)

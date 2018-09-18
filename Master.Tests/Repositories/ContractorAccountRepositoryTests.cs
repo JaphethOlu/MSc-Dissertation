@@ -10,10 +10,9 @@ using Master.Interfaces.Repositories;
 namespace Tests.Repositories
 {
     [TestFixture]
-    [Ignore("Tested to ensure functional database mapping")]
     public class ContractorAccountRepositoryTests
     {
-        IContractorAccountRepository ContractorAccountRepository;
+        IContractorAccountRepository Repository;
         DissertationContext DissertationContext = new DissertationContext();
         ContractorAccount NewContractorAccount;
         string ExampleEmailAddress = "example@email.com";
@@ -21,30 +20,32 @@ namespace Tests.Repositories
         
         public ContractorAccountRepositoryTests()
         {
-            ContractorAccountRepository = new ContractorAccountRepository(DissertationContext);
+            Repository = new ContractorAccountRepository(DissertationContext);
             NewContractorAccount = new ContractorAccount(ExampleEmailAddress, "IAmAContractor", "John", "Doe");
         }
         
         [Test]
+        [Ignore("Tested To Ensure DBConnection and functionality")]
         public void TestDeleteContractor()
         {
-            ContractorAccountRepository.DeleteContractorAccount(ExampleEmailAddress);
-            Assert.Null(ContractorAccountRepository.FindContractorAccount(ExampleEmailAddress));
+            Repository.DeleteContractorAccount(ExampleEmailAddress);
+            Assert.Null(Repository.FindContractorAccount(ExampleEmailAddress));
         }
 
         [Test]
         public void TestFindFakeContractorAccounts()
         {
             ContractorAccount foundAccount;
-            foundAccount = ContractorAccountRepository.FindContractorAccount(FakeEmailAddress);
+            foundAccount = Repository.FindContractorAccount(FakeEmailAddress);
             Assert.Null(foundAccount);
         }
         
         [Test]
+        [Ignore("Tested To Ensure DBConnection and functionality")]
         public void TestSaveContractor()
         {
-            ContractorAccountRepository.SaveNewContractorAccount(NewContractorAccount);
-            ContractorAccount savedAccount = ContractorAccountRepository.FindContractorAccount("example@email.com");
+            Repository.SaveNewContractorAccount(NewContractorAccount);
+            ContractorAccount savedAccount = Repository.FindContractorAccount("example@email.com");
             Assert.NotNull(savedAccount);
         }
     }

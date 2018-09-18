@@ -11,14 +11,14 @@ namespace Tests.Repositories
     [Ignore("Tested to ensure functional database mapping")]
     public class ContractorProfileRepositoryTests
     {
-        IContractorProfileRepository ContractorProfileRepository;
+        IContractorProfileRepository Repository;
         DissertationContext DissertationContext = new DissertationContext();
         ContractorProfile ContractorProfile;
         string ContractorAccountEmail = "bourneCoder@example.com";
 
         public ContractorProfileRepositoryTests()
         {
-            ContractorProfileRepository = new ContractorProfileRepository(DissertationContext);
+            Repository = new ContractorProfileRepository(DissertationContext);
         }
         
         [OneTimeSetUp]
@@ -34,14 +34,14 @@ namespace Tests.Repositories
         [OneTimeTearDown]
         public void TearDownContractorProfile()
         {
-            ContractorProfileRepository.DeleteContractorProfile(ContractorAccountEmail);
+            Repository.DeleteContractorProfile(ContractorAccountEmail);
         }
 
         [Test]
         public void TestSaveContractorProfile()
         {
-            ContractorProfileRepository.SaveNewContractorProfile(ContractorProfile);
-            ContractorProfile savedContractorProfile = ContractorProfileRepository.FindContractorProfile(ContractorAccountEmail);
+            Repository.SaveNewContractorProfile(ContractorProfile);
+            ContractorProfile savedContractorProfile = Repository.FindContractorProfile(ContractorAccountEmail);
             Assert.NotNull(savedContractorProfile);
         }
     }

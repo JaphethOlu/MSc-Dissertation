@@ -10,17 +10,16 @@ using Master.Interfaces.Repositories;
 namespace Tests.Repositories
 {
     [TestFixture]
-    [Ignore("Tested to ensure functional database mapping")]
     public class ContractRepositoryTests
     {
         DissertationContext DbContext = new DissertationContext();
-        ContractRepository ContractRepository;
+        ContractRepository Repository;
         Contract TestContract = new Contract();
         int TestContractId = 10000;
 
         public ContractRepositoryTests()
         {
-            ContractRepository = new ContractRepository(DbContext);
+            Repository = new ContractRepository(DbContext);
         }
 
         [OneTimeSetUp]
@@ -38,18 +37,20 @@ namespace Tests.Repositories
         }
         
         [Test]
+        [Ignore("Tested To Ensure DBConnection and functionality")]
         public void TestDeleteContract()
         {
-            ContractRepository.DeleteContract(TestContractId);
-            Contract savedContract = ContractRepository.FindContractById(TestContractId);
+            Repository.DeleteContract(TestContractId);
+            Contract savedContract = Repository.FindContractById(TestContractId);
             Assert.Null(savedContract);
         }
         
         [Test]
+        [Ignore("Tested To Ensure DBConnection and functionality")]
         public void TestSaveContract()
         {
-            ContractRepository.SaveNewContract(TestContract);
-            Contract savedContract = ContractRepository.FindContractById(TestContractId);
+            Repository.SaveNewContract(TestContract);
+            Contract savedContract = Repository.FindContractById(TestContractId);
             Assert.NotNull(savedContract);
             Assert.NotNull(savedContract.DateAdded);
         }

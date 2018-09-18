@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 using NUnit.Framework;
 
 using Master.Models;
@@ -8,19 +10,19 @@ using Master.Interfaces.Repositories;
 namespace Tests.Repositories
 {
     [TestFixture]
-    [Ignore("Tested to ensure functional database mapping")]
     public class OrganisationRepositoryTests
     {
-        OrganisationRepository OrganisationRepository;
+        OrganisationRepository Repository;
         int OrganisationId = 101100;
         string OrganisationName = "Donger's Inc";
         string OrganisationDirector = "johnsnow@example.com";
         Organisation NewOrganisation;
+        const byte TopOrganisationsLength = 5;
 
         public OrganisationRepositoryTests()
         {
             DissertationContext DbContext = new DissertationContext();
-            OrganisationRepository = new OrganisationRepository(DbContext);
+            Repository = new OrganisationRepository(DbContext);
         }
 
         [OneTimeSetUp]
@@ -36,10 +38,11 @@ namespace Tests.Repositories
         }
 
         [Test]
+        [Ignore("Tested To Ensure DBConnection and Functionality")]
         public void DeleteOrganisation()
         {
-            OrganisationRepository.DeleteOrganisation(NewOrganisation.OrganisationName);
-            Organisation deletedOrganisation = OrganisationRepository.FindOrganisationByName(NewOrganisation.OrganisationName);
+            Repository.DeleteOrganisation(NewOrganisation.OrganisationName);
+            Organisation deletedOrganisation = Repository.FindOrganisationByName(NewOrganisation.OrganisationName);
             Assert.Null(deletedOrganisation);
         }
 
@@ -47,7 +50,7 @@ namespace Tests.Repositories
         public void FindOrganisationByIdTest()
         {
             Organisation organisation;
-            organisation = OrganisationRepository.FindOrganisationById(OrganisationId);
+            organisation = Repository.FindOrganisationById(OrganisationId);
             Assert.NotNull(organisation);
             Assert.AreEqual(OrganisationId, organisation.OrganisationId);
             Assert.AreEqual(OrganisationName, organisation.OrganisationName);
@@ -58,7 +61,7 @@ namespace Tests.Repositories
         public void FindOrganisationByName()
         {
             Organisation organisation;
-            organisation = OrganisationRepository.FindOrganisationByName(OrganisationName);
+            organisation = Repository.FindOrganisationByName(OrganisationName);
             Assert.NotNull(organisation);
             Assert.AreEqual(OrganisationId, organisation.OrganisationId);
             Assert.AreEqual(OrganisationName, organisation.OrganisationName);
@@ -66,10 +69,56 @@ namespace Tests.Repositories
         }
 
         [Test]
+        public void IncreaseNumberOfContracts()
+        {
+            Organisation organisation;
+            organisation = Repository.FindOrganisationById(OrganisationId);
+            ushort? previousNumberOfContracts = organisation.NumberOfContracts;
+            Repository.IncreaseNumberOfContracts(OrganisationId);
+            organisation = Repository.FindOrganisationById(OrganisationId);
+            Assert.Greater(organisation.NumberOfContracts, previousNumberOfContracts);
+        }
+
+        [Test]
+        public void GetMostContractsByAgency()
+        {
+            List<Organisation> orgList = new List<Organisation>();
+            var result = Repository.GetMostContractsByAgency();
+
+            Assert.Multiple(() => 
+            {
+                Assert.AreEqual(orgList.GetType(), result.GetType());
+                foreach(Organisation org in result)
+                {
+                    Assert.AreEqual(OrganisationType.Agency, org.OrganisationType);
+                }
+                Assert.AreEqual(TopOrganisationsLength, result.Count);
+            });                     
+        }
+
+        [Test]
+        public void GetMostContractsByEmpployer()
+        {
+            List<Organisation> orgList = new List<Organisation>();
+            var result = Repository.GetMostContractsByEmployer();
+
+            Assert.Multiple(() => 
+            {
+                Assert.AreEqual(orgList.GetType(), result.GetType());   
+                foreach(Organisation org in result)
+                {
+                    Assert.AreEqual(OrganisationType.Employer, org.OrganisationType);
+                }
+                Assert.AreEqual(TopOrganisationsLength, result.Count);
+            });
+        }
+
+        [Test]
+        [Ignore("Tested To Ensure DBConnection and Functionality")]
         public void SaveOrganisation()
         {
-            OrganisationRepository.SaveNewOrganisation(NewOrganisation);
-            Organisation savedOrganisation = OrganisationRepository.FindOrganisationByName(NewOrganisation.OrganisationName);
+            Repository.SaveNewOrganisation(NewOrganisation);
+            Organisation savedOrganisation = Repository.FindOrganisationByName(NewOrganisation.OrganisationName);
             Assert.NotNull(savedOrganisation);
         }
     }

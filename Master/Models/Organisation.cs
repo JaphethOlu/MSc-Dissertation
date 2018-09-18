@@ -27,6 +27,8 @@ namespace Master.Models
         [Range(0, 65535)]
         public ushort? NumberOfAvailableAdverts { get; set; }
 
+        public ushort? NumberOfContracts { get; set; }
+
         [Required]
         [EmailAddress]
         public string Director { get; set; }

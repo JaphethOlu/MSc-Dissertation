@@ -10,7 +10,6 @@ using Master.Interfaces.Repositories;
 namespace Tests.Repositories
 {
     [TestFixture]
-    [Ignore("Tested to ensure functional database mapping")]
     public class RecruiterAccountRepositoryTests
     {
         IRecruiterAccountRepository RecruiterAccountRepository;
@@ -32,6 +31,7 @@ namespace Tests.Repositories
         }
         
         [Test]
+        [Ignore("Tested To Ensure DBConnection and functionality")]
         public void TestDeleteRecruiter()
         {
             RecruiterAccountRepository.DeleteRecruiterAccount(TestEmailAddress);
@@ -47,6 +47,7 @@ namespace Tests.Repositories
         }
         
         [Test]
+        [Ignore("Tested To Ensure DBConnection and functionality")]
         public void TestSaveRecruiter()
         {
             RecruiterAccountRepository.SaveNewRecruiterAccount(NewRecruiterAccount);
