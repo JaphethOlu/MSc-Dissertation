@@ -75,6 +75,7 @@ namespace Master
             // ======================= Repositories Start ==========================
             services.AddScoped<IContractorAccountRepository, ContractorAccountRepository>();
             services.AddScoped<IContractorProfileRepository, ContractorProfileRepository>();
+            services.AddScoped<IOrganisationRepository, OrganisationRepository>();
 
             // ========================== Models Start =============================
 			services.AddTransient<IAccount, ContractorAccount>();

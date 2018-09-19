@@ -65,26 +65,42 @@ namespace Master.Repositories
             }
         }
 
-        public List<Organisation> GetMostContractsByAgency()
+        public dynamic GetMostContractsByAgency()
         {
-            List<Organisation> topAgencies;
-            topAgencies = DbContext.Organisations
-                                   .Where(o => o.OrganisationType == OrganisationType.Agency)
-                                   .OrderByDescending(o => o.NumberOfContracts)
-                                   .Take(TopOrganisationsNumber)
-                                   .ToList();
+            var topAgencies = DbContext.Organisations
+                                    .Where(o => o.OrganisationType == OrganisationType.Agency)
+                                    .OrderByDescending(o => o.NumberOfContracts)
+                                    .Take(TopOrganisationsNumber)
+                                    .Select(o => new
+                                            {
+                                                organisationId = o.OrganisationId,
+                                                organisationName = o.OrganisationName,
+                                                organisationType = o.OrganisationType,
+                                                statement = o.OrganisationStatement,
+                                                location = o.Location,
+                                                numberOfContracts = o.NumberOfContracts
+                                            })
+                                    .ToList();
 
             return topAgencies;
         }
 
-        public List<Organisation> GetMostContractsByEmployer()
+        public dynamic GetMostContractsByEmployer()
         {
-            List<Organisation> topEmployers;
-            topEmployers = DbContext.Organisations
-                                   .Where(o => o.OrganisationType == OrganisationType.Employer)
-                                   .OrderByDescending(o => o.NumberOfContracts)
-                                   .Take(TopOrganisationsNumber)
-                                   .ToList();
+            var topEmployers = DbContext.Organisations
+                                    .Where(o => o.OrganisationType == OrganisationType.Agency)
+                                    .OrderByDescending(o => o.NumberOfContracts)
+                                    .Take(TopOrganisationsNumber)
+                                    .Select(o => new
+                                    {
+                                        organisationId = o.OrganisationId,
+                                        organisationName = o.OrganisationName,
+                                        organisationType = o.OrganisationType,
+                                        statement = o.OrganisationStatement,
+                                        location = o.Location,
+                                        numberOfContracts = o.NumberOfContracts
+                                    })
+                                    .ToList();
 
             return topEmployers;
         }

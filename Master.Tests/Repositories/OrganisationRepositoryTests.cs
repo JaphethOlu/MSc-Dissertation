@@ -51,10 +51,13 @@ namespace Tests.Repositories
         {
             Organisation organisation;
             organisation = Repository.FindOrganisationById(OrganisationId);
-            Assert.NotNull(organisation);
-            Assert.AreEqual(OrganisationId, organisation.OrganisationId);
-            Assert.AreEqual(OrganisationName, organisation.OrganisationName);
-            Assert.AreEqual(OrganisationDirector, organisation.Director);
+
+            Assert.Multiple(() => {
+                Assert.NotNull(organisation);
+                Assert.AreEqual(OrganisationId, organisation.OrganisationId);
+                Assert.AreEqual(OrganisationName, organisation.OrganisationName);
+                Assert.AreEqual(OrganisationDirector, organisation.Director);
+            });
         }
 
         [Test]
@@ -62,10 +65,13 @@ namespace Tests.Repositories
         {
             Organisation organisation;
             organisation = Repository.FindOrganisationByName(OrganisationName);
-            Assert.NotNull(organisation);
-            Assert.AreEqual(OrganisationId, organisation.OrganisationId);
-            Assert.AreEqual(OrganisationName, organisation.OrganisationName);
-            Assert.AreEqual(OrganisationDirector, organisation.Director);
+
+            Assert.Multiple(() => {
+                Assert.NotNull(organisation);
+                Assert.AreEqual(OrganisationId, organisation.OrganisationId);
+                Assert.AreEqual(OrganisationName, organisation.OrganisationName);
+                Assert.AreEqual(OrganisationDirector, organisation.Director);            
+            });
         }
 
         [Test]
@@ -93,35 +99,15 @@ namespace Tests.Repositories
         [Test]
         public void GetMostContractsByAgency()
         {
-            List<Organisation> orgList = new List<Organisation>();
             var result = Repository.GetMostContractsByAgency();
-
-            Assert.Multiple(() => 
-            {
-                Assert.AreEqual(orgList.GetType(), result.GetType());
-                foreach(Organisation org in result)
-                {
-                    Assert.AreEqual(OrganisationType.Agency, org.OrganisationType);
-                }
-                Assert.AreEqual(TopOrganisationsLength, result.Count);
-            });                     
+            Assert.True(result.GetType().IsGenericType);         
         }
 
         [Test]
-        public void GetMostContractsByEmpployer()
+        public void GetMostContractsByEmployer()
         {
-            List<Organisation> orgList = new List<Organisation>();
             var result = Repository.GetMostContractsByEmployer();
-
-            Assert.Multiple(() => 
-            {
-                Assert.AreEqual(orgList.GetType(), result.GetType());   
-                foreach(Organisation org in result)
-                {
-                    Assert.AreEqual(OrganisationType.Employer, org.OrganisationType);
-                }
-                Assert.AreEqual(TopOrganisationsLength, result.Count);
-            });
+            Assert.True(result.GetType().IsGenericType);
         }
 
         [Test]

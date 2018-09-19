@@ -17,9 +17,8 @@ namespace Master.Interfaces.Repositories
 
         void DecreaseNumberOfContracts(int organisationId);
 
-        List<Organisation> GetMostContractsByAgency();
+        dynamic GetMostContractsByAgency();
 
-        List<Organisation> GetMostContractsByEmployer();
-
+        dynamic GetMostContractsByEmployer();
     }
 }
