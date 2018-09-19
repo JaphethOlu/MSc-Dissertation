@@ -1,6 +1,7 @@
 import request from "superagent";
+import prefix from "superagent-prefix";
 
-// TODO: Development baseurl
+import { baseUrl, conLogin, conSignUp } from "./routes";
 
 export const authenticationService = {
     login,
@@ -9,7 +10,8 @@ export const authenticationService = {
 };
 
 function login(userCredentials) {
-    return request.post("http://localhost:55903/api/login/contractor")
+    return request.post(conLogin)
+                  .use(prefix(baseUrl))
                   .type("form")
                   .send(userCredentials)
                   .then((res) => {
@@ -22,7 +24,8 @@ function login(userCredentials) {
 };
 
 function signup(accountDetails) {
-    return request.post("http://localhost:55903/api/register/contractor")
+    return request.post(conSignUp)
+                  .use(prefix(baseUrl))
                   .type("form")
                   .send(accountDetails)
                   .then((res) => {
