@@ -1,7 +1,7 @@
 import request from "superagent";
 import prefix from "superagent-prefix";
 
-import { baseUrl, conLogin, conSignUp } from "./routes";
+import { base, conLogin, conSignUp } from "./routes";
 
 export const authenticationService = {
     login,
@@ -11,30 +11,24 @@ export const authenticationService = {
 
 function login(userCredentials) {
     return request.post(conLogin)
-                  .use(prefix(baseUrl))
-                  .type("form")
-                  .send(userCredentials)
-                  .then((res) => {
-                      storeResponse(res);
-                      return res;
-                  })
-                  .catch((err) => {
-                      console.log(err);
-                  });
+                .use(prefix(base))
+                .type("form")
+                .send(userCredentials)
+                .then((res) => {
+                    storeResponse(res);
+                    return res;
+                });
 };
 
 function signup(accountDetails) {
     return request.post(conSignUp)
-                  .use(prefix(baseUrl))
-                  .type("form")
-                  .send(accountDetails)
-                  .then((res) => {
-                      storeResponse(res);
-                      return res;
-                  })
-                  .catch((err) => {
-                      console.log(err);
-                  });
+                .use(prefix(base))
+                .type("form")
+                .send(accountDetails)
+                .then((res) => {
+                    storeResponse(res);
+                    return res;
+                });
 };
 
 function logout() {
