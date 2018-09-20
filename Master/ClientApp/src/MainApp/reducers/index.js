@@ -1,12 +1,12 @@
 import { combineReducers } from "redux";
 import { authentication } from "./authenticationReducer";
+import { topOrganisations } from "./topOrganisationsReducer";
 import { alert } from "./alertReducer";
 
-//TODO: Asynchronous action reducer from redux site
-
 const rootReducer = combineReducers({
+    alert,
     authentication,
-    alert
+    topOrganisations
 });
 
 export default rootReducer;

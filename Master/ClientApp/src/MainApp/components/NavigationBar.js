@@ -9,7 +9,7 @@ class NavigationBar extends React.Component {
             <div className="nav-bar">
                 <JobSearchBar />
                 <section className="unauth-user">
-                    <h1>Employers | Recruiters</h1>
+                    <h1>Employers & Recruiters</h1>
                     <LoginSignUp />
                 </section>
             </div>

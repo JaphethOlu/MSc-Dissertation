@@ -3,15 +3,15 @@ import sinon from "sinon";
 import thunk from "redux-thunk";
 import configureMockStore from "redux-mock-store";
 
-import { alertActionTypes, landingActionTypes } from "../../actionTypes";
-import { landingActions } from "../landingActions";
-import { landingService } from "../../services";
+import { alertActionTypes, topOrganisationsActionTypes } from "../../actionTypes";
+import { topOrganisationsActions } from "../topOrganisationsActions";
+import { topOrganisationsService } from "../../services";
 
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
 
 
-describe("Landing Component Actions", () => {
+describe(" Component Actions", () => {
     let store;
 
     const sinonTopEmployersRes = {
@@ -51,15 +51,15 @@ describe("Landing Component Actions", () => {
     test("It returns a list of top employers", done => {
 
         let expectedActions = [
-            { type: landingActionTypes.TOP_EMPLOYERS_REQUEST, loading: true },
-            { type: landingActionTypes.TOP_EMPLOYERS_SUCCESS, loading: false, TopEmployers: sinonTopEmployersRes.body }
+            { type: topOrganisationsActionTypes.TOP_EMPLOYERS_REQUEST, loading: true },
+            { type: topOrganisationsActionTypes.TOP_EMPLOYERS_SUCCESS, loading: false, TopEmployers: sinonTopEmployersRes.body }
         ];
 
         let fake = sinon.fake.resolves(sinonTopEmployersRes);
 
-        sinon.replace(landingService, "reqTopEmployers", fake);
+        sinon.replace(topOrganisationsService, "reqTopEmployers", fake);
 
-        return store.dispatch(landingActions.getTopEmployers())
+        return store.dispatch(topOrganisationsActions.getTopEmployers())
                     .then(() => {
                         let actions = store.getActions();
                         expect(actions[1].TopEmployers).to.equal(expectedActions[1].TopEmployers);
@@ -74,16 +74,16 @@ describe("Landing Component Actions", () => {
         let errorMsg = "Unable to retrieve top employers";
 
         let expectedActions = [
-            { type: landingActionTypes.TOP_EMPLOYERS_REQUEST, loading: true },
-            { type: landingActionTypes.TOP_EMPLOYERS_ERROR, loading: false, error: errorMsg },
+            { type: topOrganisationsActionTypes.TOP_EMPLOYERS_REQUEST, loading: true },
+            { type: topOrganisationsActionTypes.TOP_EMPLOYERS_ERROR, loading: false, error: errorMsg },
             { type: alertActionTypes.ERROR, message: errorMsg }
         ];
 
         let fake = sinon.fake.resolves(sinonBadRequest);
 
-        sinon.replace(landingService, "reqTopEmployers", fake);
+        sinon.replace(topOrganisationsService, "reqTopEmployers", fake);
 
-        return store.dispatch(landingActions.getTopEmployers())
+        return store.dispatch(topOrganisationsActions.getTopEmployers())
                     .then(() => {
                         let actions = store.getActions();
                         expect(actions).to.deep.equal(expectedActions);
@@ -95,15 +95,15 @@ describe("Landing Component Actions", () => {
     test("It returns a list of top agencies", done => {
 
         let expectedActions = [
-            { type: landingActionTypes.TOP_AGENCIES_REQUEST, loading: true },
-            { type: landingActionTypes.TOP_AGENCIES_SUCCESS, loading: false, TopAgencies: sinonTopEmployersRes.body }
+            { type: topOrganisationsActionTypes.TOP_AGENCIES_REQUEST, loading: true },
+            { type: topOrganisationsActionTypes.TOP_AGENCIES_SUCCESS, loading: false, TopAgencies: sinonTopEmployersRes.body }
         ];
 
         let fake = sinon.fake.resolves(sinonTopEmployersRes);
 
-        sinon.replace(landingService, "reqTopAgencies", fake);
+        sinon.replace(topOrganisationsService, "reqTopAgencies", fake);
 
-        return store.dispatch(landingActions.getTopAgencies())
+        return store.dispatch(topOrganisationsActions.getTopAgencies())
                     .then(() => {
                         let actions = store.getActions();
                         expect(actions[1].TopAgencies).to.equal(expectedActions[1].TopAgencies);
@@ -117,16 +117,16 @@ describe("Landing Component Actions", () => {
         let errorMsg = "Unable to retrieve top agencies";
 
         let expectedActions = [
-            { type: landingActionTypes.TOP_AGENCIES_REQUEST, loading: true },
-            { type: landingActionTypes.TOP_AGENCIES_ERROR, loading: false, error: errorMsg },
+            { type: topOrganisationsActionTypes.TOP_AGENCIES_REQUEST, loading: true },
+            { type: topOrganisationsActionTypes.TOP_AGENCIES_ERROR, loading: false, error: errorMsg },
             { type: alertActionTypes.ERROR, message: errorMsg }
         ];
 
         let fake = sinon.fake.resolves(sinonBadRequest);
 
-        sinon.replace(landingService, "reqTopAgencies", fake);
+        sinon.replace(topOrganisationsService, "reqTopAgencies", fake);
 
-        return store.dispatch(landingActions.getTopAgencies())
+        return store.dispatch(topOrganisationsActions.getTopAgencies())
                     .then(() => {
                         let actions = store.getActions();
                         expect(actions).to.deep.equal(expectedActions);

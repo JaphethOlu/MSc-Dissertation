@@ -1,2 +1,2 @@
 export * from "./authenticationService";
-export * from "./landingService";
+export * from "./topOrganisationsService";

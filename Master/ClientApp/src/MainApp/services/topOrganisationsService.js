@@ -3,7 +3,7 @@ import prefix from "superagent-prefix";
 
 import { base, topEmployers, topAgencies } from "./routes";
 
-export const landingService = {
+export const topOrganisationsService = {
     reqTopEmployers,
     reqTopAgencies
 };

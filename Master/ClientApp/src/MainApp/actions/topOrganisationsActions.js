@@ -1,8 +1,8 @@
-import { landingActionTypes } from "../actionTypes";
-import { landingService } from "../services";
+import { topOrganisationsActionTypes } from "../actionTypes";
+import { topOrganisationsService } from "../services";
 import { alertActions } from "./alertActions";
 
-export const landingActions = {
+export const topOrganisationsActions = {
     getTopAgencies,
     getTopEmployers
 };
@@ -11,7 +11,7 @@ export const landingActions = {
 function getTopAgencies() {
     return dispatch => {
         dispatch(request());
-        return landingService.reqTopAgencies()
+        return topOrganisationsService.reqTopAgencies()
                     .then((res) => {
                         if(res.status == 200) {
                             dispatch(success(res.body));
@@ -27,22 +27,22 @@ function getTopAgencies() {
     };
 
     function request() {
-        return { type: landingActionTypes.TOP_AGENCIES_REQUEST, loading: true };
+        return { type: topOrganisationsActionTypes.TOP_AGENCIES_REQUEST, loading: true };
     }
 
     function success(agencies) {
-        return { type: landingActionTypes.TOP_AGENCIES_SUCCESS, loading: false, TopAgencies: agencies };
+        return { type: topOrganisationsActionTypes.TOP_AGENCIES_SUCCESS, loading: false, TopAgencies: agencies };
     }
 
     function failure(error) {
-        return { type: landingActionTypes.TOP_AGENCIES_ERROR, loading: false, error };
+        return { type: topOrganisationsActionTypes.TOP_AGENCIES_ERROR, loading: false, error };
     }
 };
 
 function getTopEmployers() {
     return dispatch => {
         dispatch(request());
-        return landingService.reqTopEmployers()
+        return topOrganisationsService.reqTopEmployers()
                     .then((res) => {
                         if(res.status == 200) {
                             dispatch(success(res.body));
@@ -58,14 +58,14 @@ function getTopEmployers() {
     };
 
     function request() {
-        return { type: landingActionTypes.TOP_EMPLOYERS_REQUEST, loading: true };
+        return { type: topOrganisationsActionTypes.TOP_EMPLOYERS_REQUEST, loading: true };
     }
 
     function success(employers) {
-        return { type: landingActionTypes.TOP_EMPLOYERS_SUCCESS, loading: false, TopEmployers: employers };
+        return { type: topOrganisationsActionTypes.TOP_EMPLOYERS_SUCCESS, loading: false, TopEmployers: employers };
     }
 
     function failure(error) {
-        return { type: landingActionTypes.TOP_EMPLOYERS_ERROR, loading: false, error };
+        return { type: topOrganisationsActionTypes.TOP_EMPLOYERS_ERROR, loading: false, error };
     }
 };
