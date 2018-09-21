@@ -1,9 +1,9 @@
 // ================== Basic URLs
 const base = "http://localhost:55903/api";
 
-const topEmployers = "organisation/topemployer";
+const topEmployers = "/organisation/topemployer";
 
-const topAgencies = "organisation/topagency";
+const topAgencies = "/organisation/topagency";
 
 // ================== Contractor URLs
 const conLogin = "/login/contractor";

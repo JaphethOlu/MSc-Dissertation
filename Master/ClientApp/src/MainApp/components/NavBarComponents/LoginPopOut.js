@@ -67,15 +67,14 @@ class LoginPopOut extends React.Component {
 };
 
 const mapStateToProps = state => {
-    const { authenticating } = state.authentication;
-    return {
-        authenticating
-    };
+    const { authenticating, authenticated } = state.authentication;
+    return { authenticating, authenticated };
 };
 
 LoginPopOut.propTypes = {
-    authenticating: PropTypes.bool,
-    dispatch: PropTypes.func
+    authenticating: PropTypes.bool.isRequired,
+    authenticated: PropTypes.bool.isRequired,
+    dispatch: PropTypes.func.isRequired
 };
 
 const connectedLogin = connect(mapStateToProps)(LoginPopOut);

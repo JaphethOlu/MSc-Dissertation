@@ -104,14 +104,13 @@ class SignUpPopOut extends React.Component {
 };
 
 const mapStateToProps = state => {
-    const { authenicating } = state.authentication;
-    return {
-        authenicating
-    };
+    const { authenticating, authenticated } = state.authentication;
+    return { authenticating, authenticated };
 };
 
 SignUpPopOut.propTypes = {
-    authenticating: PropTypes.bool,
+    authenticating: PropTypes.bool.isRequired,
+    authenticated: PropTypes.bool.isRequired,
     dispatch: PropTypes.func
 };
 
