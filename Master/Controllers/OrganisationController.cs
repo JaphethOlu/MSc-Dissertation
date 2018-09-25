@@ -32,7 +32,7 @@ namespace Master.Controllers
         [HttpGet("[action]")]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
-        public IActionResult TopEmployer()
+        public IActionResult TopEmployerList()
         {
             IActionResult response;
             
@@ -54,7 +54,7 @@ namespace Master.Controllers
         [HttpGet("[action]")]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
-        public IActionResult TopAgency()
+        public IActionResult TopAgencyList()
         {
             IActionResult response;
             
