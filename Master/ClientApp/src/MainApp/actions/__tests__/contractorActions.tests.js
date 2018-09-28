@@ -102,7 +102,7 @@ describe("Contractor Actions", () => {
 
     });
 
-    test("Return right action for successfully creating contractor account", done => {
+    test("Return right action for successful sign up", done => {
         let expectedActions = [
             { type: contractorActionTypes.SIGNUP_REQUEST, authenticating: true },
             { type: contractorActionTypes.SIGNUP_SUCCESS, authenticating: false, user: successUser }
@@ -124,7 +124,7 @@ describe("Contractor Actions", () => {
 
     });
 
-    test("Return right action for successfully creating contractor account", done => {
+    test("Return right action for sign up error", done => {
         let expectedActions = [
             { type: contractorActionTypes.SIGNUP_REQUEST, authenticating: true },
             { type: contractorActionTypes.SIGNUP_ERROR, authenticating: false, error: "There was a problem creating your account" },
